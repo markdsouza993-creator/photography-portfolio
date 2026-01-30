@@ -4,16 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mark Dsouza | Visual Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- RESET & BASIC STYLES --- */
+        /* --- RESET & SMOOTH SCROLL --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         
         body {
             background-color: #050505;
             color: #fff;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif; /* Cleaner reading font */
             overflow-x: hidden;
+        }
+
+        /* --- ANIMATIONS (Fade Up) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- NAVIGATION --- */
@@ -21,21 +33,20 @@
             position: absolute;
             top: 0;
             width: 100%;
-            padding: 30px 5%;
+            padding: 40px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
+            mix-blend-mode: difference; /* Makes logo visible on white or black */
         }
         
         .logo {
             font-family: 'Oswald', sans-serif;
             font-size: 1.5rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 2px solid #fff;
-            padding: 5px 15px;
-            z-index: 101;
+            letter-spacing: 3px;
+            font-weight: 700;
         }
 
         .hamburger {
@@ -43,14 +54,15 @@
             z-index: 101;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
         .line {
-            width: 30px;
+            width: 35px;
             height: 2px;
             background-color: #fff;
             transition: 0.3s;
         }
+        .hamburger:hover .line { width: 45px; } /* Hover effect */
 
         /* --- MENU OVERLAY --- */
         .menu-overlay {
@@ -59,53 +71,52 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: #000;
+            background-color: #0a0a0a;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             transform: translateY(-100%);
-            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
             z-index: 99;
         }
-        
-        .menu-overlay.active {
-            transform: translateY(0);
-        }
+        .menu-overlay.active { transform: translateY(0); }
 
         .menu-overlay a.menu-link {
             font-family: 'Oswald', sans-serif;
-            font-size: 3rem;
-            color: #666;
+            font-size: 3.5rem;
+            color: #333;
             text-decoration: none;
-            margin: 10px 0;
+            margin: 5px 0;
             text-transform: uppercase;
-            transition: 0.3s;
+            transition: 0.4s;
+            position: relative;
         }
-        
         .menu-overlay a.menu-link:hover {
             color: #fff;
-            letter-spacing: 5px;
+            -webkit-text-stroke: 0px;
         }
-
-        /* Contact Info inside Menu (Quick View) */
+        
         .menu-contact {
-            margin-top: 50px;
+            margin-top: 60px;
             text-align: center;
-            font-family: 'Roboto', sans-serif;
-            color: #888;
+            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
         }
-        .menu-contact p { margin: 5px 0; font-size: 1.1rem; }
-        .menu-contact a { color: #fff; text-decoration: none; border-bottom: 1px solid #444; }
+        .menu-contact a { color: #fff; text-decoration: none; border-bottom: 1px solid #333; transition: 0.3s; }
+        .menu-contact a:hover { border-color: #fff; }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION (Parallax) --- */
         .hero {
             height: 100vh;
             width: 100%;
             /* REPLACE 'background.jpg' WITH YOUR PHOTO */
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('background.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('background.jpg');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed; /* PARALLAX EFFECT */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -115,69 +126,72 @@
 
         h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: 12vw;
-            line-height: 0.9;
+            font-size: 13vw;
+            line-height: 0.85;
             text-transform: uppercase;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
             margin-bottom: 20px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            letter-spacing: 5px;
+            font-size: 1rem;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            background-color: #fff;
-            color: #000;
+            margin-top: 20px;
+            font-weight: 300;
+            background: rgba(0,0,0,0.5);
             padding: 10px 20px;
-            font-weight: bold;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         /* --- BIO SECTION --- */
         .bio-section {
-            padding: 100px 10%;
-            background-color: #0a0a0a;
+            padding: 120px 10%;
+            background-color: #050505;
             text-align: center;
-            border-bottom: 1px solid #222;
         }
 
         .bio-text {
             font-family: 'Playfair Display', serif; 
-            font-size: 2rem;
-            line-height: 1.5;
-            color: #ddd;
-            max-width: 900px;
+            font-size: 2.2rem;
+            line-height: 1.4;
+            color: #888;
+            max-width: 950px;
             margin: 0 auto;
         }
 
         .highlight {
             font-style: italic;
             color: #fff;
-            border-bottom: 1px solid #444;
+            position: relative;
         }
 
-        /* --- COLLECTIONS & GALLERY HEADERS --- */
+        /* --- SECTION HEADERS --- */
         .section-header {
             font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            margin: 40px 5% 20px 5%;
-            color: #666;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            margin: 60px 5% 30px 5%;
+            color: #444;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            text-transform: uppercase;
         }
 
-        /* --- COLLECTIONS SECTION --- */
+        /* --- COLLECTIONS --- */
         .collections-section {
-            padding: 0 5% 60px 5%;
+            padding: 0 5% 80px 5%;
             display: flex;
-            gap: 20px;
+            gap: 30px;
         }
 
         .collection-item {
             flex: 1;
-            height: 500px;
+            height: 600px;
             position: relative;
             overflow: hidden;
-            border: 1px solid #333;
             cursor: pointer;
         }
 
@@ -185,68 +199,72 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.6s ease;
+            transition: transform 0.8s ease;
             filter: brightness(60%);
         }
 
         .collection-title {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            bottom: 40px;
+            left: 40px;
             font-family: 'Oswald', sans-serif;
-            font-size: 2.5rem;
+            font-size: 3rem;
             text-transform: uppercase;
-            pointer-events: none;
+            color: #fff;
             z-index: 2;
+            transition: 0.3s;
+            mix-blend-mode: overlay; /* Cool blend effect */
         }
 
         .collection-item:hover img {
-            transform: scale(1.1);
-            filter: brightness(30%);
+            transform: scale(1.05);
+            filter: brightness(40%);
+        }
+        .collection-item:hover .collection-title {
+            transform: translateX(10px);
+            mix-blend-mode: normal;
         }
 
         /* --- GALLERY GRID --- */
-        .gallery-section {
-            padding: 0 5% 60px 5%;
-        }
-
+        .gallery-section { padding: 0 5% 100px 5%; }
+        
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr); 
-            gap: 20px;
+            gap: 15px;
         }
 
         .card {
-            height: 400px;
+            height: 450px;
             overflow: hidden;
+            position: relative;
         }
 
         .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
-            filter: grayscale(100%);
+            transition: 0.6s ease;
+            filter: grayscale(100%) brightness(80%);
         }
         
         .card:hover img {
-            transform: scale(1.05);
-            filter: grayscale(0%);
+            transform: scale(1.1);
+            filter: grayscale(0%) brightness(100%);
         }
 
-        /* --- NEW DEDICATED CONTACT SECTION --- */
+        /* --- CONTACT SECTION --- */
         .contact-section {
-            background-color: #0f0f0f;
-            padding: 100px 5%;
+            background-color: #080808;
+            padding: 120px 5%;
             text-align: center;
-            border-top: 1px solid #222;
+            border-top: 1px solid #111;
         }
 
         .contact-headline {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 60px;
+            font-size: 4rem; /* Big editorial text */
+            margin-bottom: 80px;
             color: #fff;
             font-style: italic;
         }
@@ -254,81 +272,83 @@
         .contact-grid {
             display: flex;
             justify-content: center;
-            gap: 60px;
+            gap: 80px;
             flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .contact-box {
-            text-align: center;
-        }
+        .contact-box { text-align: left; }
 
         .contact-label {
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.9rem;
-            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: #555;
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: block;
         }
 
         .contact-link {
-            font-family: 'Roboto', sans-serif;
-            font-size: 1.3rem;
-            color: #fff;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: #ccc;
             text-decoration: none;
-            padding-bottom: 5px;
-            border-bottom: 1px solid transparent;
+            position: relative;
+            transition: 0.3s;
+        }
+        
+        .contact-link::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: #fff;
             transition: 0.3s;
         }
 
-        .contact-link:hover {
-            border-bottom: 1px solid #fff;
-            color: #ccc;
-        }
+        .contact-link:hover { color: #fff; }
+        .contact-link:hover::after { width: 100%; }
 
+        /* Social Button */
         .social-btn {
             font-family: 'Oswald', sans-serif;
             font-size: 1.2rem;
             border: 1px solid #333;
-            padding: 10px 30px;
+            padding: 15px 40px;
             color: #fff;
             text-decoration: none;
-            transition: 0.3s;
+            transition: 0.4s;
             display: inline-block;
         }
-
         .social-btn:hover {
             background-color: #fff;
             color: #000;
         }
 
-        /* --- DEVICE SPECIFIC TWEAKS --- */
+        /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
             h1 { font-size: 15vw; }
-            .bio-text { font-size: 1.6rem; }
+            .hero { background-attachment: scroll; } /* Disable parallax on tablet for performance */
             .grid { grid-template-columns: repeat(2, 1fr); }
-            .card { height: 350px; }
         }
 
         @media (max-width: 768px) {
             h1 { font-size: 18vw; }
-            .subtitle { font-size: 0.9rem; letter-spacing: 3px; }
-            .bio-text { font-size: 1.2rem; padding: 0 10px; }
+            .subtitle { font-size: 0.8rem; letter-spacing: 3px; }
+            .bio-text { font-size: 1.5rem; padding: 0 10px; }
+            .contact-headline { font-size: 2.5rem; }
             
             .collections-section { flex-direction: column; }
-            .collection-item { height: 300px; }
+            .collection-item { height: 350px; }
+            .collection-title { font-size: 2rem; bottom: 20px; left: 20px; }
             
             .grid { grid-template-columns: 1fr; }
             .card { height: 300px; }
             
-            .menu-overlay a.menu-link { font-size: 2rem; }
-
-            /* Contact Stack for Mobile */
-            .contact-grid { flex-direction: column; gap: 40px; }
-            .contact-headline { font-size: 2rem; }
+            .contact-grid { flex-direction: column; gap: 40px; text-align: center; }
+            .contact-box { text-align: center; }
         }
     </style>
 </head>
@@ -336,7 +356,6 @@
 
     <nav>
         <div class="logo">MARK DSOUZA</div>
-        
         <div class="hamburger" onclick="toggleMenu()">
             <div class="line"></div>
             <div class="line"></div>
@@ -348,78 +367,92 @@
         <a href="#" class="menu-link" onclick="toggleMenu()">Home</a>
         <a href="#collections" class="menu-link" onclick="toggleMenu()">Collections</a>
         <a href="#contact" class="menu-link" onclick="toggleMenu()">Contact</a>
-        
         <div class="menu-contact">
-            <p>MARK DSOUZA</p>
-            <p>Mumbai, India</p>
+            <p>MARK DSOUZA &bull; MUMBAI</p>
+            <br>
+            <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank">@urbngraphy</a>
         </div>
     </div>
 
     <header class="hero">
-        <h1>MUMBAI<br>VISUALS</h1>
-        <div class="subtitle">Photographer & Filmmaker</div>
+        <h1 class="reveal">MUMBAI<br>VISUALS</h1>
+        <div class="subtitle reveal">Photographer & Filmmaker</div>
     </header>
 
     <section class="bio-section">
-        <p class="bio-text">
+        <p class="bio-text reveal">
             I am a visual artist based in <span class="highlight">Mumbai</span>, obsessed with the contrast between chaotic streets and silent moments.
             <br><br>
             I don't just take photos; I create <span class="highlight">cinematic moments</span> from everyday life.
         </p>
     </section>
 
-    <div id="collections" class="section-header">SELECTED WORKS</div>
+    <div id="collections" class="section-header reveal">Selected Works</div>
     <section class="collections-section">
-        <div class="collection-item">
+        <div class="collection-item reveal">
             <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=800&q=80" alt="Street">
             <div class="collection-title">Street</div>
         </div>
-        <div class="collection-item">
+        <div class="collection-item reveal">
             <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" alt="Portraits">
             <div class="collection-title">Portrait</div>
         </div>
     </section>
 
-    <div class="section-header">LATEST SHOTS</div>
+    <div class="section-header reveal">Latest Shots</div>
     <section class="gallery-section">
         <div class="grid">
-            <div class="card"><img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80" alt="Img 1"></div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=800&q=80" alt="Img 2"></div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1504893524553-bfa5438b71a3?auto=format&fit=crop&w=800&q=80" alt="Img 3"></div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&w=800&q=80" alt="Img 4"></div>
+            <div class="card reveal"><img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
+            <div class="card reveal"><img src="https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
+            <div class="card reveal"><img src="https://images.unsplash.com/photo-1504893524553-bfa5438b71a3?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
+            <div class="card reveal"><img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
         </div>
     </section>
 
     <section id="contact" class="contact-section">
-        <h2 class="contact-headline">Let's Create Something Timeless.</h2>
+        <h2 class="contact-headline reveal">Let's Create Something Timeless.</h2>
         
-        <div class="contact-grid">
+        <div class="contact-grid reveal">
             <div class="contact-box">
-                <span class="contact-label">Drop an Email</span>
+                <span class="contact-label">Email</span>
                 <a href="mailto:markdsouza993@gmail.com" class="contact-link">markdsouza993@gmail.com</a>
             </div>
-
             <div class="contact-box">
-                <span class="contact-label">Call / WhatsApp</span>
+                <span class="contact-label">Phone</span>
                 <a href="tel:+919920536837" class="contact-link">+91 9920536837</a>
             </div>
-
             <div class="contact-box">
-                <span class="contact-label">Follow My Work</span>
+                <span class="contact-label">Social</span>
                 <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank" class="social-btn">@urbngraphy</a>
             </div>
         </div>
         
-        <div style="margin-top: 80px; font-size: 0.8rem; color: #444;">
-            &copy; 2026 MARK DSOUZA. All Rights Reserved.
+        <div style="margin-top: 100px; font-size: 0.7rem; color: #333; letter-spacing: 2px;">
+            &copy; 2026 MARK DSOUZA. ALL RIGHTS RESERVED.
         </div>
     </section>
 
     <script>
+        // TOGGLE MENU
         function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('active');
+            document.getElementById('menu').classList.toggle('active');
         }
+
+        // SCROLL REVEAL ANIMATION
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowheight = window.innerHeight;
+                var revealtop = reveals[i].getBoundingClientRect().top;
+                var revealpoint = 150;
+                if (revealtop < windowheight - revealpoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        // Trigger once on load
+        reveal();
     </script>
 
 </body>
