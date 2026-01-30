@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Portfolio</title>
+    <title>Mark Dsouza | Visual Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
         /* --- RESET & BASIC STYLES --- */
@@ -53,7 +53,7 @@
             transition: 0.3s;
         }
 
-        /* Menu Overlay */
+        /* --- MENU OVERLAY --- */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -66,7 +66,7 @@
             justify-content: center;
             align-items: center;
             transform: translateY(-100%);
-            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); /* Smoother slide */
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
             z-index: 99;
         }
         
@@ -74,20 +74,30 @@
             transform: translateY(0);
         }
 
-        .menu-overlay a {
+        .menu-overlay a.menu-link {
             font-family: 'Oswald', sans-serif;
             font-size: 3rem;
             color: #666;
             text-decoration: none;
-            margin: 15px 0;
+            margin: 10px 0;
             text-transform: uppercase;
             transition: 0.3s;
         }
         
-        .menu-overlay a:hover {
+        .menu-overlay a.menu-link:hover {
             color: #fff;
             letter-spacing: 5px;
         }
+
+        /* Contact Info inside Menu */
+        .menu-contact {
+            margin-top: 50px;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            color: #888;
+        }
+        .menu-contact p { margin: 5px 0; font-size: 1.1rem; }
+        .menu-contact a { color: #fff; text-decoration: none; border-bottom: 1px solid #444; }
 
         /* --- HERO SECTION --- */
         .hero {
@@ -123,7 +133,7 @@
             font-weight: bold;
         }
 
-        /* --- BIO SECTION (UPDATED FONT) --- */
+        /* --- BIO SECTION --- */
         .bio-section {
             padding: 100px 10%;
             background-color: #0a0a0a;
@@ -132,20 +142,18 @@
         }
 
         .bio-text {
-            /* This is the new premium font */
             font-family: 'Playfair Display', serif; 
-            font-size: 2rem; /* Bigger size */
+            font-size: 2rem;
             line-height: 1.5;
             color: #ddd;
             max-width: 900px;
             margin: 0 auto;
         }
 
-        /* Making key words stand out */
         .highlight {
             font-style: italic;
             color: #fff;
-            border-bottom: 1px solid #444; /* Subtle underline */
+            border-bottom: 1px solid #444;
         }
 
         /* --- COLLECTIONS SECTION --- */
@@ -166,7 +174,7 @@
 
         .collection-item {
             flex: 1;
-            height: 500px; /* Taller for iPad impact */
+            height: 500px;
             position: relative;
             overflow: hidden;
             border: 1px solid #333;
@@ -205,7 +213,6 @@
 
         .grid {
             display: grid;
-            /* PC Default: 4 columns */
             grid-template-columns: repeat(4, 1fr); 
             gap: 20px;
         }
@@ -248,44 +255,31 @@
             color: #000;
         }
 
-        /* --- DEVICE SPECIFIC TWEAKS (Responsive) --- */
-
-        /* TABLETS / iPADS (Width between 768px and 1024px) */
+        /* --- DEVICE SPECIFIC TWEAKS --- */
         @media (max-width: 1024px) {
-            h1 { font-size: 15vw; } /* Slightly bigger text for tablet */
-            .bio-text { font-size: 1.6rem; } /* Readable bio */
-            
-            .grid {
-                /* Switch to 2 columns for tablets */
-                grid-template-columns: repeat(2, 1fr); 
-            }
+            h1 { font-size: 15vw; }
+            .bio-text { font-size: 1.6rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); }
             .card { height: 350px; }
         }
 
-        /* PHONES (Width less than 768px) */
         @media (max-width: 768px) {
             h1 { font-size: 18vw; }
             .subtitle { font-size: 0.9rem; letter-spacing: 3px; }
-            
             .bio-text { font-size: 1.2rem; padding: 0 10px; }
-            
-            .collections-section { flex-direction: column; } /* Stack collections */
+            .collections-section { flex-direction: column; }
             .collection-item { height: 300px; }
-            
-            .grid {
-                /* Switch to 1 column for phones */
-                grid-template-columns: 1fr; 
-            }
+            .grid { grid-template-columns: 1fr; }
             .card { height: 300px; }
-            
-            .menu-overlay a { font-size: 2rem; }
+            .menu-overlay a.menu-link { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">YOUR NAME</div>
+        <div class="logo">MARK DSOUZA</div>
+        
         <div class="hamburger" onclick="toggleMenu()">
             <div class="line"></div>
             <div class="line"></div>
@@ -294,10 +288,17 @@
     </nav>
 
     <div class="menu-overlay" id="menu">
-        <a href="#" onclick="toggleMenu()">Home</a>
-        <a href="#" onclick="toggleMenu()">Collections</a>
-        <a href="#" onclick="toggleMenu()">Journal</a>
-        <a href="#" onclick="toggleMenu()">Contact</a>
+        <a href="#" class="menu-link" onclick="toggleMenu()">Home</a>
+        <a href="#" class="menu-link" onclick="toggleMenu()">Collections</a>
+        <a href="#" class="menu-link" onclick="toggleMenu()">Journal</a>
+        
+        <div class="menu-contact">
+            <p>MARK DSOUZA</p>
+            <p>+91 9920536837</p>
+            <p>markdsouza993@gmail.com</p>
+            <br>
+            <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank">INSTAGRAM: @urbngraphy</a>
+        </div>
     </div>
 
     <header class="hero">
@@ -337,7 +338,7 @@
 
     <footer>
         <p style="margin-bottom: 30px; color: #888;">READY TO CREATE?</p>
-        <a href="mailto:email@example.com" class="contact-btn">GET IN TOUCH</a>
+        <a href="mailto:markdsouza993@gmail.com" class="contact-btn">GET IN TOUCH</a>
     </footer>
 
     <script>
