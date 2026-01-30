@@ -38,7 +38,6 @@
             z-index: 101;
         }
 
-        /* Hamburger Icon */
         .hamburger {
             cursor: pointer;
             z-index: 101;
@@ -89,7 +88,7 @@
             letter-spacing: 5px;
         }
 
-        /* Contact Info inside Menu */
+        /* Contact Info inside Menu (Quick View) */
         .menu-contact {
             margin-top: 50px;
             text-align: center;
@@ -156,7 +155,7 @@
             border-bottom: 1px solid #444;
         }
 
-        /* --- COLLECTIONS SECTION --- */
+        /* --- COLLECTIONS & GALLERY HEADERS --- */
         .section-header {
             font-family: 'Oswald', sans-serif;
             font-size: 2rem;
@@ -166,6 +165,7 @@
             padding-bottom: 10px;
         }
 
+        /* --- COLLECTIONS SECTION --- */
         .collections-section {
             padding: 0 5% 60px 5%;
             display: flex;
@@ -235,22 +235,72 @@
             filter: grayscale(0%);
         }
 
-        /* --- FOOTER --- */
-        footer {
-            padding: 80px 5%;
+        /* --- NEW DEDICATED CONTACT SECTION --- */
+        .contact-section {
+            background-color: #0f0f0f;
+            padding: 100px 5%;
             text-align: center;
-            border-top: 1px solid #333;
+            border-top: 1px solid #222;
         }
-        .contact-btn {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            text-decoration: none;
+
+        .contact-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 60px;
             color: #fff;
-            border: 2px solid #fff;
-            padding: 15px 40px;
+            font-style: italic;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-box {
+            text-align: center;
+        }
+
+        .contact-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .contact-link {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+            text-decoration: none;
+            padding-bottom: 5px;
+            border-bottom: 1px solid transparent;
             transition: 0.3s;
         }
-        .contact-btn:hover {
+
+        .contact-link:hover {
+            border-bottom: 1px solid #fff;
+            color: #ccc;
+        }
+
+        .social-btn {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            border: 1px solid #333;
+            padding: 10px 30px;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .social-btn:hover {
             background-color: #fff;
             color: #000;
         }
@@ -267,11 +317,18 @@
             h1 { font-size: 18vw; }
             .subtitle { font-size: 0.9rem; letter-spacing: 3px; }
             .bio-text { font-size: 1.2rem; padding: 0 10px; }
+            
             .collections-section { flex-direction: column; }
             .collection-item { height: 300px; }
+            
             .grid { grid-template-columns: 1fr; }
             .card { height: 300px; }
+            
             .menu-overlay a.menu-link { font-size: 2rem; }
+
+            /* Contact Stack for Mobile */
+            .contact-grid { flex-direction: column; gap: 40px; }
+            .contact-headline { font-size: 2rem; }
         }
     </style>
 </head>
@@ -289,15 +346,12 @@
 
     <div class="menu-overlay" id="menu">
         <a href="#" class="menu-link" onclick="toggleMenu()">Home</a>
-        <a href="#" class="menu-link" onclick="toggleMenu()">Collections</a>
-        <a href="#" class="menu-link" onclick="toggleMenu()">Journal</a>
+        <a href="#collections" class="menu-link" onclick="toggleMenu()">Collections</a>
+        <a href="#contact" class="menu-link" onclick="toggleMenu()">Contact</a>
         
         <div class="menu-contact">
             <p>MARK DSOUZA</p>
-            <p>+91 9920536837</p>
-            <p>markdsouza993@gmail.com</p>
-            <br>
-            <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank">INSTAGRAM: @urbngraphy</a>
+            <p>Mumbai, India</p>
         </div>
     </div>
 
@@ -314,7 +368,7 @@
         </p>
     </section>
 
-    <div class="section-header">SELECTED WORKS</div>
+    <div id="collections" class="section-header">SELECTED WORKS</div>
     <section class="collections-section">
         <div class="collection-item">
             <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=800&q=80" alt="Street">
@@ -336,10 +390,30 @@
         </div>
     </section>
 
-    <footer>
-        <p style="margin-bottom: 30px; color: #888;">READY TO CREATE?</p>
-        <a href="mailto:markdsouza993@gmail.com" class="contact-btn">GET IN TOUCH</a>
-    </footer>
+    <section id="contact" class="contact-section">
+        <h2 class="contact-headline">Let's Create Something Timeless.</h2>
+        
+        <div class="contact-grid">
+            <div class="contact-box">
+                <span class="contact-label">Drop an Email</span>
+                <a href="mailto:markdsouza993@gmail.com" class="contact-link">markdsouza993@gmail.com</a>
+            </div>
+
+            <div class="contact-box">
+                <span class="contact-label">Call / WhatsApp</span>
+                <a href="tel:+919920536837" class="contact-link">+91 9920536837</a>
+            </div>
+
+            <div class="contact-box">
+                <span class="contact-label">Follow My Work</span>
+                <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank" class="social-btn">@urbngraphy</a>
+            </div>
+        </div>
+        
+        <div style="margin-top: 80px; font-size: 0.8rem; color: #444;">
+            &copy; 2026 MARK DSOUZA. All Rights Reserved.
+        </div>
+    </section>
 
     <script>
         function toggleMenu() {
