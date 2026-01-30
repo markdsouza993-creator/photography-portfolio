@@ -43,14 +43,13 @@
             margin-left: 25px;
             text-transform: uppercase;
             font-size: 0.9rem;
-            transition: 0.3s;
         }
-        .nav-links a:hover { color: #888; }
 
-        /* --- HERO --- */
+        /* --- HERO SECTION --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('background.jpg') center/cover no-repeat;
+            /* Update 'background.jpg' to 'images/background.jpg' if you moved it */
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('images/background.jpg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -59,7 +58,7 @@
         }
         h1 { font-family: 'Oswald', sans-serif; font-size: 10vw; text-transform: uppercase; line-height: 1; }
 
-        /* --- ABOUT & QUALIFICATIONS --- */
+        /* --- ABOUT SECTION --- */
         .info-section {
             padding: 100px 10%;
             background: #050505;
@@ -67,65 +66,55 @@
             grid-template-columns: 1fr 1fr;
             gap: 60px;
         }
-        .info-section h2 { font-family: 'Oswald', sans-serif; font-size: 2.5rem; margin-bottom: 20px; color: #fff; }
-        .info-section p { color: #ccc; margin-bottom: 20px; font-size: 1.1rem; }
+        .info-section h2 { font-family: 'Oswald', sans-serif; font-size: 2.5rem; margin-bottom: 20px; }
         
         .qual-list { list-style: none; }
         .qual-list li { 
             margin-bottom: 15px; 
             padding-left: 15px; 
             border-left: 2px solid #fff; 
-            font-size: 1rem;
             color: #aaa;
         }
 
-        /* --- GALLERY --- */
+        /* --- GALLERY: This makes photos look good --- */
         .gallery-section { padding: 100px 5%; }
         .section-header {
             font-family: 'Oswald', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 40px;
             text-transform: uppercase;
-            letter-spacing: 3px;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
-        .card { height: 400px; overflow: hidden; background: #111; }
-        .card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.6s; }
+        .card { 
+            height: 500px; /* Taller boxes for a more cinematic feel */
+            overflow: hidden; 
+            background: #111; 
+            border: 1px solid #222;
+        }
+        .card img { 
+            width: 100%; 
+            height: 100%; 
+            /* object-fit: cover makes sure images aren't stretched */
+            object-fit: cover; 
+            filter: grayscale(100%); 
+            transition: 0.8s ease; 
+        }
         .card:hover img { filter: grayscale(0%); transform: scale(1.05); }
 
-        /* --- CONTACT SECTION --- */
-        .contact-section {
-            padding: 100px 5%;
-            background: #0a0a0a;
-            text-align: center;
-        }
-        .contact-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-        .contact-item h4 { font-family: 'Oswald', sans-serif; text-transform: uppercase; color: #888; margin-bottom: 5px; }
-        .contact-item a, .contact-item p { 
-            font-size: 1.5rem; 
-            color: #fff; 
-            text-decoration: none; 
-            font-family: 'Oswald', sans-serif;
-            transition: 0.3s;
-        }
-        .contact-item a:hover { color: #888; }
+        /* --- CONTACT --- */
+        .contact-section { padding: 100px 5%; background: #0a0a0a; text-align: center; }
+        .contact-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 40px; }
+        .contact-item a { font-size: 1.5rem; color: #fff; text-decoration: none; font-family: 'Oswald', sans-serif; }
 
-        footer { padding: 50px; text-align: center; color: #444; font-size: 0.8rem; letter-spacing: 2px; }
+        footer { padding: 50px; text-align: center; color: #444; font-size: 0.8rem; }
 
         @media (max-width: 768px) {
             .info-section { grid-template-columns: 1fr; }
             h1 { font-size: 15vw; }
-            .nav-links { display: none; }
         }
     </style>
 </head>
@@ -148,15 +137,14 @@
     <section id="about" class="info-section">
         <div class="intro-text">
             <h2>THE VISION</h2>
-            <p>I am a <strong>BAMMC student</strong> currently pursuing my degree in Mumbai, with a deep focus on visual storytelling and mass media. Through my Sony a6400, I explore the cinematic pulse of the city—capturing the raw rhythm of the streets and the quiet beauty of the night sky.</p>
+            <p>I am a <strong>BAMMC student</strong> in Mumbai. Through my Sony a6400, I explore the cinematic pulse of the city—capturing raw rhythm and quiet shadows.</p>
         </div>
         <div class="qualifications">
-            <h2>ACADEMIC & SKILLS</h2>
+            <h2>ACADEMIC</h2>
             <ul class="qual-list">
                 <li>Bachelor of Arts in Multimedia and Mass Communication</li>
                 <li>Visual Communication & Media Studies</li>
-                <li>Digital Photography (Sony Mirrorless System)</li>
-                <li>Cinematic Post-Processing</li>
+                <li>Digital Photography & Post-Processing</li>
             </ul>
         </div>
     </section>
@@ -164,14 +152,13 @@
     <section id="gallery" class="gallery-section">
         <div class="section-header">Latest Work</div>
         <div class="grid">
-<div class="grid">
-    <div class="card"><img src="DSC02010 (1).jpg" alt="Rolls-Royce Cinematic"></div>
-    <div class="card"><img src="DSC01607.jpg" alt="Vintage Triumph"></div>
-    <div class="card"><img src="DSC02090.jpg" alt="Bentley Detail"></div>
-    <div class="card"><img src="DSC01911.jpg" alt="Classic Wheel"></div>
-    <div class="card"><img src="DSC02058.jpg" alt="Noir Grill B&W"></div>
-    <div class="card"><img src="DSC01974.jpg" alt="Modern Ferrari"></div>
-</div>
+            <div class="card"><img src="images/latest-shot.jpg" alt="Latest Work"></div>
+            
+            <div class="card"><img src="images/DSC02010 (1).jpg" alt="Rolls-Royce"></div>
+            <div class="card"><img src="images/DSC01607.jpg" alt="Triumph"></div>
+            <div class="card"><img src="images/DSC01911.jpg" alt="Wheel"></div>
+            <div class="card"><img src="images/DSC02058.jpg" alt="Grill"></div>
+            <div class="card"><img src="images/DSC01974.jpg" alt="Ferrari"></div>
         </div>
     </section>
 
@@ -179,24 +166,14 @@
         <div class="section-header">Get In Touch</div>
         <div class="contact-grid">
             <div class="contact-item">
-                <h4>Call / WhatsApp</h4>
-                <p>+91 99205 36837</p> 
-            </div>
-            <div class="contact-item">
-                <h4>Instagram</h4>
                 <a href="https://www.instagram.com/urbngraphy/" target="_blank">@urbngraphy</a>
-            </div>
-            <div class="contact-item">
-                <h4>Email</h4>
-                <a href="mailto:yourname@gmail.com">markdsouza993@gmail.com</a>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 MARK DSOUZA | urbngraphy</p>
+        <p>© 2026 MARK DSOUZA | BAMMC STUDENT</p>
     </footer>
 
 </body>
 </html>
-
