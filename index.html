@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mark Dsouza | Portfolio</title>
+    <title>Mark Dsouza | Visuals</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
         /* --- RESET & BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; } /* Makes the "jump" to gallery smooth */
+        html { scroll-behavior: smooth; }
         
         body {
             background-color: #000;
@@ -27,8 +27,8 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.9);
+            border-bottom: 1px solid #222;
         }
         .logo {
             font-family: 'Oswald', sans-serif;
@@ -41,9 +41,9 @@
             color: #fff;
             text-decoration: none;
             font-family: 'Oswald', sans-serif;
-            margin-left: 30px;
+            margin-left: 25px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
             transition: 0.3s;
         }
         .nav-links a:hover { color: #888; }
@@ -51,7 +51,7 @@
         /* --- HERO --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('background.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('background.jpg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -60,63 +60,73 @@
         }
         h1 { font-family: 'Oswald', sans-serif; font-size: 10vw; text-transform: uppercase; line-height: 1; }
 
-        /* --- INTRODUCTION (BLANK FOR NOW) --- */
-        .intro-section {
-            padding: 120px 10%;
-            text-align: center;
+        /* --- ABOUT & QUALIFICATIONS --- */
+        .info-section {
+            padding: 100px 10%;
             background: #050505;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
         }
-        .intro-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .intro-content h2 { 
-            font-family: 'Oswald', sans-serif; 
-            font-size: 3rem; 
-            margin-bottom: 30px; 
-            letter-spacing: 3px;
-        }
-        .placeholder-box {
-            border: 1px dashed #444;
-            padding: 40px;
-            color: #666;
+        .info-section h2 { font-family: 'Oswald', sans-serif; font-size: 2.5rem; margin-bottom: 20px; color: #fff; }
+        .info-section p { color: #ccc; margin-bottom: 20px; font-size: 1.1rem; }
+        
+        .qual-list { list-style: none; }
+        .qual-list li { 
+            margin-bottom: 15px; 
+            padding-left: 15px; 
+            border-left: 2px solid #fff; 
+            font-size: 1rem;
+            color: #aaa;
         }
 
         /* --- GALLERY --- */
-        .gallery-section { 
-            padding: 100px 5%; 
-            background-color: #000;
-        }
+        .gallery-section { padding: 100px 5%; }
         .section-header {
             font-family: 'Oswald', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 40px;
             text-transform: uppercase;
-            border-bottom: 1px solid #222;
-            padding-bottom: 10px;
+            letter-spacing: 3px;
         }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 15px;
         }
-        .card { 
-            height: 450px; 
-            overflow: hidden; 
-            background: #111; 
-        }
-        .card img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            filter: grayscale(100%); transition: 0.8s ease; 
-        }
-        .card:hover img { filter: grayscale(0%); transform: scale(1.1); }
+        .card { height: 400px; overflow: hidden; background: #111; }
+        .card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.6s; }
+        .card:hover img { filter: grayscale(0%); transform: scale(1.05); }
 
-        /* --- FOOTER --- */
-        footer { padding: 100px 5%; text-align: center; border-top: 1px solid #222; }
-        
+        /* --- CONTACT SECTION --- */
+        .contact-section {
+            padding: 100px 5%;
+            background: #0a0a0a;
+            text-align: center;
+        }
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .contact-item h4 { font-family: 'Oswald', sans-serif; text-transform: uppercase; color: #888; margin-bottom: 5px; }
+        .contact-item a, .contact-item p { 
+            font-size: 1.5rem; 
+            color: #fff; 
+            text-decoration: none; 
+            font-family: 'Oswald', sans-serif;
+            transition: 0.3s;
+        }
+        .contact-item a:hover { color: #888; }
+
+        footer { padding: 50px; text-align: center; color: #444; font-size: 0.8rem; letter-spacing: 2px; }
+
         @media (max-width: 768px) {
+            .info-section { grid-template-columns: 1fr; }
             h1 { font-size: 15vw; }
-            .nav-links { display: none; } /* Simplifies mobile view */
+            .nav-links { display: none; }
         }
     </style>
 </head>
@@ -126,25 +136,34 @@
         <div class="logo">MARK DSOUZA</div>
         <div class="nav-links">
             <a href="#">Home</a>
-            <a href="#intro">About</a>
-            <a href="#gallery">Gallery</a> </div>
+            <a href="#about">About</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+        </div>
     </nav>
 
     <header class="hero">
         <h1>MUMBAI<br>VISUALS</h1>
     </header>
 
-    <section id="intro" class="intro-section">
-        <div class="intro-content">
-            <h2>ABOUT ME</h2>
-            <div class="placeholder-box">
-                <p>[ Your introduction will go here. Just let me know what you want to say and I will format it for you! ]</p>
-            </div>
+    <section id="about" class="info-section">
+        <div class="intro-text">
+            <h2>THE VISION</h2>
+            <p>Mumbai is a city of shadows and light. Through the lens of my Sony a6400, I seek the quiet moments amidst the chaos—the hazy docks at dawn, the lonely street corners, and the stories that often go unnoticed. My work is an exploration of the cinematic side of everyday life.</p>
+        </div>
+        <div class="qualifications">
+            <h2>QUALIFICATIONS</h2>
+            <ul class="qual-list">
+                <li>Film & Media Student</li>
+                <li>Specialized in Cinematic Street Photography</li>
+                <li>Experienced in Astrophotography & Night Scapes</li>
+                <li>Advanced Photo Editing & Color Grading</li>
+            </ul>
         </div>
     </section>
 
     <section id="gallery" class="gallery-section">
-        <div class="section-header">The Gallery</div>
+        <div class="section-header">Latest Work</div>
         <div class="grid">
             <div class="card"><img src="latest-shot.jpg" alt="Latest Work"></div>
             <div class="card"><img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=800" alt="Work"></div>
@@ -155,8 +174,25 @@
         </div>
     </section>
 
+    <section id="contact" class="contact-section">
+        <div class="section-header">Get In Touch</div>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <h4>Call / WhatsApp</h4>
+                <p>+91 XXXXX XXXXX</p> </div>
+            <div class="contact-item">
+                <h4>Instagram</h4>
+                <a href="https://www.instagram.com/your_id/" target="_blank">@your_id</a>
+            </div>
+            <div class="contact-item">
+                <h4>Email</h4>
+                <a href="mailto:your-email@gmail.com">your-email@gmail.com</a>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p style="color: #444; letter-spacing: 2px;">© 2026 MARK DSOUZA</p>
+        <p>© 2026 MARK DSOUZA | CINEMATIC STREET PHOTOGRAPHY</p>
     </footer>
 
 </body>
