@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Portfolio</title>
+    <title>Visual Portfolio | Mark Dsouza</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
         /* --- RESET --- */
@@ -13,7 +13,7 @@
             background-color: #000;
             color: #fff;
             font-family: 'Roboto', sans-serif;
-            overflow-x: hidden; /* Prevents side scrolling */
+            overflow-x: hidden;
         }
 
         /* --- NAVIGATION --- */
@@ -25,25 +25,26 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 10; /* Sits on top of the image */
+            z-index: 10;
         }
         .logo {
             font-family: 'Oswald', sans-serif;
             font-size: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border: 2px solid #fff; /* Box around logo */
+            border: 2px solid #fff;
             padding: 5px 15px;
         }
 
-        /* --- HERO SECTION (The Big Cover Image) --- */
+        /* --- HERO SECTION --- */
         .hero {
-            height: 100vh; /* 100% of the screen height */
+            height: 100vh;
             width: 100%;
-            /* This is the background image of your site */
-            background-image:background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('background.jpg')
+            /* Fixed the double property and syntax here */
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('background.jpg');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -51,14 +52,14 @@
             text-align: center;
         }
 
-        /* BIG FONTS */
         h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: 12vw; /* Massive size that scales with screen */
+            font-size: 12vw;
             line-height: 1;
             text-transform: uppercase;
             letter-spacing: -2px;
             margin-bottom: 20px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .subtitle {
@@ -72,13 +73,13 @@
 
         /* --- GALLERY GRID --- */
         .gallery-section {
-            padding: 50px 5%;
+            padding: 80px 5%;
             background-color: #0a0a0a;
         }
         .section-header {
             font-family: 'Oswald', sans-serif;
             font-size: 3rem;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             border-bottom: 1px solid #333;
             padding-bottom: 10px;
         }
@@ -90,29 +91,31 @@
         }
 
         .card {
-            height: 500px; /* Taller images */
+            height: 500px;
             position: relative;
             overflow: hidden;
+            background-color: #111;
         }
 
         .card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
-            filter: grayscale(100%); /* Start Black & White */
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            filter: grayscale(100%);
         }
         
         .card:hover img {
-            transform: scale(1.1);
-            filter: grayscale(0%); /* Color on hover */
+            transform: scale(1.05);
+            filter: grayscale(0%);
         }
 
         /* --- FOOTER --- */
         footer {
-            padding: 80px 5%;
+            padding: 100px 5%;
             text-align: center;
             border-top: 1px solid #333;
+            background-color: #000;
         }
         .contact-btn {
             font-family: 'Oswald', sans-serif;
@@ -122,6 +125,7 @@
             border: 2px solid #fff;
             padding: 20px 40px;
             transition: 0.3s;
+            display: inline-block;
         }
         .contact-btn:hover {
             background-color: #fff;
@@ -130,15 +134,16 @@
 
         /* MOBILE TWEAKS */
         @media (max-width: 768px) {
-            h1 { font-size: 18vw; } /* Even bigger on phone */
-            .card { height: 300px; }
+            h1 { font-size: 18vw; }
+            .card { height: 350px; }
+            .section-header { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">MARK DSOUZA
+        <div class="logo">MARK DSOUZA</div>
     </nav>
 
     <header class="hero">
@@ -166,13 +171,9 @@
     </section>
 
     <footer>
-        <p style="margin-bottom: 30px; color: #888;">READY TO CREATE?</p>
+        <p style="margin-bottom: 30px; color: #888; letter-spacing: 2px;">READY TO CREATE?</p>
         <a href="mailto:email@example.com" class="contact-btn">GET IN TOUCH</a>
     </footer>
 
 </body>
-
 </html>
-
-
-
