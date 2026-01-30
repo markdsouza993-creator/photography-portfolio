@@ -13,8 +13,10 @@
         body {
             background-color: #050505;
             color: #fff;
-            font-family: 'Inter', sans-serif; /* Cleaner reading font */
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            opacity: 0; /* Starts hidden, fades in via script */
+            transition: opacity 0.5s ease;
         }
 
         /* --- ANIMATIONS (Fade Up) --- */
@@ -38,7 +40,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            mix-blend-mode: difference; /* Makes logo visible on white or black */
+            mix-blend-mode: difference;
         }
         
         .logo {
@@ -62,7 +64,7 @@
             background-color: #fff;
             transition: 0.3s;
         }
-        .hamburger:hover .line { width: 45px; } /* Hover effect */
+        .hamburger:hover .line { width: 45px; }
 
         /* --- MENU OVERLAY --- */
         .menu-overlay {
@@ -108,7 +110,7 @@
         .menu-contact a { color: #fff; text-decoration: none; border-bottom: 1px solid #333; transition: 0.3s; }
         .menu-contact a:hover { border-color: #fff; }
 
-        /* --- HERO SECTION (Parallax) --- */
+        /* --- HERO SECTION --- */
         .hero {
             height: 100vh;
             width: 100%;
@@ -116,7 +118,7 @@
             background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('background.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* PARALLAX EFFECT */
+            background-attachment: fixed; /* Parallax */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -165,7 +167,6 @@
         .highlight {
             font-style: italic;
             color: #fff;
-            position: relative;
         }
 
         /* --- SECTION HEADERS --- */
@@ -213,7 +214,7 @@
             color: #fff;
             z-index: 2;
             transition: 0.3s;
-            mix-blend-mode: overlay; /* Cool blend effect */
+            mix-blend-mode: overlay;
         }
 
         .collection-item:hover img {
@@ -237,7 +238,6 @@
         .card {
             height: 450px;
             overflow: hidden;
-            position: relative;
         }
 
         .card img {
@@ -263,7 +263,7 @@
 
         .contact-headline {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem; /* Big editorial text */
+            font-size: 4rem;
             margin-bottom: 80px;
             color: #fff;
             font-style: italic;
@@ -311,7 +311,6 @@
         .contact-link:hover { color: #fff; }
         .contact-link:hover::after { width: 100%; }
 
-        /* Social Button */
         .social-btn {
             font-family: 'Oswald', sans-serif;
             font-size: 1.2rem;
@@ -330,7 +329,7 @@
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
             h1 { font-size: 15vw; }
-            .hero { background-attachment: scroll; } /* Disable parallax on tablet for performance */
+            .hero { background-attachment: scroll; }
             .grid { grid-template-columns: repeat(2, 1fr); }
         }
 
@@ -433,12 +432,29 @@
     </section>
 
     <script>
-        // TOGGLE MENU
+        // --- 1. FORCE SCROLL TO TOP ON LOAD ---
+        // This stops the website from jumping to contacts automatically
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        } else {
+            window.onbeforeunload = function () {
+                window.scrollTo(0, 0);
+            }
+        }
+        
+        window.onload = function() {
+            setTimeout(function() {
+                window.scrollTo(0, 0);
+                document.body.style.opacity = 1; // Fade in the site once ready
+            }, 10);
+        };
+
+        // --- 2. TOGGLE MENU ---
         function toggleMenu() {
             document.getElementById('menu').classList.toggle('active');
         }
 
-        // SCROLL REVEAL ANIMATION
+        // --- 3. SCROLL REVEAL ANIMATION ---
         window.addEventListener('scroll', reveal);
         function reveal() {
             var reveals = document.querySelectorAll('.reveal');
@@ -451,7 +467,7 @@
                 }
             }
         }
-        // Trigger once on load
+        // Run once on start
         reveal();
     </script>
 
