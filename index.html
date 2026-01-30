@@ -66,7 +66,7 @@
         }
         .hamburger:hover .line { width: 45px; }
 
-        /* --- MENU OVERLAY --- */
+        /* --- MENU OVERLAY (UPDATED LAYOUT) --- */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -75,46 +75,91 @@
             height: 100vh;
             background-color: #0a0a0a;
             display: flex;
-            flex-direction: column;
+            /* Changed to row to allow split screen */
+            flex-direction: row; 
             justify-content: center;
             align-items: center;
             transform: translateY(-100%);
             transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1);
             z-index: 99;
+            padding: 0 10%;
         }
         .menu-overlay.active { transform: translateY(0); }
 
-        .menu-overlay a.menu-link {
+        /* Menu Left Side (Links) */
+        .menu-links {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            border-right: 1px solid #222; /* Divider line */
+            padding-right: 50px;
+        }
+
+        .menu-links a {
             font-family: 'Oswald', sans-serif;
-            font-size: 3.5rem;
+            font-size: 4rem;
             color: #333;
             text-decoration: none;
             margin: 5px 0;
             text-transform: uppercase;
             transition: 0.4s;
-            position: relative;
+            line-height: 1;
         }
-        .menu-overlay a.menu-link:hover {
+        .menu-links a:hover {
             color: #fff;
-            -webkit-text-stroke: 0px;
+            margin-left: 20px; /* Slide effect */
         }
-        
-        .menu-contact {
-            margin-top: 60px;
-            text-align: center;
+
+        /* Menu Right Side (YOUR BIO) */
+        .menu-about {
+            flex: 1;
+            padding-left: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
             color: #666;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .about-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: #ccc;
+            max-width: 500px;
+        }
+
+        .about-camera {
+            margin-top: 30px;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
+            color: #555;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+        }
+        
+        .menu-contact-info {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #666;
             letter-spacing: 1px;
         }
-        .menu-contact a { color: #fff; text-decoration: none; border-bottom: 1px solid #333; transition: 0.3s; }
-        .menu-contact a:hover { border-color: #fff; }
+        .menu-contact-info a { color: #fff; text-decoration: none; border-bottom: 1px solid #333; transition: 0.3s; }
+        .menu-contact-info a:hover { border-color: #fff; }
 
         /* --- HERO SECTION --- */
         .hero {
             height: 100vh;
             width: 100%;
-            /* Make sure 'background.jpg' is in your folder */
             background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('background.jpg');
             background-size: cover;
             background-position: center;
@@ -148,33 +193,12 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* --- BIO SECTION --- */
-        .bio-section {
-            padding: 120px 10%;
-            background-color: #050505;
-            text-align: center;
-        }
-
-        .bio-text {
-            font-family: 'Playfair Display', serif; 
-            font-size: 2.2rem;
-            line-height: 1.4;
-            color: #888;
-            max-width: 950px;
-            margin: 0 auto;
-        }
-
-        .highlight {
-            font-style: italic;
-            color: #fff;
-        }
-
         /* --- SECTION HEADERS --- */
         .section-header {
             font-family: 'Oswald', sans-serif;
             font-size: 1rem;
             letter-spacing: 4px;
-            margin: 60px 5% 30px 5%;
+            margin: 80px 5% 30px 5%;
             color: #444;
             border-top: 1px solid #222;
             padding-top: 20px;
@@ -226,19 +250,17 @@
             mix-blend-mode: normal;
         }
 
-        /* --- GALLERY GRID (NO CROP) --- */
+        /* --- GALLERY GRID --- */
         .gallery-section { padding: 0 5% 100px 5%; }
         
         .grid {
             display: grid;
-            /* 3 Columns */
             grid-template-columns: repeat(3, 1fr); 
             gap: 20px;
-            align-items: start; /* Prevents stretching to match row height */
+            align-items: start;
         }
 
         .card {
-            /* Changed from fixed height to auto so images aren't cropped */
             height: auto; 
             overflow: hidden;
             margin-bottom: 20px;
@@ -246,7 +268,6 @@
 
         .card img {
             width: 100%;
-            /* Changed to auto so it keeps original shape */
             height: auto; 
             display: block;
             transition: 0.6s ease;
@@ -254,7 +275,7 @@
         }
         
         .card:hover img {
-            transform: scale(1.02); /* Slight zoom */
+            transform: scale(1.02);
             filter: grayscale(0%) brightness(100%);
         }
 
@@ -336,13 +357,16 @@
             h1 { font-size: 15vw; }
             .hero { background-attachment: scroll; }
             .grid { grid-template-columns: repeat(2, 1fr); } 
-            .collection-item { height: 400px; }
+            
+            /* Tablet Menu Adjust */
+            .menu-overlay { flex-direction: column; padding: 40px; align-items: flex-start; }
+            .menu-links { border-right: none; border-bottom: 1px solid #222; padding-right: 0; padding-bottom: 30px; margin-bottom: 30px; width: 100%; align-items: flex-start;}
+            .menu-about { padding-left: 0; }
         }
 
         @media (max-width: 768px) {
             h1 { font-size: 18vw; }
             .subtitle { font-size: 0.8rem; letter-spacing: 3px; }
-            .bio-text { font-size: 1.5rem; padding: 0 10px; }
             .contact-headline { font-size: 2.5rem; }
             
             .collections-section { flex-direction: column; }
@@ -354,6 +378,10 @@
             
             .contact-grid { flex-direction: column; gap: 40px; text-align: center; }
             .contact-box { text-align: center; }
+
+            /* Mobile Menu Adjust */
+            .menu-links a { font-size: 3rem; }
+            .about-text { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -369,28 +397,36 @@
     </nav>
 
     <div class="menu-overlay" id="menu">
-        <a href="#" class="menu-link" onclick="toggleMenu()">Home</a>
-        <a href="#collections" class="menu-link" onclick="toggleMenu()">Collections</a>
-        <a href="#contact" class="menu-link" onclick="toggleMenu()">Contact</a>
-        <div class="menu-contact">
-            <p>MARK DSOUZA &bull; MUMBAI</p>
-            <br>
-            <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank">@urbngraphy</a>
+        
+        <div class="menu-links">
+            <a href="#" onclick="toggleMenu()">Home</a>
+            <a href="#collections" onclick="toggleMenu()">Works</a>
+            <a href="#contact" onclick="toggleMenu()">Contact</a>
+            
+            <div class="menu-contact-info">
+                <br><br>
+                <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank">@urbngraphy</a>
+            </div>
         </div>
+
+        <div class="menu-about">
+            <div class="about-title">About the Artist</div>
+            <p class="about-text">
+                Based in <span style="color:#fff;">Malad, Mumbai</span>, my journey is defined by a late start but a rapid obsession. I’ve always watched the world with a photographer's eye, but only recently picked up the camera to prove it. 
+                <br><br>
+                I believe you don't need the most expensive gear to tell a story. I am a student of the streets, constantly learning to freeze time—turning the chaos of Mumbai into cinematic silence.
+            </p>
+            <div class="about-camera">
+                GEAR: SONY A6400 + KIT LENS
+            </div>
+        </div>
+
     </div>
 
     <header class="hero">
         <h1 class="reveal">MUMBAI<br>VISUALS</h1>
         <div class="subtitle reveal">Photographer & Filmmaker</div>
     </header>
-
-    <section class="bio-section">
-        <p class="bio-text reveal">
-            I am a visual artist based in <span class="highlight">Mumbai</span>, obsessed with the contrast between chaotic streets and silent moments.
-            <br><br>
-            I don't just take photos; I create <span class="highlight">cinematic moments</span> from everyday life.
-        </p>
-    </section>
 
     <div id="collections" class="section-header reveal">Selected Works</div>
     <section class="collections-section">
