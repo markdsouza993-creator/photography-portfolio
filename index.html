@@ -6,7 +6,9 @@
     <title>Mark Dsouza | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
+        /* --- RESET & BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; } /* Makes the "jump" to gallery smooth */
         
         body {
             background-color: #000;
@@ -15,7 +17,7 @@
             line-height: 1.6;
         }
 
-        /* --- NAV --- */
+        /* --- NAVIGATION --- */
         nav {
             position: fixed;
             top: 0;
@@ -23,20 +25,33 @@
             padding: 20px 5%;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
         }
         .logo {
             font-family: 'Oswald', sans-serif;
             border: 2px solid #fff;
             padding: 5px 15px;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            margin-left: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #888; }
 
         /* --- HERO --- */
         .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('background.jpg') center/cover no-repeat;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('background.jpg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -45,55 +60,63 @@
         }
         h1 { font-family: 'Oswald', sans-serif; font-size: 10vw; text-transform: uppercase; line-height: 1; }
 
-        /* --- INTRODUCTION --- */
+        /* --- INTRODUCTION (BLANK FOR NOW) --- */
         .intro-section {
-            padding: 100px 10%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
+            padding: 120px 10%;
+            text-align: center;
             background: #050505;
         }
-        .intro-text h2 { font-family: 'Oswald', sans-serif; font-size: 3rem; margin-bottom: 20px; color: #fff; }
-        .intro-text p { font-size: 1.1rem; color: #ccc; margin-bottom: 20px; }
+        .intro-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .intro-content h2 { 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 3rem; 
+            margin-bottom: 30px; 
+            letter-spacing: 3px;
+        }
+        .placeholder-box {
+            border: 1px dashed #444;
+            padding: 40px;
+            color: #666;
+        }
 
         /* --- GALLERY --- */
-        .gallery-section { padding: 80px 5%; }
+        .gallery-section { 
+            padding: 100px 5%; 
+            background-color: #000;
+        }
         .section-header {
             font-family: 'Oswald', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 40px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
         }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
+            gap: 20px;
         }
-        .card { height: 400px; overflow: hidden; position: relative; background: #111; }
+        .card { 
+            height: 450px; 
+            overflow: hidden; 
+            background: #111; 
+        }
         .card img { 
             width: 100%; height: 100%; object-fit: cover; 
-            filter: grayscale(100%); transition: 0.6s; 
+            filter: grayscale(100%); transition: 0.8s ease; 
         }
-        .card:hover img { filter: grayscale(0%); transform: scale(1.05); }
+        .card:hover img { filter: grayscale(0%); transform: scale(1.1); }
 
         /* --- FOOTER --- */
         footer { padding: 100px 5%; text-align: center; border-top: 1px solid #222; }
-        .contact-btn {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: #fff;
-            border: 2px solid #fff;
-            padding: 15px 30px;
-            transition: 0.3s;
-        }
-        .contact-btn:hover { background: #fff; color: #000; }
-
+        
         @media (max-width: 768px) {
-            .intro-section { grid-template-columns: 1fr; text-align: center; }
             h1 { font-size: 15vw; }
+            .nav-links { display: none; } /* Simplifies mobile view */
         }
     </style>
 </head>
@@ -101,39 +124,39 @@
 
     <nav>
         <div class="logo">MARK DSOUZA</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#intro">About</a>
+            <a href="#gallery">Gallery</a> </div>
     </nav>
 
     <header class="hero">
-        <h1>MUMBAI<br>STREETS</h1>
+        <h1>MUMBAI<br>VISUALS</h1>
     </header>
 
-    <section class="intro-section">
-        <div class="intro-text">
-            <h2>THE VISION</h2>
-            <p>I am a Mumbai-based photographer capturing the raw, cinematic pulse of the city. From the hazy mornings at the docks to the neon glow of the suburbs, my work focuses on the intersection of human stories and urban landscapes.</p>
-            <p>Specializing in street, astrophotography, and noir aesthetics.</p>
-        </div>
-        <div class="intro-image">
-            <img src="background.jpg" style="width: 100%; filter: sepia(0.2) contrast(1.2);">
+    <section id="intro" class="intro-section">
+        <div class="intro-content">
+            <h2>ABOUT ME</h2>
+            <div class="placeholder-box">
+                <p>[ Your introduction will go here. Just let me know what you want to say and I will format it for you! ]</p>
+            </div>
         </div>
     </section>
 
-    <section class="gallery-section">
+    <section id="gallery" class="gallery-section">
         <div class="section-header">The Gallery</div>
         <div class="grid">
-            <div class="card">
-                <img src="latest-shot.jpg" alt="Your New Latest Image">
-            </div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800" alt="Work"></div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800" alt="Work"></div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1504893524553-bfa5438b71a3?auto=format&fit=crop&w=800" alt="Work"></div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&w=800" alt="Work"></div>
-            <div class="card"><img src="https://images.unsplash.com/photo-1493246507139-91e8bef99c1e?auto=format&fit=crop&w=800" alt="Work"></div>
+            <div class="card"><img src="latest-shot.jpg" alt="Latest Work"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=800" alt="Work"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800" alt="Work"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1504893524553-bfa5438b71a3?w=800" alt="Work"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?w=800" alt="Work"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1493246507139-91e8bef99c1e?w=800" alt="Work"></div>
         </div>
     </section>
 
     <footer>
-        <a href="mailto:your-email@gmail.com" class="contact-btn">GET IN TOUCH</a>
+        <p style="color: #444; letter-spacing: 2px;">© 2026 MARK DSOUZA</p>
     </footer>
 
 </body>
