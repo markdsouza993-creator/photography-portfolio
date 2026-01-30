@@ -15,11 +15,11 @@
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            opacity: 0; /* Starts hidden, fades in via script */
+            opacity: 0;
             transition: opacity 0.5s ease;
         }
 
-        /* --- ANIMATIONS (Fade Up) --- */
+        /* --- ANIMATIONS --- */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -114,11 +114,11 @@
         .hero {
             height: 100vh;
             width: 100%;
-            /* REPLACE 'background.jpg' WITH YOUR PHOTO */
+            /* Make sure 'background.jpg' is in your folder */
             background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('background.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Parallax */
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -226,12 +226,13 @@
             mix-blend-mode: normal;
         }
 
-        /* --- GALLERY GRID --- */
+        /* --- GALLERY GRID (Updated for 6 Photos) --- */
         .gallery-section { padding: 0 5% 100px 5%; }
         
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); 
+            /* Changed to 3 columns for perfect symmetry with 6 photos */
+            grid-template-columns: repeat(3, 1fr); 
             gap: 15px;
         }
 
@@ -330,7 +331,8 @@
         @media (max-width: 1024px) {
             h1 { font-size: 15vw; }
             .hero { background-attachment: scroll; }
-            .grid { grid-template-columns: repeat(2, 1fr); }
+            .grid { grid-template-columns: repeat(2, 1fr); } /* 2 columns on tablet */
+            .collection-item { height: 400px; }
         }
 
         @media (max-width: 768px) {
@@ -343,7 +345,7 @@
             .collection-item { height: 350px; }
             .collection-title { font-size: 2rem; bottom: 20px; left: 20px; }
             
-            .grid { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: 1fr; } /* 1 column on phone */
             .card { height: 300px; }
             
             .contact-grid { flex-direction: column; gap: 40px; text-align: center; }
@@ -396,15 +398,21 @@
             <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" alt="Portraits">
             <div class="collection-title">Portrait</div>
         </div>
+        <div class="collection-item reveal">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=800&q=80" alt="Automotive">
+            <div class="collection-title">Automotive</div>
+        </div>
     </section>
 
     <div class="section-header reveal">Latest Shots</div>
     <section class="gallery-section">
         <div class="grid">
-            <div class="card reveal"><img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
-            <div class="card reveal"><img src="https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
-            <div class="card reveal"><img src="https://images.unsplash.com/photo-1504893524553-bfa5438b71a3?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
-            <div class="card reveal"><img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&w=800&q=80" alt="Img"></div>
+            <div class="card reveal"><img src="DSC02090.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="DSC02058.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="DSC02010 (1).jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="DSC01974.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="DSC01911.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="DSC01607.jpg" alt="Latest Work"></div>
         </div>
     </section>
 
@@ -433,7 +441,6 @@
 
     <script>
         // --- 1. FORCE SCROLL TO TOP ON LOAD ---
-        // This stops the website from jumping to contacts automatically
         if (history.scrollRestoration) {
             history.scrollRestoration = 'manual';
         } else {
@@ -445,7 +452,7 @@
         window.onload = function() {
             setTimeout(function() {
                 window.scrollTo(0, 0);
-                document.body.style.opacity = 1; // Fade in the site once ready
+                document.body.style.opacity = 1; 
             }, 10);
         };
 
@@ -467,7 +474,6 @@
                 }
             }
         }
-        // Run once on start
         reveal();
     </script>
 
