@@ -46,15 +46,16 @@
         }
 
         /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            /* Update 'background.jpg' to 'images/background.jpg' if you moved it */
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('images/background.jpg') center/cover no-repeat;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+     .hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), 
+                url('images/background.jpg') center/cover no-repeat;
+    background-attachment: fixed; /* This creates the parallax effect */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
         }
         h1 { font-family: 'Oswald', sans-serif; font-size: 10vw; text-transform: uppercase; line-height: 1; }
 
@@ -176,4 +177,5 @@
     </footer>
 
 </body>
+
 </html>
