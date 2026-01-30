@@ -66,7 +66,7 @@
         }
         .hamburger:hover .line { width: 45px; }
 
-        /* --- MENU OVERLAY (UPDATED LAYOUT) --- */
+        /* --- MENU OVERLAY --- */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -75,7 +75,6 @@
             height: 100vh;
             background-color: #0a0a0a;
             display: flex;
-            /* Changed to row to allow split screen */
             flex-direction: row; 
             justify-content: center;
             align-items: center;
@@ -86,14 +85,13 @@
         }
         .menu-overlay.active { transform: translateY(0); }
 
-        /* Menu Left Side (Links) */
         .menu-links {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            border-right: 1px solid #222; /* Divider line */
+            border-right: 1px solid #222;
             padding-right: 50px;
         }
 
@@ -109,10 +107,9 @@
         }
         .menu-links a:hover {
             color: #fff;
-            margin-left: 20px; /* Slide effect */
+            margin-left: 20px;
         }
 
-        /* Menu Right Side (YOUR BIO) */
         .menu-about {
             flex: 1;
             padding-left: 50px;
@@ -205,15 +202,17 @@
             text-transform: uppercase;
         }
 
-        /* --- COLLECTIONS --- */
+        /* --- COLLECTIONS (UPDATED GRID) --- */
         .collections-section {
             padding: 0 5% 80px 5%;
             display: flex;
-            gap: 30px;
+            flex-wrap: wrap; /* Allows wrapping on tablet */
+            gap: 20px;
         }
 
         .collection-item {
             flex: 1;
+            min-width: 22%; /* 4 Items across on PC */
             height: 600px;
             position: relative;
             overflow: hidden;
@@ -231,9 +230,9 @@
         .collection-title {
             position: absolute;
             bottom: 40px;
-            left: 40px;
+            left: 30px;
             font-family: 'Oswald', sans-serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             text-transform: uppercase;
             color: #fff;
             z-index: 2;
@@ -358,7 +357,9 @@
             .hero { background-attachment: scroll; }
             .grid { grid-template-columns: repeat(2, 1fr); } 
             
-            /* Tablet Menu Adjust */
+            /* Tablet: Make collections 2x2 */
+            .collection-item { min-width: 45%; height: 500px; }
+
             .menu-overlay { flex-direction: column; padding: 40px; align-items: flex-start; }
             .menu-links { border-right: none; border-bottom: 1px solid #222; padding-right: 0; padding-bottom: 30px; margin-bottom: 30px; width: 100%; align-items: flex-start;}
             .menu-about { padding-left: 0; }
@@ -369,8 +370,9 @@
             .subtitle { font-size: 0.8rem; letter-spacing: 3px; }
             .contact-headline { font-size: 2.5rem; }
             
+            /* Phone: Stack collections */
             .collections-section { flex-direction: column; }
-            .collection-item { height: 350px; }
+            .collection-item { width: 100%; height: 350px; }
             .collection-title { font-size: 2rem; bottom: 20px; left: 20px; }
             
             .grid { grid-template-columns: 1fr; } 
@@ -379,7 +381,6 @@
             .contact-grid { flex-direction: column; gap: 40px; text-align: center; }
             .contact-box { text-align: center; }
 
-            /* Mobile Menu Adjust */
             .menu-links a { font-size: 3rem; }
             .about-text { font-size: 1.1rem; }
         }
@@ -397,7 +398,6 @@
     </nav>
 
     <div class="menu-overlay" id="menu">
-        
         <div class="menu-links">
             <a href="#" onclick="toggleMenu()">Home</a>
             <a href="#collections" onclick="toggleMenu()">Works</a>
@@ -420,7 +420,6 @@
                 GEAR: SONY A6400 + KIT LENS
             </div>
         </div>
-
     </div>
 
     <header class="hero">
@@ -437,6 +436,14 @@
         <div class="collection-item reveal">
             <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" alt="Portraits">
             <div class="collection-title">Portrait</div>
+        </div>
+        <div class="collection-item reveal">
+            <img src="https://images.unsplash.com/photo-1599553765874-325373323067?auto=format&fit=crop&w=800&q=80" alt="Ganpati">
+            <div class="collection-title">Ganpati</div>
+        </div>
+        <div class="collection-item reveal">
+            <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445?auto=format&fit=crop&w=800&q=80" alt="Walkeshwar">
+            <div class="collection-title">Walkeshwar</div>
         </div>
     </section>
 
