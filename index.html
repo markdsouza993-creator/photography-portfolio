@@ -202,21 +202,35 @@
             text-transform: uppercase;
         }
 
-        /* --- COLLECTIONS (UPDATED GRID) --- */
+        /* --- COLLECTIONS (UPDATED FOR VISIBILITY & LINKS) --- */
         .collections-section {
             padding: 0 5% 80px 5%;
             display: flex;
-            flex-wrap: wrap; /* Allows wrapping on tablet */
+            flex-wrap: wrap;
             gap: 20px;
         }
 
         .collection-item {
             flex: 1;
-            min-width: 22%; /* 4 Items across on PC */
+            min-width: 22%;
             height: 600px;
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            display: block; /* Important for links */
+        }
+
+        /* Shadow Gradient to make text readable */
+        .collection-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            z-index: 1;
+            transition: 0.3s;
         }
 
         .collection-item img {
@@ -224,7 +238,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.8s ease;
-            filter: brightness(60%);
+            filter: brightness(80%); /* Made image slightly darker so text pops */
         }
 
         .collection-title {
@@ -234,19 +248,20 @@
             font-family: 'Oswald', sans-serif;
             font-size: 2.5rem;
             text-transform: uppercase;
-            color: #fff;
+            color: #fff; /* Pure White */
             z-index: 2;
             transition: 0.3s;
-            mix-blend-mode: overlay;
+            text-shadow: 0 5px 15px rgba(0,0,0,1); /* Strong Shadow */
+            letter-spacing: 2px;
         }
 
         .collection-item:hover img {
             transform: scale(1.05);
-            filter: brightness(40%);
+            filter: brightness(60%);
         }
         .collection-item:hover .collection-title {
             transform: translateX(10px);
-            mix-blend-mode: normal;
+            color: #fff;
         }
 
         /* --- GALLERY GRID --- */
@@ -357,7 +372,6 @@
             .hero { background-attachment: scroll; }
             .grid { grid-template-columns: repeat(2, 1fr); } 
             
-            /* Tablet: Make collections 2x2 */
             .collection-item { min-width: 45%; height: 500px; }
 
             .menu-overlay { flex-direction: column; padding: 40px; align-items: flex-start; }
@@ -370,7 +384,6 @@
             .subtitle { font-size: 0.8rem; letter-spacing: 3px; }
             .contact-headline { font-size: 2.5rem; }
             
-            /* Phone: Stack collections */
             .collections-section { flex-direction: column; }
             .collection-item { width: 100%; height: 350px; }
             .collection-title { font-size: 2rem; bottom: 20px; left: 20px; }
@@ -429,22 +442,27 @@
 
     <div id="collections" class="section-header reveal">Selected Works</div>
     <section class="collections-section">
-        <div class="collection-item reveal">
+        
+        <a href="street.html" target="_blank" class="collection-item reveal">
             <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=800&q=80" alt="Street">
             <div class="collection-title">Street</div>
-        </div>
-        <div class="collection-item reveal">
+        </a>
+        
+        <a href="portrait.html" target="_blank" class="collection-item reveal">
             <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80" alt="Portraits">
             <div class="collection-title">Portrait</div>
-        </div>
-        <div class="collection-item reveal">
+        </a>
+        
+        <a href="ganpati.html" target="_blank" class="collection-item reveal">
             <img src="https://images.unsplash.com/photo-1599553765874-325373323067?auto=format&fit=crop&w=800&q=80" alt="Ganpati">
             <div class="collection-title">Ganpati</div>
-        </div>
-        <div class="collection-item reveal">
+        </a>
+        
+        <a href="walkeshwar.html" target="_blank" class="collection-item reveal">
             <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445?auto=format&fit=crop&w=800&q=80" alt="Walkeshwar">
             <div class="collection-title">Walkeshwar</div>
-        </div>
+        </a>
+
     </section>
 
     <div class="section-header reveal">Latest Shots</div>
