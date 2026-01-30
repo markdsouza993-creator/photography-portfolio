@@ -7,9 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- BRAND COLORS --- */
         :root {
-            --accent-color: #FFD700; /* Gold Accent */
+            --accent-color: #FFD700; 
             --bg-dark: #000000;
             --bg-soft: #0a0a0a;
             --text-light: #ffffff;
@@ -25,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION --- */
         nav {
             position: absolute;
             top: 0;
@@ -38,19 +36,20 @@
         }
         .logo {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border: 2px solid var(--accent-color);
+            border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 5px 15px;
+            padding: 5px 12px;
+            background: rgba(0,0,0,0.5);
         }
 
-        /* --- HERO SECTION --- */
+        /* --- UPDATED HERO WITH YOUR IMAGE --- */
         .hero {
             height: 100vh;
             width: 100%;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=1920&q=80');
+            background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('http://googleusercontent.com/image_generation_content/0');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -62,46 +61,51 @@
 
         h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: 10vw;
+            font-size: 9vw;
             line-height: 1;
             text-transform: uppercase;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            color: #fff;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
         }
-        h1 span { color: var(--accent-color); }
+
+        .subtitle-box {
+            border: 2px solid var(--accent-color);
+            padding: 10px 30px;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+        }
 
         .subtitle {
-            font-size: 1.2rem;
-            letter-spacing: 5px;
+            font-size: 1rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            background-color: var(--accent-color);
-            color: #000;
-            padding: 10px 25px;
+            color: var(--accent-color);
             font-weight: 700;
         }
 
-        /* --- GALLERY GRID --- */
+        /* --- GALLERY --- */
         .gallery-section {
             padding: 80px 5%;
             background-color: var(--bg-soft);
         }
         .section-header {
             font-family: 'Oswald', sans-serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 40px;
-            border-left: 5px solid var(--accent-color);
-            padding-left: 20px;
+            color: var(--accent-color);
+            text-transform: uppercase;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
+            gap: 20px;
         }
 
         .card {
-            height: 500px;
-            position: relative;
+            height: 450px;
             overflow: hidden;
             border: 1px solid #222;
         }
@@ -110,39 +114,28 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-            filter: grayscale(100%) contrast(1.2);
+            filter: grayscale(100%);
+            transition: 0.5s;
         }
         
         .card:hover img {
-            transform: scale(1.05);
-            filter: grayscale(0%) contrast(1);
+            filter: grayscale(0%);
+            transform: scale(1.03);
         }
 
-        /* --- NEW SOCIAL FOOTER --- */
+        /* --- SOCIAL FOOTER --- */
         footer {
-            padding: 100px 5% 50px;
+            padding: 80px 5% 40px;
             background-color: var(--bg-dark);
             text-align: center;
-        }
-
-        .footer-content h2 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .footer-content p {
-            color: var(--text-dim);
-            margin-bottom: 30px;
-            font-size: 1.1rem;
+            border-top: 1px solid #1a1a1a;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 50px;
+            gap: 40px;
+            margin: 40px 0;
         }
 
         .social-item {
@@ -156,38 +149,34 @@
         }
 
         .social-item i {
-            font-size: 2rem;
+            font-size: 1.5rem;
             padding: 20px;
-            border: 1px solid #333;
+            border: 1px solid var(--accent-color);
             border-radius: 50%;
-            transition: 0.3s;
+            color: var(--accent-color);
         }
 
         .social-item:hover i {
             background-color: var(--accent-color);
             color: #000;
-            border-color: var(--accent-color);
-            transform: translateY(-5px);
         }
 
         .social-item span {
-            font-size: 0.8rem;
-            text-transform: uppercase;
+            font-size: 0.7rem;
             letter-spacing: 2px;
+            text-transform: uppercase;
             color: var(--text-dim);
         }
 
         .copyright {
-            margin-top: 50px;
-            font-size: 0.8rem;
-            color: #444;
-            letter-spacing: 1px;
+            font-size: 0.7rem;
+            color: #333;
+            margin-top: 40px;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 15vw; }
+            h1 { font-size: 14vw; }
             .grid { grid-template-columns: 1fr; }
-            .social-links { gap: 15px; }
         }
     </style>
 </head>
@@ -198,51 +187,38 @@
     </nav>
 
     <header class="hero">
-        <h1>MUMBAI<span>.</span><br>VISUALS</h1>
-        <div class="subtitle">Photography & Cinematography</div>
+        <h1>MUMBAI. VISUALS</h1>
+        <div class="subtitle-box">
+            <div class="subtitle">Photography & Cinematography</div>
+        </div>
     </header>
 
     <section class="gallery-section">
-        <div class="section-header">PORTFOLIO</div>
-        
+        <div class="section-header">LATEST WORK</div>
         <div class="grid">
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1570160897040-30430ade2211?auto=format&fit=crop&w=800&q=80" alt="Street">
-            </div>
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1532976229418-5da206a4c2c9?auto=format&fit=crop&w=800&q=80" alt="Astro">
-            </div>
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=800&q=80" alt="Star Trails">
-            </div>
-             <div class="card">
-                <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=800&q=80" alt="Urban">
-            </div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1570160897040-30430ade2211?auto=format&fit=crop&w=800&q=80" alt="Work 1"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1532976229418-5da206a4c2c9?auto=format&fit=crop&w=800&q=80" alt="Work 2"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?auto=format&fit=crop&w=800&q=80" alt="Work 3"></div>
+            <div class="card"><img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=800&q=80" alt="Work 4"></div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <h2>LET'S CONNECT</h2>
-            <p>Available for street shoots, star trail sessions, and creative collaborations.</p>
-            
-            <div class="social-links">
-                <a href="https://www.instagram.com/urbngraphy/" target="_blank" class="social-item">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
-                </a>
-                <a href="tel:+919920536837" class="social-item">
-                    <i class="fas fa-phone"></i>
-                    <span>9920536837</span>
-                </a>
-                <a href="mailto:contact@urbngraphy.com" class="social-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>Email</span>
-                </a>
-            </div>
+        <div class="social-links">
+            <a href="https://www.instagram.com/urbngraphy/" target="_blank" class="social-item">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="tel:+919920536837" class="social-item">
+                <i class="fas fa-phone"></i>
+                <span>9920536837</span>
+            </a>
+            <a href="mailto:contact@urbngraphy.com" class="social-item">
+                <i class="fas fa-envelope"></i>
+                <span>Email</span>
+            </a>
         </div>
-
-        <p class="copyright">&copy; 2026 MARK DSOUZA | ALL RIGHTS RESERVED</p>
+        <p class="copyright">© 2026 MARK DSOUZA</p>
     </footer>
 
 </body>
