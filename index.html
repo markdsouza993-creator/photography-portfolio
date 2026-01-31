@@ -191,14 +191,12 @@
     <div id="walkeshwar-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('walkeshwar-gallery')">&times;</span><div class="modal-content"><h2>Walkeshwar</h2><div id="walkeshwar-container">Loading...</div></div></div>
 
     <script>
-      <script>
         // --- 1. CONFIGURATION ---
-        // UPDATE THIS LINE BELOW:
+        // CORRECTED USERNAME FROM YOUR SCREENSHOT:
         const githubUsername = "markdsouza993-creator"; 
         
         const githubRepo = "photography-portfolio"; 
         const folderNameLatest = "latestimages"; 
-        // ------------------------
         // ------------------------
 
         // 2. FETCH IMAGES FROM GITHUB (For Galleries)
@@ -212,13 +210,12 @@
                 // ERROR HANDLING
                 if (!response.ok) {
                     console.error(`Error fetching ${folderName}:`, response.status, response.statusText);
-                    container.innerHTML = `<div style="color:red">Error: Folder '${folderName}' not found (404).<br>Check folder name on GitHub.</div>`;
+                    container.innerHTML = `<div style="color:red">Error: Folder '${folderName}' not found (404).<br>Check GitHub folder name.</div>`;
                     return;
                 }
 
                 const data = await response.json();
 
-                // SAFEGUARD: Ensure data is actually a list of files
                 if (!Array.isArray(data)) {
                     console.error("Data is not an array:", data);
                     return;
@@ -227,7 +224,7 @@
                 const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
                 images.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
 
-                container.innerHTML = ""; // Clear loading text
+                container.innerHTML = ""; 
 
                 let filesToShow = images;
                 if (limit > 0) filesToShow = images.slice(offset, offset + limit);
@@ -252,7 +249,6 @@
 
         // 3. LOAD HOME PAGE CONTENT (Latest & Archive)
         async function loadLatestAndArchive() {
-            // Using the variable from top to ensure consistency
             const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderNameLatest}`;
             const latestContainer = document.getElementById('latest-grid');
             const archiveContainer = document.getElementById('archive-grid');
@@ -260,16 +256,15 @@
             try {
                 const response = await fetch(apiUrl);
                 
-                // ERROR HANDLING (This fixes the 'filter' crash)
                 if (!response.ok) {
                     console.error(`Error fetching ${folderNameLatest}:`, response.status);
-                    latestContainer.innerHTML = `<div style="color:red; padding:20px;">Error 404: GitHub cannot find the folder <b>'${folderNameLatest}'</b>.<br>Please check capitalization.</div>`;
+                    latestContainer.innerHTML = `<div style="color:red; padding:20px;">Error 404: Cannot find folder <b>'${folderNameLatest}'</b> in repo <b>'${githubRepo}'</b> for user <b>'${githubUsername}'</b>.</div>`;
                     return;
                 }
 
                 const data = await response.json();
 
-                if (!Array.isArray(data)) return; // Stop if not a list
+                if (!Array.isArray(data)) return; 
 
                 const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
                 images.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
@@ -277,11 +272,11 @@
                 latestContainer.innerHTML = "";
                 archiveContainer.innerHTML = "";
 
-                // Top 6 -> Latest
                 if (images.length === 0) {
                     latestContainer.innerHTML = "<div style='padding:20px;'>No images found in folder.</div>";
                 }
 
+                // Top 6 -> Latest
                 images.slice(0, 6).forEach(file => {
                     latestContainer.innerHTML += `<div class="card reveal active"><img src="${file.download_url}" alt="${file.name}"></div>`;
                 });
@@ -301,7 +296,7 @@
             
             const containerId = modalId.replace('gallery', 'container');
             const container = document.getElementById(containerId);
-            // Reload every time to be safe, or check if 'Loading...'
+            
             if(container.innerText.includes("Loading") || container.innerText.includes("Error")) {
                 fetchImages(folderName, containerId); 
             }
@@ -329,4 +324,3 @@
     </script>
 </body>
 </html>
-
