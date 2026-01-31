@@ -40,9 +40,9 @@
             -webkit-user-drag: none;
             user-select: none;
         }
-        /* Re-enable clicking for links that contain images */
-        a img { pointer-events: none; } 
-        a { pointer-events: auto; cursor: pointer; }
+        /* Re-enable clicking for links/divs that contain images */
+        a img, div img { pointer-events: none; } 
+        a, .collection-item { pointer-events: auto; cursor: pointer; }
 
         /* --- ANIMATIONS --- */
         .reveal {
@@ -65,7 +65,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            mix-blend-mode: normal; /* Changed so Gold logo pops */
+            mix-blend-mode: normal; 
         }
         
         .logo {
@@ -233,7 +233,7 @@
             text-transform: uppercase;
         }
 
-        /* --- COLLECTIONS --- */
+        /* --- COLLECTIONS (Interactive Modals) --- */
         .collections-section {
             padding: 0 5% 80px 5%;
             display: flex;
@@ -299,7 +299,59 @@
             color: #ffc107; /* Title turns Gold */
         }
 
-        /* --- GALLERY GRID --- */
+        /* --- NEW CSS FOR POPUP GALLERY --- */
+        .gallery-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 2000; /* High z-index to sit on top of everything */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.95); /* Deep black bg */
+            padding-top: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            margin: auto;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            padding-bottom: 50px;
+        }
+
+        .modal-content h2 {
+            color: #ffc107;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .modal-content img {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 2px;
+            border: 1px solid #333;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+            transition: 0.3s;
+        }
+        .close-btn:hover { color: #ffc107; }
+
+        /* --- GALLERY GRID (Latest Shots) --- */
         .gallery-section { padding: 0 5% 100px 5%; }
         
         .grid {
@@ -317,7 +369,7 @@
             transition: 0.3s;
         }
         .card:hover {
-            border-bottom: 2px solid #ffc107; /* Gold underline on hover */
+            border-bottom: 2px solid #ffc107; 
         }
 
         .card img {
@@ -486,37 +538,37 @@
     <div id="collections" class="section-header reveal">Selected Works</div>
     <section class="collections-section">
         
-        <a href="street.html" target="_blank" class="collection-item reveal">
-            <img src="cover/DSC2174.jpg" alt="Street">
+        <div class="collection-item reveal" onclick="openGallery('street-gallery')">
+            <img src="latestimages/_DSC2174.jpg" alt="Street">
             <div class="collection-title">Street</div>
-        </a>
+        </div>
         
-        <a href="portrait.html" target="_blank" class="collection-item reveal">
-           <img src="https://placehold.co/600x400/555/FFF?text=Portrait%0A(Working+on+it)&font=lato" alt="Portrait - Working on it">
-           </div> class="collection-title">Portrait</div>
-        </a>
+        <div class="collection-item reveal" style="cursor: default;">
+            <img src="https://placehold.co/600x400/222/FFF?text=Portrait%0A(Working+on+it)&font=lato" alt="Portrait - Working on it">
+            <div class="collection-title" style="color:#888;">Portrait</div>
+        </div>
         
-        <a href="ganpati.html" target="_blank" class="collection-item reveal">
-            <img src="cover/DSC02733.jpg" alt="Ganpati">
+        <div class="collection-item reveal" onclick="openGallery('ganpati-gallery')">
+            <img src="latestimages/DSC02733.jpg" alt="Ganpati">
             <div class="collection-title">Ganpati</div>
-        </a>
+        </div>
         
-        <a href="walkeshwar.html" target="_blank" class="collection-item reveal">
-            <img src="https://images.unsplash.com/photo-1566552881560-0be862a7c445?auto=format&fit=crop&w=800&q=80" alt="Walkeshwar">
+        <div class="collection-item reveal" onclick="openGallery('walkeshwar-gallery')">
+            <img src="latestimages/walkeshwar_cover.jpg" alt="Walkeshwar">
             <div class="collection-title">Walkeshwar</div>
-        </a>
+        </div>
 
     </section>
 
     <div class="section-header reveal">Latest Shots</div>
     <section class="gallery-section">
         <div class="grid">
-            <div class="card reveal"><img src="latestimages/DSC02090.jpg" alt="Latest Work" loading=""></div>
-            <div class="card reveal"><img src="latestimages/DSC02058.jpg" alt="Latest Work" loading=""></div>
-            <div class="card reveal"><img src="latestimages/DSC02010 (1).jpg" alt="Latest Work" loading=""></div>
-            <div class="card reveal"><img src="latestimages/DSC01974.jpg" alt="Latest Work" loading=""></div>
-            <div class="card reveal"><img src="latestimages/DSC01911.jpg" alt="Latest Work" loading=""></div>
-            <div class="card reveal"><img src="latestimages/DSC01607.jpg" alt="Latest Work" loading=""></div>
+            <div class="card reveal"><img src="latestimages/DSC02090.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="latestimages/DSC02058.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="latestimages/DSC02010 (1).jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="latestimages/DSC01974.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="latestimages/DSC01911.jpg" alt="Latest Work"></div>
+            <div class="card reveal"><img src="latestimages/DSC01607.jpg" alt="Latest Work"></div>
         </div>
     </section>
 
@@ -542,6 +594,33 @@
             &copy; 2026 MARK DSOUZA. ALL RIGHTS RESERVED.
         </div>
     </section>
+
+    <div id="street-gallery" class="gallery-modal">
+        <span class="close-btn" onclick="closeGallery('street-gallery')">&times;</span>
+        <div class="modal-content">
+            <h2>Street Photography</h2>
+            <img src="latestimages/_DSC2174.jpg" alt="Street 1">
+            <img src="latestimages/street_extra_1.jpg" alt="Street 2">
+        </div>
+    </div>
+
+    <div id="ganpati-gallery" class="gallery-modal">
+        <span class="close-btn" onclick="closeGallery('ganpati-gallery')">&times;</span>
+        <div class="modal-content">
+            <h2>Ganpati Festival</h2>
+            <img src="latestimages/DSC02733.jpg" alt="Ganpati 1">
+            <img src="latestimages/ganpati_extra_1.jpg" alt="Ganpati 2">
+        </div>
+    </div>
+
+    <div id="walkeshwar-gallery" class="gallery-modal">
+        <span class="close-btn" onclick="closeGallery('walkeshwar-gallery')">&times;</span>
+        <div class="modal-content">
+            <h2>Walkeshwar</h2>
+            <img src="latestimages/walkeshwar_cover.jpg" alt="Walkeshwar 1">
+            <img src="latestimages/walkeshwar_extra_1.jpg" alt="Walkeshwar 2">
+        </div>
+    </div>
 
     <script>
         // --- 1. FORCE SCROLL TO TOP ON LOAD ---
@@ -579,11 +658,26 @@
             }
         }
         reveal();
+
+        // --- 4. GALLERY POPUP LOGIC ---
+        function openGallery(galleryId) {
+            document.getElementById(galleryId).style.display = "block";
+            document.body.style.overflow = "hidden"; // Stop background scroll
+        }
+
+        function closeGallery(galleryId) {
+            document.getElementById(galleryId).style.display = "none";
+            document.body.style.overflow = "auto"; // Resume background scroll
+        }
+
+        // Close when clicking outside the image (on the black part)
+        window.onclick = function(event) {
+            if (event.target.className === 'gallery-modal') {
+                event.target.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
     </script>
 
 </body>
 </html>
-
-
-
-
