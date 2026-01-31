@@ -24,8 +24,8 @@
             color: #fff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            /* REMOVED OPACITY: 0 TO PREVENT "BLANK SCREEN" ISSUES */
+            opacity: 1; 
             user-select: none; 
             -webkit-user-select: none;
         }
@@ -199,7 +199,7 @@
         const folderNameLatest = "latestimages"; 
         // ------------------------
 
-        // 2. FETCH IMAGES FROM GITHUB (For Galleries)
+        // 2. FETCH IMAGES FROM GITHUB
         async function fetchImages(folderName, containerId, limit = 0, offset = 0) {
             const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
             const container = document.getElementById(containerId);
@@ -247,7 +247,7 @@
             }
         }
 
-        // 3. LOAD HOME PAGE CONTENT (Latest & Archive)
+        // 3. LOAD HOME PAGE CONTENT
         async function loadLatestAndArchive() {
             const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderNameLatest}`;
             const latestContainer = document.getElementById('latest-grid');
@@ -308,7 +308,7 @@
         window.onclick = function(e) { if(e.target.classList.contains('gallery-modal')) { e.target.style.display="none"; document.body.style.overflow="auto";} }
 
         window.onload = function() {
-            setTimeout(() => { window.scrollTo(0, 0); document.body.style.opacity = 1; }, 10);
+            setTimeout(() => { window.scrollTo(0, 0); }, 10);
             loadLatestAndArchive();
         };
 
