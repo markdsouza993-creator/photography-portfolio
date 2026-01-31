@@ -143,7 +143,7 @@
     <div id="collections" class="section-header reveal">Selected Works</div>
     <section class="collections-section">
         <div class="collection-item reveal" onclick="openGallery('street-gallery', 'street')">
-            <img src="cover/DSC2174.jpg" alt="Street">
+            <img src="latestimages/_DSC2174.jpg" alt="Street">
             <div class="collection-title">Street</div>
         </div>
         
@@ -153,12 +153,12 @@
         </div>
         
         <div class="collection-item reveal" onclick="openGallery('ganpati-gallery', 'ganpati')">
-            <img src="cover/DSC02733.jpg" alt="Ganpati">
+            <img src="latestimages/DSC02733.jpg" alt="Ganpati">
             <div class="collection-title">Ganpati</div>
         </div>
         
         <div class="collection-item reveal" onclick="openGallery('walkeshwar-gallery', 'walkeshwar')">
-            <img src="cover/walkeshwar_cover.jpg" alt="Walkeshwar">
+            <img src="latestimages/walkeshwar_cover.jpg" alt="Walkeshwar">
             <div class="collection-title">Walkeshwar</div>
         </div>
     </section>
@@ -191,41 +191,46 @@
     <div id="walkeshwar-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('walkeshwar-gallery')">&times;</span><div class="modal-content"><h2>Walkeshwar</h2><div id="walkeshwar-container">Loading...</div></div></div>
 
     <script>
-        // --- 1. CONFIGURATION (Updated with your details) ---
+        // --- 1. CONFIGURATION ---
         const githubUsername = "markdsouza993"; 
         const githubRepo = "photography-portfolio"; 
-        // ----------------------------------------------------
+        
+        // IMPORTANT: Make sure this matches your GitHub folder name EXACTLY (Capitals matter!)
+        const folderNameLatest = "latestimages"; 
+        // ------------------------
 
-        // 2. FETCH IMAGES FROM GITHUB
+        // 2. FETCH IMAGES FROM GITHUB (For Galleries)
         async function fetchImages(folderName, containerId, limit = 0, offset = 0) {
             const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
-            
+            const container = document.getElementById(containerId);
+
             try {
                 const response = await fetch(apiUrl);
+                
+                // ERROR HANDLING
                 if (!response.ok) {
-                    console.error("GitHub API Error: " + response.status);
+                    console.error(`Error fetching ${folderName}:`, response.status, response.statusText);
+                    container.innerHTML = `<div style="color:red">Error: Folder '${folderName}' not found (404).<br>Check folder name on GitHub.</div>`;
                     return;
                 }
+
                 const data = await response.json();
 
-                // Filter only image files
-                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
-
-                // Sort Descending (Newest Files First)
-                images.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
-
-                const container = document.getElementById(containerId);
-                container.innerHTML = ""; // Clear loading text
-
-                // Slice data if needed
-                let filesToShow = images;
-                if (limit > 0) {
-                    filesToShow = images.slice(offset, offset + limit);
-                } else if (offset > 0) {
-                    filesToShow = images.slice(offset);
+                // SAFEGUARD: Ensure data is actually a list of files
+                if (!Array.isArray(data)) {
+                    console.error("Data is not an array:", data);
+                    return;
                 }
 
-                // Create Elements
+                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
+                images.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
+
+                container.innerHTML = ""; // Clear loading text
+
+                let filesToShow = images;
+                if (limit > 0) filesToShow = images.slice(offset, offset + limit);
+                else if (offset > 0) filesToShow = images.slice(offset);
+
                 filesToShow.forEach(file => {
                     const imgDiv = document.createElement('div');
                     if (containerId.includes('grid')) {
@@ -238,30 +243,43 @@
                 });
 
             } catch (error) {
-                console.error("Error loading images:", error);
-                document.getElementById(containerId).innerHTML = "Failed to load images. Ensure repo is Public.";
+                console.error("Network Error:", error);
+                container.innerHTML = "Failed to connect to GitHub.";
             }
         }
 
-        // 3. LOAD HOME PAGE CONTENT
+        // 3. LOAD HOME PAGE CONTENT (Latest & Archive)
         async function loadLatestAndArchive() {
-            const folderName = "latestimages";
-            const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
+            // Using the variable from top to ensure consistency
+            const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderNameLatest}`;
+            const latestContainer = document.getElementById('latest-grid');
+            const archiveContainer = document.getElementById('archive-grid');
             
             try {
                 const response = await fetch(apiUrl);
-                const data = await response.json();
-                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
                 
-                // Sort Descending
+                // ERROR HANDLING (This fixes the 'filter' crash)
+                if (!response.ok) {
+                    console.error(`Error fetching ${folderNameLatest}:`, response.status);
+                    latestContainer.innerHTML = `<div style="color:red; padding:20px;">Error 404: GitHub cannot find the folder <b>'${folderNameLatest}'</b>.<br>Please check capitalization.</div>`;
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (!Array.isArray(data)) return; // Stop if not a list
+
+                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
                 images.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
 
-                const latestContainer = document.getElementById('latest-grid');
-                const archiveContainer = document.getElementById('archive-grid');
                 latestContainer.innerHTML = "";
                 archiveContainer.innerHTML = "";
 
                 // Top 6 -> Latest
+                if (images.length === 0) {
+                    latestContainer.innerHTML = "<div style='padding:20px;'>No images found in folder.</div>";
+                }
+
                 images.slice(0, 6).forEach(file => {
                     latestContainer.innerHTML += `<div class="card reveal active"><img src="${file.download_url}" alt="${file.name}"></div>`;
                 });
@@ -271,7 +289,7 @@
                     archiveContainer.innerHTML += `<div class="card reveal active"><img src="${file.download_url}" alt="${file.name}"></div>`;
                 });
 
-            } catch (e) { console.log(e); }
+            } catch (e) { console.log("Critical Error:", e); }
         }
 
         // 4. UI LOGIC
@@ -281,7 +299,8 @@
             
             const containerId = modalId.replace('gallery', 'container');
             const container = document.getElementById(containerId);
-            if(container.innerText === "Loading...") {
+            // Reload every time to be safe, or check if 'Loading...'
+            if(container.innerText.includes("Loading") || container.innerText.includes("Error")) {
                 fetchImages(folderName, containerId); 
             }
         }
@@ -308,5 +327,3 @@
     </script>
 </body>
 </html>
-
-
