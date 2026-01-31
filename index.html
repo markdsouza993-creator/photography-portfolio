@@ -10,17 +10,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* --- NEW: GOLD SELECTION COLOR --- */
+        /* --- GOLD SELECTION --- */
         ::selection {
-            background: #ffc107; /* Cinematic Gold */
+            background: #ffc107; 
             color: #000;
         }
 
-        /* --- NEW: CUSTOM SCROLLBAR --- */
+        /* --- CUSTOM SCROLLBAR --- */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ffc107; } /* Turns gold on hover */
+        ::-webkit-scrollbar-thumb { background: #444; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ffc107; }
 
         body {
             background-color: #050505;
@@ -29,7 +29,20 @@
             overflow-x: hidden;
             opacity: 0;
             transition: opacity 0.5s ease;
+            /* DISABLE SELECTION FOR PROTECTION */
+            user-select: none; 
+            -webkit-user-select: none;
         }
+
+        /* --- PROTECT IMAGES (NO DRAG) --- */
+        img {
+            pointer-events: none; /* Disables clicking/dragging on image itself */
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        /* Re-enable clicking for links that contain images */
+        a img { pointer-events: none; } 
+        a { pointer-events: auto; cursor: pointer; }
 
         /* --- ANIMATIONS --- */
         .reveal {
@@ -52,7 +65,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            mix-blend-mode: difference;
+            mix-blend-mode: normal; /* Changed so Gold logo pops */
         }
         
         .logo {
@@ -61,10 +74,11 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 700;
+            color: #ffc107; /* GOLD LOGO */
+            text-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
             transition: 0.3s;
         }
-        /* Logo glow */
-        .logo:hover { color: #ffc107; text-shadow: 0 0 10px rgba(255, 193, 7, 0.5); }
+        .logo:hover { color: #fff; text-shadow: none; }
 
         .hamburger {
             cursor: pointer;
@@ -79,7 +93,6 @@
             background-color: #fff;
             transition: 0.3s;
         }
-        /* Hamburger turns gold */
         .hamburger:hover .line { width: 45px; background-color: #ffc107; }
 
         /* --- MENU OVERLAY --- */
@@ -107,23 +120,22 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            border-right: 1px solid #222;
+            border-right: 1px solid #333;
             padding-right: 50px;
         }
 
         .menu-links a {
             font-family: 'Oswald', sans-serif;
             font-size: 4rem;
-            color: #333;
+            color: #444;
             text-decoration: none;
             margin: 5px 0;
             text-transform: uppercase;
             transition: 0.4s;
             line-height: 1;
         }
-        /* Menu links turn Gold */
         .menu-links a:hover {
-            color: #ffc107;
+            color: #ffc107; /* Gold Hover */
             margin-left: 20px;
             text-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
         }
@@ -139,7 +151,7 @@
         .about-title {
             font-family: 'Oswald', sans-serif;
             font-size: 1rem;
-            color: #666;
+            color: #ffc107; /* Gold Title */
             letter-spacing: 3px;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -157,8 +169,8 @@
             margin-top: 30px;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
-            color: #555;
-            border-top: 1px solid #222;
+            color: #888;
+            border-top: 1px solid #333;
             padding-top: 20px;
         }
         
@@ -202,47 +214,23 @@
             text-transform: uppercase;
             margin-top: 20px;
             font-weight: 300;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             padding: 10px 20px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            /* New Gold Border accent */
-            border-left: 3px solid #ffc107; 
+            border: 1px solid #444;
+            border-left: 3px solid #ffc107; /* Gold Accent */
         }
 
         /* --- SECTION HEADERS --- */
         .section-header {
             font-family: 'Oswald', sans-serif;
-            font-size: 1rem;
+            font-size: 1.2rem;
             letter-spacing: 4px;
             margin: 80px 5% 30px 5%;
-            color: #444;
+            color: #ffc107; /* GOLD HEADERS */
             border-top: 1px solid #222;
             padding-top: 20px;
             text-transform: uppercase;
-        }
-
-        /* --- BIO SECTION --- */
-        .bio-section {
-            padding: 120px 10%;
-            background-color: #050505;
-            text-align: center;
-        }
-        
-        .bio-text {
-            font-family: 'Playfair Display', serif; 
-            font-size: 2.2rem;
-            line-height: 1.4;
-            color: #888;
-            max-width: 950px;
-            margin: 0 auto;
-        }
-
-        /* UPDATED HIGHLIGHT COLOR */
-        .highlight {
-            font-style: italic;
-            color: #ffc107; /* Cinematic Gold */
-            position: relative;
         }
 
         /* --- COLLECTIONS --- */
@@ -261,7 +249,7 @@
             overflow: hidden;
             cursor: pointer;
             display: block;
-            border-bottom: 2px solid transparent; /* Prepare for hover border */
+            border: 1px solid #222; /* Subtle Border */
             transition: 0.3s;
         }
 
@@ -300,7 +288,7 @@
         }
 
         .collection-item:hover {
-            border-bottom: 5px solid #ffc107; /* Gold bottom line on hover */
+            border-color: #ffc107; /* Border turns Gold */
         }
         .collection-item:hover img {
             transform: scale(1.05);
@@ -325,6 +313,11 @@
             height: auto; 
             overflow: hidden;
             margin-bottom: 20px;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .card:hover {
+            border-bottom: 2px solid #ffc107; /* Gold underline on hover */
         }
 
         .card img {
@@ -345,14 +338,14 @@
             background-color: #080808;
             padding: 120px 5%;
             text-align: center;
-            border-top: 1px solid #111;
+            border-top: 1px solid #222;
         }
 
         .contact-headline {
             font-family: 'Playfair Display', serif;
             font-size: 4rem;
             margin-bottom: 80px;
-            color: #fff;
+            color: #ffc107; /* GOLD TEXT */
             font-style: italic;
         }
 
@@ -368,7 +361,7 @@
         .contact-label {
             font-family: 'Inter', sans-serif;
             font-size: 0.75rem;
-            color: #555;
+            color: #888;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 10px;
@@ -388,10 +381,10 @@
             content: '';
             position: absolute;
             width: 0%;
-            height: 1px;
+            height: 2px;
             bottom: -5px;
             left: 0;
-            background-color: #ffc107; /* Gold Underline */
+            background-color: #ffc107;
             transition: 0.3s;
         }
 
@@ -403,15 +396,17 @@
             font-size: 1.2rem;
             border: 1px solid #333;
             padding: 15px 40px;
-            color: #fff;
+            color: #000;
+            background-color: #ffc107; /* Gold Button Default */
             text-decoration: none;
             transition: 0.4s;
             display: inline-block;
+            font-weight: bold;
         }
         .social-btn:hover {
-            background-color: #ffc107; /* Gold Background */
-            border-color: #ffc107;
-            color: #000; /* Black Text */
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
         }
 
         /* --- RESPONSIVE --- */
@@ -441,13 +436,13 @@
             
             .contact-grid { flex-direction: column; gap: 40px; text-align: center; }
             .contact-box { text-align: center; }
-
+            
             .menu-links a { font-size: 3rem; }
             .about-text { font-size: 1.1rem; }
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <nav>
         <div class="logo">MARK DSOUZA</div>
@@ -492,7 +487,7 @@
     <section class="collections-section">
         
         <a href="street.html" target="_blank" class="collection-item reveal">
-            <img src="_DSC2174" alt="Street">
+            <img src="cover/DSC02090.jpg" alt="Street">
             <div class="collection-title">Street</div>
         </a>
         
@@ -502,7 +497,7 @@
         </a>
         
         <a href="ganpati.html" target="_blank" class="collection-item reveal">
-            <img src="https://images.unsplash.com/photo-1599553765874-325373323067?auto=format&fit=crop&w=800&q=80" alt="Ganpati">
+            <img src="cover/ganpati.jpg" alt="Ganpati">
             <div class="collection-title">Ganpati</div>
         </a>
         
@@ -516,12 +511,12 @@
     <div class="section-header reveal">Latest Shots</div>
     <section class="gallery-section">
         <div class="grid">
-            <div class="card reveal"><img src="DSC02090.jpg" alt="Latest Work" loading="lazy"></div>
-            <div class="card reveal"><img src="DSC02058.jpg" alt="Latest Work" loading="lazy"></div>
-            <div class="card reveal"><img src="DSC02010 (1).jpg" alt="Latest Work" loading="lazy"></div>
-            <div class="card reveal"><img src="DSC01974.jpg" alt="Latest Work" loading="lazy"></div>
-            <div class="card reveal"><img src="DSC01911.jpg" alt="Latest Work" loading="lazy"></div>
-            <div class="card reveal"><img src="DSC01607.jpg" alt="Latest Work" loading="lazy"></div>
+            <div class="card reveal"><img src="latestimages/DSC02090.jpg" alt="Latest Work" loading="lazy"></div>
+            <div class="card reveal"><img src="latestimages/DSC02058.jpg" alt="Latest Work" loading="lazy"></div>
+            <div class="card reveal"><img src="latestimages/DSC02010 (1).jpg" alt="Latest Work" loading="lazy"></div>
+            <div class="card reveal"><img src="latestimages/DSC01974.jpg" alt="Latest Work" loading="lazy"></div>
+            <div class="card reveal"><img src="latestimages/DSC01911.jpg" alt="Latest Work" loading="lazy"></div>
+            <div class="card reveal"><img src="latestimages/DSC01607.jpg" alt="Latest Work" loading="lazy"></div>
         </div>
     </section>
 
@@ -543,7 +538,7 @@
             </div>
         </div>
         
-        <div style="margin-top: 100px; font-size: 0.7rem; color: #333; letter-spacing: 2px;">
+        <div style="margin-top: 100px; font-size: 0.7rem; color: #444; letter-spacing: 2px;">
             &copy; 2026 MARK DSOUZA. ALL RIGHTS RESERVED.
         </div>
     </section>
