@@ -6,28 +6,47 @@
     <title>Mark Dsouza | Visual Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- KEEPING ALL YOUR EXISTING STYLES --- */
+        /* --- RESET & SMOOTH SCROLL --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        
+        /* --- GOLD SELECTION --- */
         ::selection { background: #ffc107; color: #000; }
+
+        /* --- CUSTOM SCROLLBAR --- */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #111; }
         ::-webkit-scrollbar-thumb { background: #444; border-radius: 5px; }
         ::-webkit-scrollbar-thumb:hover { background: #ffc107; }
-        body { background-color: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; opacity: 0; transition: opacity 0.5s ease; user-select: none; -webkit-user-select: none; }
+
+        body {
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            user-select: none; 
+            -webkit-user-select: none;
+        }
+
+        /* --- PROTECT IMAGES --- */
         img { pointer-events: none; -webkit-user-drag: none; user-select: none; }
         a img, div img { pointer-events: none; } 
         a, .collection-item, .card { pointer-events: auto; cursor: pointer; }
-        
+
+        /* --- ANIMATIONS --- */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* --- NAVIGATION --- */
         nav { position: absolute; top: 0; width: 100%; padding: 40px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; mix-blend-mode: normal; }
         .logo { font-family: 'Oswald', sans-serif; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; font-weight: 700; color: #ffc107; text-shadow: 0 0 10px rgba(255, 193, 7, 0.3); transition: 0.3s; }
         .hamburger { cursor: pointer; z-index: 101; display: flex; flex-direction: column; gap: 8px; }
         .line { width: 35px; height: 2px; background-color: #fff; transition: 0.3s; }
         .hamburger:hover .line { width: 45px; background-color: #ffc107; }
 
+        /* --- MENU --- */
         .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #0a0a0a; display: flex; flex-direction: row; justify-content: center; align-items: center; transform: translateY(-100%); transition: 0.6s cubic-bezier(0.7, 0, 0.3, 1); z-index: 99; padding: 0 10%; }
         .menu-overlay.active { transform: translateY(0); }
         .menu-links { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border-right: 1px solid #333; padding-right: 50px; }
@@ -41,11 +60,15 @@
         .menu-contact-info a { color: #fff; text-decoration: none; border-bottom: 1px solid #333; transition: 0.3s; }
         .menu-contact-info a:hover { border-color: #ffc107; color: #ffc107; }
 
+        /* --- HERO --- */
         .hero { height: 100vh; width: 100%; background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('background.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
         h1 { font-family: 'Oswald', sans-serif; font-size: 13vw; line-height: 0.85; text-transform: uppercase; letter-spacing: -3px; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .subtitle { font-size: 1rem; letter-spacing: 6px; text-transform: uppercase; margin-top: 20px; font-weight: 300; background: rgba(0,0,0,0.6); padding: 10px 20px; backdrop-filter: blur(5px); border: 1px solid #444; border-left: 3px solid #ffc107; }
 
+        /* --- SECTIONS --- */
         .section-header { font-family: 'Oswald', sans-serif; font-size: 1.2rem; letter-spacing: 4px; margin: 80px 5% 30px 5%; color: #ffc107; border-top: 1px solid #222; padding-top: 20px; text-transform: uppercase; }
+        
+        /* --- COLLECTIONS --- */
         .collections-section { padding: 0 5% 80px 5%; display: flex; flex-wrap: wrap; gap: 20px; }
         .collection-item { flex: 1; min-width: 22%; height: 600px; position: relative; overflow: hidden; cursor: pointer; display: block; border: 1px solid #222; transition: 0.3s; }
         .collection-item::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 1; transition: 0.3s; }
@@ -55,6 +78,7 @@
         .collection-item:hover img { transform: scale(1.05); filter: brightness(60%); }
         .collection-item:hover .collection-title { transform: translateX(10px); color: #ffc107; }
 
+        /* --- POPUP GALLERY --- */
         .gallery-modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.95); padding-top: 50px; backdrop-filter: blur(5px); }
         .modal-content { margin: auto; width: 90%; max-width: 800px; text-align: center; padding-bottom: 50px; }
         .modal-content h2 { color: #ffc107; font-family: 'Oswald', sans-serif; font-size: 2rem; margin-bottom: 30px; letter-spacing: 2px; text-transform: uppercase; }
@@ -62,6 +86,7 @@
         .close-btn { position: fixed; top: 20px; right: 30px; color: #fff; font-size: 50px; font-weight: bold; cursor: pointer; z-index: 2001; transition: 0.3s; }
         .close-btn:hover { color: #ffc107; }
 
+        /* --- IMAGE GRID --- */
         .gallery-section { padding: 0 5% 100px 5%; }
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
         .card { height: auto; overflow: hidden; margin-bottom: 20px; border-bottom: 2px solid transparent; transition: 0.3s; }
@@ -69,6 +94,7 @@
         .card img { width: 100%; height: auto; display: block; transition: 0.6s ease; filter: grayscale(100%) brightness(80%); }
         .card:hover img { transform: scale(1.02); filter: grayscale(0%) brightness(100%); }
 
+        /* --- CONTACT --- */
         .contact-section { background-color: #080808; padding: 120px 5%; text-align: center; border-top: 1px solid #222; }
         .contact-headline { font-family: 'Playfair Display', serif; font-size: 4rem; margin-bottom: 80px; color: #ffc107; font-style: italic; }
         .contact-grid { display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; }
@@ -81,6 +107,7 @@
         .social-btn { font-family: 'Oswald', sans-serif; font-size: 1.2rem; border: 1px solid #333; padding: 15px 40px; color: #000; background-color: #ffc107; text-decoration: none; transition: 0.4s; display: inline-block; font-weight: bold; }
         .social-btn:hover { background-color: #fff; color: #000; box-shadow: 0 0 20px rgba(255, 193, 7, 0.4); }
 
+        /* --- RESPONSIVE --- */
         @media (max-width: 1024px) { h1 { font-size: 15vw; } .hero { background-attachment: scroll; } .grid { grid-template-columns: repeat(2, 1fr); } .collection-item { min-width: 45%; height: 500px; } .menu-overlay { flex-direction: column; padding: 40px; align-items: flex-start; } .menu-links { border-right: none; border-bottom: 1px solid #222; padding-right: 0; padding-bottom: 30px; margin-bottom: 30px; width: 100%; align-items: flex-start;} .menu-about { padding-left: 0; } }
         @media (max-width: 768px) { h1 { font-size: 18vw; } .subtitle { font-size: 0.8rem; letter-spacing: 3px; } .contact-headline { font-size: 2.5rem; } .collections-section { flex-direction: column; } .collection-item { width: 100%; height: 350px; } .collection-title { font-size: 2rem; bottom: 20px; left: 20px; } .grid { grid-template-columns: 1fr; } .card { margin-bottom: 30px; } .contact-grid { flex-direction: column; gap: 40px; text-align: center; } .contact-box { text-align: center; } .menu-links a { font-size: 3rem; } .about-text { font-size: 1.1rem; } }
     </style>
@@ -139,7 +166,7 @@
     <div class="section-header reveal">Latest Shots</div>
     <section class="gallery-section">
         <div class="grid" id="latest-grid">
-            <div style="color: grey; padding:20px;">Loading latest shots...</div>
+            <div style="color: grey; padding:20px;">Loading latest shots from GitHub...</div>
         </div>
     </section>
 
@@ -164,35 +191,33 @@
     <div id="walkeshwar-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('walkeshwar-gallery')">&times;</span><div class="modal-content"><h2>Walkeshwar</h2><div id="walkeshwar-container">Loading...</div></div></div>
 
     <script>
-        // --- CONFIGURATION: EDIT THIS! ---
-        // Replace with your GitHub Username and Repository Name
-        const githubUsername = "YOUR_GITHUB_USERNAME"; 
-        const githubRepo = "YOUR_REPO_NAME"; 
-        // ---------------------------------
+        // --- 1. CONFIGURATION (Updated with your details) ---
+        const githubUsername = "markdsouza993"; 
+        const githubRepo = "photography-portfolio"; 
+        // ----------------------------------------------------
 
-        // 1. HELPER: FETCH IMAGES FROM GITHUB FOLDER
+        // 2. FETCH IMAGES FROM GITHUB
         async function fetchImages(folderName, containerId, limit = 0, offset = 0) {
             const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
             
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error("Folder not found or API limit reached");
+                if (!response.ok) {
+                    console.error("GitHub API Error: " + response.status);
+                    return;
+                }
                 const data = await response.json();
 
-                // Filter only image files (jpg, png, jpeg)
+                // Filter only image files
                 const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
 
-                // Sort by name descending (assuming DSC200 is newer than DSC100)
-                // If you want to sort by Upload Date, GitHub API makes that harder. Filename sort is best.
-                images.sort((a, b) => {
-                    return b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' });
-                });
+                // Sort Descending (Newest Files First)
+                images.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
 
-                // Clear Loading Text
                 const container = document.getElementById(containerId);
-                container.innerHTML = "";
+                container.innerHTML = ""; // Clear loading text
 
-                // Determine slice (for splitting Latest vs Archive)
+                // Slice data if needed
                 let filesToShow = images;
                 if (limit > 0) {
                     filesToShow = images.slice(offset, offset + limit);
@@ -200,15 +225,13 @@
                     filesToShow = images.slice(offset);
                 }
 
-                // Render Images
+                // Create Elements
                 filesToShow.forEach(file => {
-                    // We use the 'download_url' provided by GitHub
                     const imgDiv = document.createElement('div');
                     if (containerId.includes('grid')) {
-                        imgDiv.className = 'card reveal active'; // For Grid
+                        imgDiv.className = 'card reveal active';
                         imgDiv.innerHTML = `<img src="${file.download_url}" alt="${file.name}">`;
                     } else {
-                        // For Modal
                         imgDiv.innerHTML = `<img src="${file.download_url}" alt="${file.name}" style="width:100%; margin-bottom:20px;">`;
                     }
                     container.appendChild(imgDiv);
@@ -216,11 +239,11 @@
 
             } catch (error) {
                 console.error("Error loading images:", error);
+                document.getElementById(containerId).innerHTML = "Failed to load images. Ensure repo is Public.";
             }
         }
 
-        // 2. LOAD LATEST & ARCHIVE AUTOMATICALLY
-        // Loads 'latestimages' folder. Puts top 6 in 'latest-grid', rest in 'archive-grid'
+        // 3. LOAD HOME PAGE CONTENT
         async function loadLatestAndArchive() {
             const folderName = "latestimages";
             const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
@@ -230,7 +253,7 @@
                 const data = await response.json();
                 const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
                 
-                // Sort Descending (Newest First based on filename)
+                // Sort Descending
                 images.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
 
                 const latestContainer = document.getElementById('latest-grid');
@@ -238,12 +261,12 @@
                 latestContainer.innerHTML = "";
                 archiveContainer.innerHTML = "";
 
-                // First 6 go to Latest
+                // Top 6 -> Latest
                 images.slice(0, 6).forEach(file => {
                     latestContainer.innerHTML += `<div class="card reveal active"><img src="${file.download_url}" alt="${file.name}"></div>`;
                 });
 
-                // The rest go to Archive
+                // Rest -> Archive
                 images.slice(6).forEach(file => {
                     archiveContainer.innerHTML += `<div class="card reveal active"><img src="${file.download_url}" alt="${file.name}"></div>`;
                 });
@@ -251,13 +274,12 @@
             } catch (e) { console.log(e); }
         }
 
-        // 3. UI FUNCTIONS (Popups, Menu, Scroll)
+        // 4. UI LOGIC
         function openGallery(modalId, folderName) {
             document.getElementById(modalId).style.display = "block";
             document.body.style.overflow = "hidden";
             
-            // Only load if empty (saves data)
-            const containerId = modalId.replace('gallery', 'container'); // e.g., street-container
+            const containerId = modalId.replace('gallery', 'container');
             const container = document.getElementById(containerId);
             if(container.innerText === "Loading...") {
                 fetchImages(folderName, containerId); 
@@ -269,10 +291,9 @@
         
         window.onclick = function(e) { if(e.target.classList.contains('gallery-modal')) { e.target.style.display="none"; document.body.style.overflow="auto";} }
 
-        // 4. INIT
         window.onload = function() {
             setTimeout(() => { window.scrollTo(0, 0); document.body.style.opacity = 1; }, 10);
-            loadLatestAndArchive(); // Run the automatic sort on load
+            loadLatestAndArchive();
         };
 
         window.addEventListener('scroll', reveal);
