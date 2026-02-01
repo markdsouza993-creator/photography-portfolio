@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Collection</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; padding: 20px; text-align: center; }
+        .back-btn { display: inline-block; border: 1px solid #fff; color: #fff; padding: 10px 20px; text-decoration: none; margin-bottom: 30px; }
+        h1 { margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Grid Layout */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        .gallery img { width: 100%; border-radius: 4px; transition: transform 0.3s; }
+        .gallery img:hover { transform: scale(1.02); }
+        .loading { color: #888; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" class="back-btn">← Back to Home</a>
+    <h1>Street Series</h1>
+    
+    <div class="gallery" id="gallery-container">
+        <p class="loading">Scanning for new photos...</p>
+    </div>
+
+    <script>
+        // ----------------------------------------------------
+        // SETTINGS: WE TELL THE CODE WHICH FOLDER TO LOOK IN
+        // ----------------------------------------------------
+        const githubUsername = "markdsouza993-creator";
+        const repoName = "photography-portfolio";
+        const folderName = "street"; // <--- CHANGE THIS for other folders!
+        // ----------------------------------------------------
+
+        const apiUrl = `https://api.github.com/repos/${githubUsername}/${repoName}/contents/${folderName}`;
+        const container = document.getElementById('gallery-container');
+
+        // This asks GitHub: "Give me the list of files in this folder"
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Clear the "Scanning..." text
+                container.innerHTML = '';
+
+                // Loop through every file GitHub found
+                data.forEach(file => {
+                    // Check if the file is an image (jpg, png, jpeg)
+                    if (file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                        
+                        const img = document.createElement('img');
+                        // We use the 'download_url' to show the image
+                        img.src = file.download_url;
+                        img.alt = file.name;
+                        
+                        container.appendChild(img);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                container.innerHTML = '<p>Error loading images. Please try again later.</p>';
+            });
+    </script>
+
+</body>
+</html>
