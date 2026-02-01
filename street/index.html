@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Diagnostic Mode</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: monospace; padding: 20px; text-align: left; }
+        .back-btn { display: inline-block; border: 1px solid #fff; color: #fff; padding: 10px; text-decoration: none; margin-bottom: 20px; }
+        
+        /* Debug Box Styling */
+        #debug-box { border: 2px solid #333; padding: 20px; background: #111; margin-bottom: 20px; white-space: pre-wrap; }
+        .success { color: #0f0; } /* Green for good */
+        .error { color: #f00; }   /* Red for bad */
+        .info { color: #ffa500; } /* Orange for info */
+
+        /* Gallery Grid */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .gallery img { width: 100%; border: 1px solid #555; }
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" class="back-btn">← Back</a>
+    <h1>⚠️ Diagnostic Mode</h1>
+    
+    <div id="debug-box">Initializing scanner...</div>
+
+    <div class="gallery" id="gallery-container"></div>
+
+    <script>
+        // --- SETTINGS ---
+        const githubUsername = "markdsouza993-creator";
+        const repoName = "photography-portfolio";
+        const folderName = "street"; 
+        // ----------------
+
+        const debugBox = document.getElementById('debug-box');
+        const container = document.getElementById('gallery-container');
+        const apiUrl = `https://api.github.com/repos/${githubUsername}/${repoName}/contents/${folderName}`;
+
+        function log(message, type = 'info') {
+            debugBox.innerHTML += `<div class="${type}">${message}</div>`;
+        }
+
+        // 1. Check if variables look right
+        log(`Checking settings...`);
+        log(`User: ${githubUsername}`);
+        log(`Folder: ${folderName}`);
+        log(`API URL: ${apiUrl}`);
+
+        // 2. Ask GitHub for files
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`GitHub Error: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                log(`Successfully connected to GitHub!`, 'success');
+                log(`Found ${data.length} files in the folder. Scanning for images...`);
+
+                let imageCount = 0;
+                data.forEach(file => {
+                    // Check for jpg, jpeg, png, gif (case insensitive)
+                    if (file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                        imageCount++;
+                        log(`+ Loading: ${file.name}`, 'success');
+                        
+                        const img = document.createElement('img');
+                        img.src = file.download_url;
+                        img.style.width = "200px"; // Force size for test
+                        container.appendChild(img);
+                    } else {
+                        log(`- Ignored: ${file.name} (Not an image)`, 'info');
+                    }
+                });
+
+                if (imageCount === 0) {
+                    log(`❌ NO IMAGES FOUND. Did you upload .jpg files to the 'street' folder yet?`, 'error');
+                } else {
+                    log(`✅ Loaded ${imageCount} images successfully.`, 'success');
+                }
+            })
+            .catch(error => {
+                log(`❌ CRITICAL ERROR: ${error.message}`, 'error');
+                log(`Tip: If this says "404 Not Found", check if the folder name '${folderName}' matches exactly.`, 'info');
+                log(`Tip: If this says "403 rate limit", wait 1 hour and try again.`, 'info');
+            });
+    </script>
+
+</body>
+</html>
