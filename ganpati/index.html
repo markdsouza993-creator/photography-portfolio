@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganpati Collection</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; padding: 20px; text-align: center; }
+        .back-btn { display: inline-block; border: 1px solid #fff; color: #fff; padding: 10px 20px; text-decoration: none; margin-bottom: 30px; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        .gallery img { width: 100%; border-radius: 4px; margin-bottom: 10px; transition: transform 0.3s; }
+        .gallery img:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" class="back-btn">← Back to Home</a>
+    <h1 style="font-family: 'Times New Roman', serif; font-style: italic;">Ganpati Series</h1>
+    
+    <div class="gallery" id="gallery-container">
+        <p>Loading photos...</p>
+    </div>
+
+    <script>
+        // SETTINGS FOR GANPATI
+        const githubUsername = "markdsouza993-creator";
+        const repoName = "photography-portfolio";
+        const folderName = "ganpati"; // <--- This looks in the ganpati folder
+
+        const apiUrl = `https://api.github.com/repos/${githubUsername}/${repoName}/contents/${folderName}`;
+        const container = document.getElementById('gallery-container');
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                container.innerHTML = '';
+                data.forEach(file => {
+                    if (file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                        const img = document.createElement('img');
+                        img.src = file.download_url;
+                        container.appendChild(img);
+                    }
+                });
+            })
+            .catch(error => {
+                container.innerHTML = '<p>Error loading images. Please upload photos to the "ganpati" folder!</p>';
+            });
+    </script>
+</body>
+</html>
