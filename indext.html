@@ -480,42 +480,78 @@
     <div id="ganpati-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('ganpati-gallery')">&times;</span><div class="modal-content"><h2>Ganpati Festival</h2><div id="ganpati-container">Loading...</div></div></div>
     <div id="walkeshwar-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('walkeshwar-gallery')">&times;</span><div class="modal-content"><h2>Walkeshwar</h2><div id="walkeshwar-container">Loading...</div></div></div>
 
-    <script>
+<script>
         // --- CONFIGURATION ---
-        const githubUsername = "markdsouza993-creator"; 
+        // 1. UPDATE THESE TO MATCH YOUR GITHUB EXACTLY
+        const githubUsername = "markdsouza993"; // Double check this!
         const githubRepo = "photography-portfolio"; 
-        const folderNameLatest = "latestimages"; 
-
+        const folderNameLatest = "latestimages"; // strict case-sensitive
+        
         // --- FETCH IMAGES ---
         async function fetchImages(folderName, containerId, limit = 0, offset = 0) {
             const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
             const container = document.getElementById(containerId);
+            
+            // Visual feedback that we are trying to load
+            container.innerHTML = `<div style="padding:20px; color:#ccc;">Connecting to GitHub...</div>`;
+
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error(response.statusText);
+                
+                // ERROR HANDLING: If GitHub says "No", tell us why
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error(`Folder "${folderName}" not found (404). Check repo privacy or folder name.`);
+                    } else if (response.status === 403) {
+                        throw new Error(`Rate Limit Exceeded (403). Wait 1 hour.`);
+                    } else {
+                        throw new Error(`GitHub Error: ${response.status} ${response.statusText}`);
+                    }
+                }
+
                 const data = await response.json();
-                if (!Array.isArray(data)) return;
-                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
+
+                // If data isn't a list (e.g. it's a file, not a folder), throw error
+                if (!Array.isArray(data)) {
+                    throw new Error("Target is not a folder.");
+                }
+
+                // Filter for images only
+                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
                                    .sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
-                container.innerHTML = ""; 
+
+                if (images.length === 0) {
+                    container.innerHTML = "Folder found, but no images detected.";
+                    return;
+                }
+
+                container.innerHTML = ""; // Clear loading message
+
                 let filesToShow = limit > 0 ? images.slice(offset, offset + limit) : (offset > 0 ? images.slice(offset) : images);
+                
                 filesToShow.forEach(file => {
                     const imgDiv = document.createElement('div');
                     // Check if it's the main grid or popup
                     if (containerId === 'latest-grid') {
                         imgDiv.className = 'card reveal active';
-                        imgDiv.innerHTML = `<img src="${file.download_url}" alt="${file.name}">`;
+                        imgDiv.innerHTML = `<img src="${file.download_url}" loading="lazy" alt="${file.name}">`;
                     } else {
-                        imgDiv.innerHTML = `<img src="${file.download_url}" alt="${file.name}">`;
+                        imgDiv.innerHTML = `<img src="${file.download_url}" loading="lazy" alt="${file.name}">`;
                     }
                     container.appendChild(imgDiv);
                 });
-            } catch (error) { console.error("Error:", error); container.innerHTML = "Failed to load."; }
+
+            } catch (error) { 
+                console.error("Error:", error);
+                // PRINT THE ERROR ON THE SCREEN
+                container.innerHTML = `<div style="color: #ff6b6b; padding: 20px; border: 1px solid #ff6b6b; display:inline-block;">
+                    <strong>Error loading images:</strong><br>${error.message}
+                </div>`; 
+            }
         }
 
         // --- LOAD HOME CONTENT ---
         async function loadLatest() {
-            // Load all images for the gallery section
             fetchImages(folderNameLatest, 'latest-grid');
         }
 
@@ -524,7 +560,9 @@
             document.getElementById(modalId).style.display = "block";
             document.body.style.overflow = "hidden";
             const containerId = modalId.replace('gallery', 'container');
-            if(document.getElementById(containerId).innerText.includes("Loading")) {
+            // Check if empty or displaying an error, retry fetch
+            const content = document.getElementById(containerId).innerText;
+            if(content.includes("Loading") || content.includes("Error") || content === "") {
                 fetchImages(folderName, containerId); 
             }
         }
@@ -539,8 +577,5 @@
                 if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
             });
         }
-        // Trigger reveal on load for initial elements
         reveal();
     </script>
-</body>
-</html>
