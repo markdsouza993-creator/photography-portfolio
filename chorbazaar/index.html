@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Collection</title>
+    <title>Chor Bazaar Collection</title>
     <style>
         body { background-color: #000; color: #fff; font-family: sans-serif; padding: 20px; text-align: center; }
         .back-btn { display: inline-block; border: 1px solid #fff; color: #fff; padding: 10px 20px; text-decoration: none; margin-bottom: 30px; }
@@ -17,7 +16,7 @@
 
     <a href="../index.html" class="back-btn">← Back to Home</a>
     
-    <h1 style="font-family: 'Times New Roman', serif; font-style: italic;">My New Collection</h1>
+    <h1 style="font-family: 'Times New Roman', serif; font-style: italic;">Chor Bazaar</h1>
     
     <div class="gallery" id="gallery-container">
         <p>Loading photos...</p>
@@ -28,9 +27,8 @@
         const githubUsername = "markdsouza993-creator";
         const repoName = "photography-portfolio";
         
-        // IMPORTANT: CHANGE THIS TO MATCH YOUR FOLDER NAME EXACTLY
-        const folderName = "CHANGE_THIS_NAME"; 
-        // Example: const folderName = "portraits";
+        // UPDATED LINE BELOW:
+        const folderName = "chorbazaar"; 
 
         const apiUrl = `https://api.github.com/repos/${githubUsername}/${repoName}/contents/${folderName}`;
         const container = document.getElementById('gallery-container');
@@ -39,16 +37,23 @@
             .then(response => response.json())
             .then(data => {
                 container.innerHTML = '';
-                data.forEach(file => {
-                    if (file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
-                        const img = document.createElement('img');
-                        img.src = file.download_url;
-                        container.appendChild(img);
-                    }
-                });
+                // Check if data is an array (successful folder fetch)
+                if (Array.isArray(data)) {
+                    data.forEach(file => {
+                        if (file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                            const img = document.createElement('img');
+                            img.src = file.download_url;
+                            container.appendChild(img);
+                        }
+                    });
+                } else {
+                     // If the folder is empty or doesn't exist
+                    container.innerHTML = '<p>Folder not found or empty.</p>';
+                }
             })
             .catch(error => {
-                container.innerHTML = '<p>Error loading. Did you create the folder and upload photos?</p>';
+                console.error(error);
+                container.innerHTML = '<p>Error loading. Check your internet or folder name.</p>';
             });
     </script>
 </body>
