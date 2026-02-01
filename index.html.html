@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Dsouza | Visual Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES (Theme Colors) --- */
+        :root {
+            --bg-color: #1a2e1a;       /* Dark Forest Green */
+            --accent-color: #dfff4f;   /* Vibrant Lime Green */
+            --text-color: #f0f0f0;     /* Off-White */
+            --title-font: 'Teko', sans-serif;
+            --body-font: 'Inter', sans-serif;
+        }
+
+        /* --- RESET & BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        ::selection { background: var(--accent-color); color: var(--bg-color); }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #3a5e3a; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--body-font);
+            overflow-x: hidden;
+            opacity: 1;
+        }
+
+        h1, h2, h3, .logo, .big-title {
+            font-family: var(--title-font);
+            text-transform: uppercase;
+            line-height: 0.9;
+        }
+
+        img { pointer-events: none; -webkit-user-drag: none; user-select: none; display: block; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+
+        /* --- REUSABLE ANIMATION CLASS --- */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- HEADER / NAV --- */
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 2rem;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent-color); }
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; }
+        .line { width: 30px; height: 3px; background-color: var(--accent-color); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            padding: 150px 5% 50px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .hero-bg-shape {
+            position: absolute;
+            top: 10%;
+            right: -10%;
+            width: 70%;
+            height: 80%;
+            background-color: var(--accent-color);
+            border-radius: 50px;
+            transform: rotate(-5deg);
+            z-index: 0;
+            opacity: 0.8;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 50%;
+        }
+        h1.hero-title {
+            font-size: 12vw;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 0px var(--bg-color);
+            margin-bottom: 20px;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 400px;
+            margin-bottom: 40px;
+        }
+        .hero-image-container {
+            position: absolute;
+            top: 15%;
+            right: 5%;
+            width: 40%;
+            z-index: 2;
+        }
+        .hero-portrait {
+            width: 100%;
+            border-radius: 30px;
+            /* REPLACE WITH YOUR OWN PORTRAIT */
+            content: url('https://placehold.co/600x800/3a5e3a/dfff4f?text=Your+Portrait+Here');
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-section {
+            padding: 100px 5%;
+            display: flex;
+            align-items: center;
+            gap: 5%;
+        }
+        .about-content { flex: 1; }
+        .big-title {
+            font-size: 10vw;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+        }
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .highlight { color: var(--accent-color); }
+        .about-visuals {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Rotating Text Circle */
+        .rotating-text-container {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            animation: rotateCircle 20s linear infinite;
+        }
+        @keyframes rotateCircle { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .rotating-text-container svg { width: 100%; height: 100%; }
+        .rotating-text-path {
+            fill: none;
+        }
+        .rotating-text {
+            font-family: var(--title-font);
+            font-size: 1.2rem;
+            fill: var(--accent-color);
+            letter-spacing: 2px;
+        }
+        .about-camera-img {
+            position: relative;
+            z-index: 2;
+            width: 60%;
+            /* REPLACE WITH YOUR CAMERA IMAGE */
+            content: url('https://placehold.co/400x400/1a2e1a/dfff4f?text=Camera+Image');
+        }
+
+        /* --- WORKS SECTION (List Style) --- */
+        .works-section {
+            padding: 100px 5%;
+        }
+        .works-list {
+            margin-top: 50px;
+            border-top: 1px solid #3a5e3a;
+        }
+        .work-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #3a5e3a;
+            transition: background 0.3s;
+        }
+        .work-item:hover { background: rgba(223, 255, 79, 0.05); }
+        .work-info { flex: 2; }
+        .work-year {
+            font-family: var(--title-font);
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+        .work-title {
+            font-family: var(--title-font);
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .work-desc { font-size: 0.9rem; color: #ccc; max-width: 400px; }
+        .work-link .discover-btn {
+            padding: 10px 30px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50px;
+            font-family: var(--title-font);
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            transition: 0.3s;
+        }
+        .work-item:hover .discover-btn {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+        /* Disabled state for Portrait */
+        .work-item.disabled { opacity: 0.5; cursor: default; }
+        .work-item.disabled .discover-btn { border-color: #555; color: #555; }
+        .work-item.disabled:hover { background: none; }
+        .work-item.disabled:hover .discover-btn { background: none; color: #555; }
+
+
+        /* --- GALLERY SECTION (Latest Shots) --- */
+        .gallery-section {
+            padding: 100px 5%;
+        }
+        /* Layout: 1 large featured + grid of smaller ones */
+        .gallery-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+        }
+        /* The first image spans full width */
+        .gallery-layout .card:first-child {
+            grid-column: 1 / -1;
+        }
+        .gallery-layout .card:first-child img {
+            height: 60vh;
+            object-fit: cover;
+            border-radius: 30px;
+        }
+        .card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform 0.5s ease;
+            filter: grayscale(20%);
+        }
+        .card:hover img {
+            transform: scale(1.03);
+            filter: grayscale(0%);
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-section {
+            padding: 100px 5% 50px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .contact-title-large {
+            font-size: 15vw;
+            color: var(--accent-color);
+            line-height: 0.8;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+        }
+        .contact-hand-img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            z-index: 1;
+            /* REPLACE WITH YOUR HAND/CAMERA IMAGE */
+            content: url('https://placehold.co/500x600/1a2e1a/dfff4f?text=Hand+Holding+Camera');
+        }
+        .contact-links-container {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 200px; /* Space for the hand image */
+            margin-bottom: 50px;
+        }
+        .contact-link-item a {
+            font-family: var(--title-font);
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            transition: 0.3s;
+        }
+        .contact-link-item a:hover { color: var(--accent-color); padding-bottom: 5px; }
+        .footer {
+            position: relative;
+            z-index: 3;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* --- POPUP MODALS (Kept from original) --- */
+        .gallery-modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(26, 46, 26, 0.98); padding-top: 50px; }
+        .modal-content { margin: auto; width: 90%; max-width: 900px; text-align: center; padding-bottom: 50px; }
+        .modal-content h2 { color: var(--accent-color); font-size: 3rem; margin-bottom: 40px; }
+        .modal-content img { width: 100%; margin-bottom: 30px; border-radius: 20px; }
+        .close-btn { position: fixed; top: 20px; right: 30px; color: var(--accent-color); font-size: 50px; cursor: pointer; z-index: 2001; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            h1.hero-title { font-size: 18vw; }
+            .hero-image-container { display: none; } /* Hide portrait on mobile for cleaner look */
+            .hero-content { width: 100%; }
+            .hero-bg-shape { width: 90%; right: -20%; }
+            
+            .about-section { flex-direction: column; gap: 50px; }
+            .big-title { font-size: 15vw; }
+            .rotating-text-container { width: 250px; height: 250px; }
+
+            .work-item { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .work-link { align-self: flex-start; }
+
+            .gallery-layout { grid-template-columns: 1fr; }
+            .gallery-layout .card:first-child img { height: 40vh; }
+
+            .contact-title-large { font-size: 20vw; }
+            .contact-links-container { flex-direction: column; gap: 30px; margin-top: 150px;}
+            .contact-hand-img { width: 80%; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <nav>
+        <div class="logo">MARK DSOUZA</div>
+        <div class="nav-links">
+            <a href="#about">ABOUT</a>
+            <a href="#works">WORKS</a>
+            <a href="#gallery">GALLERY</a>
+            <a href="#contact">CONTACT</a>
+        </div>
+        <div class="hamburger">
+            <div class="line"></div><div class="line"></div><div class="line"></div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-bg-shape reveal"></div>
+        <div class="hero-content reveal">
+            <h1 class="hero-title">MUMBAI<br>VISUALS</h1>
+            <p class="hero-subtitle">What makes my photography unique is the combination of technical expertise and a personal touch, capturing the beauty of the ordinary and the extraordinary.</p>
+        </div>
+        <div class="hero-image-container reveal" style="transition-delay: 0.2s;">
+            <img class="hero-portrait" alt="Mark Dsouza Portrait">
+        </div>
+    </header>
+
+    <section id="about" class="about-section">
+        <div class="about-content reveal">
+            <h2 class="big-title">ABOUT</h2>
+            <div class="about-text">
+                <p>Welcome to my world of visual storytelling. I am <span class="highlight">Mark Dsouza</span>, a passionate photographer dedicated to freezing moments in time. With a keen eye for detail and a love for authentic emotions.</p>
+                <p>Based in Mumbai, I believe you don't need the most expensive gear to tell a story. I am a student of the streets, constantly learning to freeze time—turning the chaos into cinematic silence.</p>
+            </div>
+        </div>
+        <div class="about-visuals reveal" style="transition-delay: 0.2s;">
+            <div class="rotating-text-container">
+                <svg viewBox="0 0 100 100" width="100" height="100">
+                    <defs>
+                        <path id="circle"
+                        d="
+                        M 50, 50
+                        m -37, 0
+                        a 37,37 0 1,1 74,0
+                        a 37,37 0 1,1 -74,0
+                        "
+                        />
+                    </defs>
+                    <text font-size="17">
+                        <textPath xlink:href="#circle" class="rotating-text">
+                        GEAR MY GEAR MY GEAR MY GEAR MY
+                        </textPath>
+                    </text>
+                </svg>
+            </div>
+            <img class="about-camera-img" alt="Camera Gear">
+        </div>
+    </section>
+
+    <section id="works" class="works-section">
+        <h2 class="big-title reveal">WORKS</h2>
+        <div class="works-list reveal">
+            
+            <div class="work-item reveal" onclick="openGallery('street-gallery', 'street')">
+                <div class="work-info">
+                    <div class="work-year">2024</div>
+                    <div class="work-title">STREET PHOTOGRAPHY</div>
+                    <div class="work-desc">Capturing the raw, unscripted moments of daily life in Mumbai.</div>
+                </div>
+                <div class="work-link">
+                    <button class="discover-btn">DISCOVER</button>
+                </div>
+            </div>
+
+            <div class="work-item reveal" onclick="openGallery('ganpati-gallery', 'ganpati')" style="transition-delay: 0.1s;">
+                <div class="work-info">
+                    <div class="work-year">2023</div>
+                    <div class="work-title">GANPATI FESTIVAL</div>
+                    <div class="work-desc">The vibrant energy and devotion of Mumbai's biggest festival.</div>
+                </div>
+                <div class="work-link">
+                    <button class="discover-btn">DISCOVER</button>
+                </div>
+            </div>
+
+            <div class="work-item reveal" onclick="openGallery('walkeshwar-gallery', 'walkeshwar')" style="transition-delay: 0.2s;">
+                <div class="work-info">
+                    <div class="work-year">2023</div>
+                    <div class="work-title">WALKESHWAR</div>
+                    <div class="work-desc">Exploring the historic and cultural depths of the city.</div>
+                </div>
+                <div class="work-link">
+                    <button class="discover-btn">DISCOVER</button>
+                </div>
+            </div>
+
+             <div class="work-item disabled reveal" style="transition-delay: 0.3s;">
+                <div class="work-info">
+                    <div class="work-year">COMING SOON</div>
+                    <div class="work-title">PORTRAIT</div>
+                    <div class="work-desc">Currently working on this collection. Stay tuned.</div>
+                </div>
+                <div class="work-link">
+                    <button class="discover-btn">DISCOVER</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery-section">
+        <h2 class="big-title reveal" style="text-align: right;">GALLERY</h2>
+        <div class="gallery-layout" id="latest-grid">
+            <div style="color: var(--accent-color); padding:20px; grid-column: 1/-1;">Loading latest shots from GitHub...</div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2 class="contact-title-large reveal">CONTACT ME</h2>
+        <img class="contact-hand-img reveal" style="transition-delay: 0.2s;" alt="Hand holding camera">
+        
+        <div class="contact-links-container reveal" style="transition-delay: 0.4s;">
+            <div class="contact-link-item">
+                <a href="mailto:markdsouza993@gmail.com">markdsouza993@gmail.com</a>
+            </div>
+            <div class="contact-link-item">
+                 <a href="https://www.instagram.com/urbngraphy/?__pwa=1" target="_blank">@urbngraphy</a>
+            </div>
+        </div>
+        <div class="footer reveal" style="transition-delay: 0.5s;">
+            &copy; 2026 MARK DSOUZA. ALL RIGHTS RESERVED.
+        </div>
+    </section>
+
+
+    <div id="street-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('street-gallery')">&times;</span><div class="modal-content"><h2>Street Photography</h2><div id="street-container">Loading...</div></div></div>
+    <div id="ganpati-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('ganpati-gallery')">&times;</span><div class="modal-content"><h2>Ganpati Festival</h2><div id="ganpati-container">Loading...</div></div></div>
+    <div id="walkeshwar-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('walkeshwar-gallery')">&times;</span><div class="modal-content"><h2>Walkeshwar</h2><div id="walkeshwar-container">Loading...</div></div></div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const githubUsername = "markdsouza993-creator"; 
+        const githubRepo = "photography-portfolio"; 
+        const folderNameLatest = "latestimages"; 
+
+        // --- FETCH IMAGES ---
+        async function fetchImages(folderName, containerId, limit = 0, offset = 0) {
+            const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
+            const container = document.getElementById(containerId);
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error(response.statusText);
+                const data = await response.json();
+                if (!Array.isArray(data)) return;
+                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
+                                   .sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
+                container.innerHTML = ""; 
+                let filesToShow = limit > 0 ? images.slice(offset, offset + limit) : (offset > 0 ? images.slice(offset) : images);
+                filesToShow.forEach(file => {
+                    const imgDiv = document.createElement('div');
+                    // Check if it's the main grid or popup
+                    if (containerId === 'latest-grid') {
+                        imgDiv.className = 'card reveal active';
+                        imgDiv.innerHTML = `<img src="${file.download_url}" alt="${file.name}">`;
+                    } else {
+                        imgDiv.innerHTML = `<img src="${file.download_url}" alt="${file.name}">`;
+                    }
+                    container.appendChild(imgDiv);
+                });
+            } catch (error) { console.error("Error:", error); container.innerHTML = "Failed to load."; }
+        }
+
+        // --- LOAD HOME CONTENT ---
+        async function loadLatest() {
+            // Load all images for the gallery section
+            fetchImages(folderNameLatest, 'latest-grid');
+        }
+
+        // --- UI LOGIC ---
+        function openGallery(modalId, folderName) {
+            document.getElementById(modalId).style.display = "block";
+            document.body.style.overflow = "hidden";
+            const containerId = modalId.replace('gallery', 'container');
+            if(document.getElementById(containerId).innerText.includes("Loading")) {
+                fetchImages(folderName, containerId); 
+            }
+        }
+        function closeGallery(id) { document.getElementById(id).style.display = "none"; document.body.style.overflow = "auto"; }
+        window.onclick = function(e) { if(e.target.classList.contains('gallery-modal')) closeGallery(e.target.id); }
+
+        // --- INIT & ANIMATION ---
+        window.onload = function() { setTimeout(() => window.scrollTo(0, 0), 10); loadLatest(); };
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        }
+        // Trigger reveal on load for initial elements
+        reveal();
+    </script>
+</body>
+</html>
