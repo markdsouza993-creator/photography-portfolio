@@ -42,14 +42,14 @@
             backdrop-filter: blur(2px);
         }
 
-        /* HEADINGS: TIMES NEW ROMAN (Classic) */
+        /* HEADINGS */
         h1, h2, h3 { 
             font-family: 'Times New Roman', Times, serif; 
             text-transform: uppercase; 
             letter-spacing: 0px;
         }
 
-        /* === 3. FIXED SIDEBAR === */
+        /* === 3. SIDEBAR (Desktop) === */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
@@ -86,6 +86,8 @@
             transition: 0.4s;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: 700;
+            display: block; /* Ensure they sit on their own lines on desktop */
+            width: 100%;
         }
         .nav-btn:hover, .nav-btn.active { 
             color: #fff; 
@@ -143,73 +145,15 @@
 
         /* Collections Grid */
         .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        
-        /* CARD STYLES */
         .collection-link { text-decoration: none; color: inherit; display: block; }
         .collection-card { position: relative; height: 350px; border: 1px solid #222; cursor: pointer; overflow: hidden; }
         .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s ease; opacity: 0.8; filter: grayscale(100%); }
         .collection-card:hover img { transform: scale(1.05); opacity: 1; filter: grayscale(0%); }
-        
         .collection-title { 
-            position: absolute; 
-            bottom: 30px; 
-            left: 30px; 
-            font-size: 2.5rem; 
-            font-family: 'Times New Roman', Times, serif; 
-            font-style: italic;
-            z-index: 2; 
-            text-shadow: 0 5px 15px rgba(0,0,0,0.8); 
-            color: #fff;
+            position: absolute; bottom: 30px; left: 30px; 
+            font-size: 2.5rem; font-family: 'Times New Roman', Times, serif; font-style: italic;
+            z-index: 2; text-shadow: 0 5px 15px rgba(0,0,0,0.8); color: #fff;
         }
-
-        /* About & Gear */
-        .about-layout { display: flex; gap: 80px; align-items: flex-start; }
-        
-        .about-text { 
-            flex: 1; 
-            font-family: 'Times New Roman', Times, serif; 
-            font-size: 1.4rem; 
-            line-height: 1.6; 
-            color: #ccc; 
-            font-style: italic; 
-        }
-        .about-text strong { color: #fff; font-family: Arial, Helvetica, sans-serif; font-style: normal; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;}
-        
-        .outlined-name {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 4rem;
-            font-weight: bold;
-            font-style: normal;
-            margin-bottom: 20px;
-            color: transparent; 
-            -webkit-text-stroke: 1px #fff; 
-            letter-spacing: 2px;
-        }
-
-        /* --- UPDATED PROFILE PICTURE SIZE --- */
-        .profile-img { 
-            width: 250px;   /* WAS 120px */
-            height: 250px;  /* WAS 120px */
-            border-radius: 50%; 
-            border: 3px solid var(--accent); /* Thicker border for bigger image */
-            object-fit: cover; 
-            margin-bottom: 40px; 
-            display: block;
-        }
-        
-        .gear-box { 
-            flex: 0.6; 
-            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); 
-            padding: 40px; 
-            text-align: center; 
-            border: 1px solid #222;
-        }
-        .gear-box img { width: 100%; max-width: 200px; margin-bottom: 20px; mix-blend-mode: lighten; opacity: 0.8; }
-
-        /* Latest Grid */
-        .masonry-grid { column-count: 3; column-gap: 30px; }
-        .grid-img { width: 100%; margin-bottom: 30px; display: block; cursor: zoom-in; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .grid-img:hover { transform: translateY(-5px); opacity: 0.9; }
 
         /* Coming Soon Box */
         .coming-soon-box {
@@ -220,23 +164,97 @@
             border-radius: 4px;
         }
 
-        /* Mobile */
-        @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; padding: 20px; flex-direction: row; align-items: center; border-right: none; border-bottom: 1px solid #222;}
-            .nav-menu { display: none; }
-            .main-content { margin-left: 0; width: 100%; }
-            .section { padding: 50px 20px; }
-            .hero-title { font-size: 3.5rem; }
-            .about-layout, .collections-grid { grid-template-columns: 1fr; flex-direction: column; gap: 40px; }
-            .masonry-grid { column-count: 1; }
-            .collection-card { width: 100%; margin-bottom: 20px; height: 250px; }
+        /* About & Gear */
+        .about-layout { display: flex; gap: 80px; align-items: flex-start; }
+        .about-text { flex: 1; font-family: 'Times New Roman', Times, serif; font-size: 1.4rem; line-height: 1.6; color: #ccc; font-style: italic; }
+        .about-text strong { color: #fff; font-family: Arial, Helvetica, sans-serif; font-style: normal; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;}
+        .outlined-name {
+            font-family: 'Times New Roman', Times, serif; font-size: 4rem; font-weight: bold; font-style: normal;
+            margin-bottom: 20px; color: transparent; -webkit-text-stroke: 1px #fff; letter-spacing: 2px;
         }
+        .profile-img { 
+            width: 250px; height: 250px; border-radius: 50%; 
+            border: 3px solid var(--accent); object-fit: cover; margin-bottom: 40px; display: block;
+        }
+        .gear-box { 
+            flex: 0.6; background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); 
+            padding: 40px; text-align: center; border: 1px solid #222;
+        }
+        .gear-box img { width: 100%; max-width: 200px; margin-bottom: 20px; mix-blend-mode: lighten; opacity: 0.8; }
+
+        /* Latest Grid */
+        .masonry-grid { column-count: 3; column-gap: 30px; }
+        .grid-img { width: 100%; margin-bottom: 30px; display: block; cursor: zoom-in; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .grid-img:hover { transform: translateY(-5px); opacity: 0.9; }
 
         /* Lightbox */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
         .lightbox img { max-height: 90vh; max-width: 90vw; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
         .close-lightbox { position: absolute; top: 30px; right: 30px; color: white; font-size: 3rem; cursor: pointer; font-weight: 100; transition: 0.3s;}
         .close-lightbox:hover { color: var(--accent); transform: rotate(90deg); }
+
+        /* ========================================= */
+        /* === MOBILE RESPONSIVE FIXES (CRUCIAL) === */
+        /* ========================================= */
+        @media (max-width: 768px) {
+            /* 1. Reset Sidebar to Top Bar */
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: relative; /* Moves it into normal flow */
+                padding: 20px; 
+                flex-direction: column; /* Stack logo on top of menu */
+                align-items: center; 
+                border-right: none; 
+                border-bottom: 1px solid #333;
+                background-color: #000;
+            }
+            
+            /* 2. Brand Adjustment */
+            .brand { margin-bottom: 20px; font-size: 1.8rem; }
+
+            /* 3. SHOW THE MENU! (Previously hidden) */
+            .nav-menu { 
+                display: flex; 
+                flex-wrap: wrap; 
+                justify-content: center; 
+                gap: 15px; 
+                width: 100%;
+            }
+
+            /* 4. Style Mobile Buttons */
+            .nav-btn {
+                width: auto; /* Let them shrink to fit */
+                font-size: 0.75rem; /* Smaller text for mobile */
+                padding: 8px 12px;
+                border: 1px solid #333; /* Give them a border so they look like buttons */
+                border-radius: 20px;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+
+            /* 5. Active State for Mobile */
+            .nav-btn:hover, .nav-btn.active { 
+                background-color: var(--accent);
+                color: #fff;
+                padding-left: 12px; /* Reset padding shift */
+                border-left: 1px solid var(--accent); /* Reset border */
+                border-color: var(--accent);
+            }
+
+            /* 6. Fix Content Width */
+            .main-content { margin-left: 0; width: 100%; }
+            .section { padding: 40px 20px; }
+            
+            /* 7. Typography Fixes */
+            .hero-title { font-size: 3rem; }
+            .about-layout, .collections-grid { grid-template-columns: 1fr; flex-direction: column; gap: 40px; }
+            .masonry-grid { column-count: 1; }
+            .collection-card { width: 100%; margin-bottom: 20px; height: 250px; }
+            
+            /* 8. Hide Socials on Mobile to save space */
+            .socials { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -250,9 +268,7 @@
         <div class="nav-menu">
             <button class="nav-btn active" onclick="showSection('home', this)">Introduction</button>
             <button class="nav-btn" onclick="showSection('collections', this)">Series / Collections</button>
-            
             <button class="nav-btn" onclick="showSection('work', this)">Current Work</button>
-            
             <button class="nav-btn" onclick="showSection('latest', this)">Latest Stream</button>
             <button class="nav-btn" onclick="showSection('about', this)">About & Gear</button>
         </div>
