@@ -479,74 +479,63 @@
     <div id="street-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('street-gallery')">&times;</span><div class="modal-content"><h2>Street Photography</h2><div id="street-container">Loading...</div></div></div>
     <div id="ganpati-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('ganpati-gallery')">&times;</span><div class="modal-content"><h2>Ganpati Festival</h2><div id="ganpati-container">Loading...</div></div></div>
     <div id="walkeshwar-gallery" class="gallery-modal"><span class="close-btn" onclick="closeGallery('walkeshwar-gallery')">&times;</span><div class="modal-content"><h2>Walkeshwar</h2><div id="walkeshwar-container">Loading...</div></div></div>
-
 <script>
         // --- CONFIGURATION ---
-        // 1. UPDATE THESE TO MATCH YOUR GITHUB EXACTLY
-        const githubUsername = "markdsouza993"; // Double check this!
+        // CONFIRMED CORRECT FROM SCREENSHOT
+        const githubUsername = "markdsouza993-creator"; 
         const githubRepo = "photography-portfolio"; 
-        const folderNameLatest = "latestimages"; // strict case-sensitive
         
+        // ⚠️ CRITICAL: THESE MUST MATCH YOUR GITHUB FOLDERS EXACTLY (Case Sensitive!)
+        // If your folder is "LatestImages", change this line to match it.
+        const folderNameLatest = "latestimages"; 
+
         // --- FETCH IMAGES ---
         async function fetchImages(folderName, containerId, limit = 0, offset = 0) {
-            const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
             const container = document.getElementById(containerId);
-            
-            // Visual feedback that we are trying to load
-            container.innerHTML = `<div style="padding:20px; color:#ccc;">Connecting to GitHub...</div>`;
+            const apiUrl = `https://api.github.com/repos/${githubUsername}/${githubRepo}/contents/${folderName}`;
+
+            // 1. Show Loading
+            container.innerHTML = `<div style="padding:20px; color:#888;">Connecting to GitHub folder: <b>${folderName}</b>...</div>`;
 
             try {
                 const response = await fetch(apiUrl);
                 
-                // ERROR HANDLING: If GitHub says "No", tell us why
+                // 2. ERROR DETECTION
                 if (!response.ok) {
                     if (response.status === 404) {
-                        throw new Error(`Folder "${folderName}" not found (404). Check repo privacy or folder name.`);
-                    } else if (response.status === 403) {
-                        throw new Error(`Rate Limit Exceeded (403). Wait 1 hour.`);
+                        throw new Error(`FOLDER NOT FOUND (404). <br>Checked: <b>${folderName}</b><br>Check if folder exists or has capital letters.`);
                     } else {
-                        throw new Error(`GitHub Error: ${response.status} ${response.statusText}`);
+                        throw new Error(`GitHub Error: ${response.status}`);
                     }
                 }
 
                 const data = await response.json();
 
-                // If data isn't a list (e.g. it's a file, not a folder), throw error
-                if (!Array.isArray(data)) {
-                    throw new Error("Target is not a folder.");
-                }
-
-                // Filter for images only
-                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
-                                   .sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
+                // 3. FILTER IMAGES
+                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i));
 
                 if (images.length === 0) {
-                    container.innerHTML = "Folder found, but no images detected.";
+                    container.innerHTML = `<div style="padding:20px;">Folder <b>${folderName}</b> found, but it is empty.</div>`;
                     return;
                 }
 
-                container.innerHTML = ""; // Clear loading message
-
-                let filesToShow = limit > 0 ? images.slice(offset, offset + limit) : (offset > 0 ? images.slice(offset) : images);
+                // 4. DISPLAY IMAGES
+                container.innerHTML = ""; 
+                let filesToShow = limit > 0 ? images.slice(offset, offset + limit) : images;
                 
                 filesToShow.forEach(file => {
                     const imgDiv = document.createElement('div');
-                    // Check if it's the main grid or popup
-                    if (containerId === 'latest-grid') {
-                        imgDiv.className = 'card reveal active';
-                        imgDiv.innerHTML = `<img src="${file.download_url}" loading="lazy" alt="${file.name}">`;
-                    } else {
-                        imgDiv.innerHTML = `<img src="${file.download_url}" loading="lazy" alt="${file.name}">`;
-                    }
+                    if (containerId === 'latest-grid') imgDiv.className = 'card reveal active';
+                    imgDiv.innerHTML = `<img src="${file.download_url}" loading="lazy" alt="${file.name}">`;
                     container.appendChild(imgDiv);
                 });
 
-            } catch (error) { 
-                console.error("Error:", error);
-                // PRINT THE ERROR ON THE SCREEN
-                container.innerHTML = `<div style="color: #ff6b6b; padding: 20px; border: 1px solid #ff6b6b; display:inline-block;">
-                    <strong>Error loading images:</strong><br>${error.message}
-                </div>`; 
+            } catch (error) {
+                console.error("Fetch failed:", error);
+                // 5. VISUAL ERROR MESSAGE
+                container.innerHTML = `<div style="color: #ff6b6b; padding: 20px; border: 1px solid #ff6b6b; display:inline-block; text-align:left;">
+                    <strong>❌ ERROR:</strong> ${error.message}
+                </div>`;
             }
         }
 
@@ -560,17 +549,17 @@
             document.getElementById(modalId).style.display = "block";
             document.body.style.overflow = "hidden";
             const containerId = modalId.replace('gallery', 'container');
-            // Check if empty or displaying an error, retry fetch
+            // Reload if empty or error
             const content = document.getElementById(containerId).innerText;
-            if(content.includes("Loading") || content.includes("Error") || content === "") {
+            if(content.includes("Connecting") || content.includes("ERROR") || content.trim() === "") {
                 fetchImages(folderName, containerId); 
             }
         }
         function closeGallery(id) { document.getElementById(id).style.display = "none"; document.body.style.overflow = "auto"; }
         window.onclick = function(e) { if(e.target.classList.contains('gallery-modal')) closeGallery(e.target.id); }
 
-        // --- INIT & ANIMATION ---
-        window.onload = function() { setTimeout(() => window.scrollTo(0, 0), 10); loadLatest(); };
+        // --- INIT ---
+        window.onload = function() { loadLatest(); };
         window.addEventListener('scroll', reveal);
         function reveal() {
             document.querySelectorAll('.reveal').forEach(el => {
