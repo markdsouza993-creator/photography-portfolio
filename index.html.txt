@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Dsouza | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. THE COLORS (Change these to swap colors) --- */
+        :root {
+            --bg-color: #111111;       /* Rich Charcoal (Not Pitch Black) */
+            --sidebar-bg: #161616;     /* Slightly lighter for separation */
+            --text-color: #e0e0e0;     /* Soft White */
+            --accent-color: #888888;   /* Grey for secondary text */
+        }
+
+        /* --- 2. BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- 3. SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: var(--sidebar-bg);
+            border-right: 1px solid #222; /* Subtle dark border */
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        .nav-item {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .nav-item:hover, .nav-item.active { color: #fff; letter-spacing: 0.5px; }
+
+        .socials a { color: var(--accent-color); text-decoration: none; display: block; margin-top: 10px; font-size: 0.85rem; }
+        .socials a:hover { color: #fff; }
+
+        /* --- 4. MAIN CONTENT --- */
+        .main-content {
+            margin-left: 260px;
+            padding: 50px;
+            width: calc(100% - 260px);
+        }
+
+        /* --- 5. PHOTO GRID --- */
+        .masonry-grid {
+            column-count: 3; 
+            column-gap: 30px;
+        }
+        
+        .grid-item {
+            break-inside: avoid;
+            margin-bottom: 30px;
+            cursor: zoom-in;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.3s;
+            /* Tiny border to make images pop against dark bg */
+            border: 1px solid #222; 
+        }
+        .grid-item:hover img { opacity: 0.8; }
+
+        /* --- 6. TEXT SECTIONS --- */
+        .text-section { display: none; max-width: 600px; animation: fadeIn 0.5s; }
+        .text-section h2 { margin-bottom: 20px; color: #fff; font-weight: 400; }
+        .text-section p { line-height: 1.6; color: #ccc; margin-bottom: 20px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- 7. LIGHTBOX --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        .lightbox img { max-height: 90vh; max-width: 90vw; border: 1px solid #333; }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar {
+                width: 100%; height: auto; position: relative;
+                padding: 20px; flex-direction: row; align-items: center;
+                border-bottom: 1px solid #222;
+            }
+            .logo { margin-bottom: 0; }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .masonry-grid { column-count: 1; }
+            .socials { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div>
+            <a href="#" class="logo" onclick="loadView('gallery')">MARK DSOUZA</a>
+            <div class="nav-menu">
+                <a class="nav-item active" onclick="loadView('gallery')">Portfolio</a>
+                <a class="nav-item" onclick="loadView('about')">About</a>
+                <a class="nav-item" onclick="loadView('contact')">Contact</a>
+            </div>
+        </div>
+        <div class="socials">
+            <a href="https://www.instagram.com/urbngraphy/" target="_blank">Instagram</a>
+            <a href="mailto:markdsouza993@gmail.com">Email</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div id="view-gallery">
+            <div class="masonry-grid" id="photo-grid">
+                <p style="color:#666">Connecting to GitHub...</p>
+            </div>
+        </div>
+
+        <div id="view-about" class="text-section">
+            <h2>About</h2>
+            <p>I am Mark Dsouza, based in Mumbai. I capture the silence inside the noise of the city.</p>
+        </div>
+
+        <div id="view-contact" class="text-section">
+            <h2>Contact</h2>
+            <p>markdsouza993@gmail.com<br>+91 9920536837</p>
+        </div>
+    </main>
+
+    <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        const user = "markdsouza993-creator";
+        const repo = "photography-portfolio";
+        const folder = "latestimages";
+
+        function loadView(viewName) {
+            document.getElementById('view-gallery').style.display = 'none';
+            document.getElementById('view-about').style.display = 'none';
+            document.getElementById('view-contact').style.display = 'none';
+            document.getElementById('view-' + viewName).style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        async function fetchPhotos() {
+            const container = document.getElementById('photo-grid');
+            const url = `https://api.github.com/repos/${user}/${repo}/contents/${folder}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("GitHub Error");
+                const data = await response.json();
+                const images = data.filter(file => file.name.match(/\.(jpg|jpeg|png)$/i));
+                container.innerHTML = "";
+                images.forEach(img => {
+                    const div = document.createElement('div');
+                    div.className = 'grid-item';
+                    div.innerHTML = `<img src="${img.download_url}" alt="Photo">`;
+                    div.onclick = () => {
+                        document.getElementById('lightbox-img').src = img.download_url;
+                        document.getElementById('lightbox').style.display = 'flex';
+                    };
+                    container.appendChild(div);
+                });
+            } catch (error) { container.innerHTML = "Loading..."; }
+        }
+        window.onload = fetchPhotos;
+    </script>
+</body>
+</html>
