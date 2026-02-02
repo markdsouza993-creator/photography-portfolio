@@ -166,15 +166,11 @@
             border-radius: 4px;
         }
 
-        /* === NEW CSS FOR INSTAGRAM ROLE (DARK THEME) === */
+        /* === NEW CSS FOR COMPANY LOGO === */
         .current-role {
             font-family: Arial, Helvetica, sans-serif;
             margin-top: 20px;
-            padding: 30px;
-            border-left: 4px solid #E1306C; /* Instagram Pink Accent */
-            background-color: rgba(255, 255, 255, 0.03); /* Subtle dark background */
-            max-width: 500px;
-            border-radius: 0 4px 4px 0;
+            /* No border left this time, focusing on the image */
         }
 
         .role-text {
@@ -186,28 +182,24 @@
             font-weight: bold;
         }
 
-        .company-link {
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-            font-size: 1.5rem; /* Larger text */
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            transition: color 0.3s ease;
-            font-family: 'Times New Roman', Times, serif; /* Matches your headings */
-            font-style: italic;
+        .logo-box {
+            background: #fff; /* White background to make the logo pop */
+            padding: 20px;
+            border-radius: 4px;
+            display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: fit-content;
         }
 
-        .company-link i {
-            font-size: 2rem; /* Large Logo */
-            background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; /* Makes the icon actual Insta colors */
+        .logo-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* Shadow for depth */
         }
 
-        .company-link:hover {
-            opacity: 0.8;
+        .company-logo {
+            display: block;
+            max-width: 200px; /* Controls size of logo */
+            height: auto;
         }
 
         /* About & Gear */
@@ -378,8 +370,10 @@
             
             <div class="current-role">
                 <p class="role-text">Currently working with</p>
-                <a href="https://www.instagram.com/bombaycreativeco/" target="_blank" class="company-link">
-                    <i class="fab fa-instagram"></i> Bombay Creative Co.
+                <a href="https://www.instagram.com/bombaycreativeco/" target="_blank">
+                    <div class="logo-box">
+                        <img src="latestimages/bcc_logo.png" alt="Bombay Creative Co." class="company-logo">
+                    </div>
                 </a>
             </div>
 
@@ -461,7 +455,7 @@
                 
                 container.innerHTML = "";
                 images.forEach(img => {
-                    if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover')) return;
+                    if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover') || img.name.includes('bcc_logo')) return;
                     
                     container.innerHTML += `<img src="${img.download_url}" class="grid-img" onclick="openLightbox('${img.download_url}')">`;
                 });
@@ -470,13 +464,4 @@
 
         function openLightbox(url) {
             document.getElementById('lightbox-img').src = url;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
-        window.onload = loadLatest;
-    </script>
-</body>
-</html>
+            document.getElementById('lightbox').style
