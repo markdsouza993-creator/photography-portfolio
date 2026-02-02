@@ -33,7 +33,7 @@
             background-image: url('latestimages/background.jpg'); 
             background-size: cover;
             background-position: center;
-            z-index: -2; /* Pushed further back */
+            z-index: -1;
         }
         .site-overlay {
             position: fixed;
@@ -88,7 +88,7 @@
             transition: 0.4s;
             font-family: Arial, Helvetica, sans-serif;
             font-weight: 700;
-            display: block;
+            display: block; /* Ensure they sit on their own lines on desktop */
             width: 100%;
         }
         .nav-btn:hover, .nav-btn.active { 
@@ -105,9 +105,6 @@
             margin-left: var(--sidebar-width);
             width: calc(100% - var(--sidebar-width));
             min-height: 100vh;
-            /* FIX: Ensures content is clickable above background */
-            position: relative;
-            z-index: 1;
         }
 
         .section { display: none; padding: 100px; animation: fadeIn 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -160,10 +157,24 @@
             z-index: 2; text-shadow: 0 5px 15px rgba(0,0,0,0.8); color: #fff;
         }
 
-        /* Current Work / Logo */
+        /* Coming Soon Box */
+        .coming-soon-box {
+            border: 1px dashed #333;
+            padding: 100px 20px;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            border-radius: 4px;
+        }
+
+        /* === NEW CSS FOR INSTAGRAM ROLE (DARK THEME) === */
         .current-role {
             font-family: Arial, Helvetica, sans-serif;
             margin-top: 20px;
+            padding: 30px;
+            border-left: 4px solid #E1306C; /* Instagram Pink Accent */
+            background-color: rgba(255, 255, 255, 0.03); /* Subtle dark background */
+            max-width: 500px;
+            border-radius: 0 4px 4px 0;
         }
 
         .role-text {
@@ -175,24 +186,28 @@
             font-weight: bold;
         }
 
-        .logo-box {
-            background: #fff;
-            padding: 20px;
-            border-radius: 4px;
-            display: inline-block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: fit-content;
+        .company-link {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.5rem; /* Larger text */
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: color 0.3s ease;
+            font-family: 'Times New Roman', Times, serif; /* Matches your headings */
+            font-style: italic;
         }
 
-        .logo-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        .company-link i {
+            font-size: 2rem; /* Large Logo */
+            background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Makes the icon actual Insta colors */
         }
 
-        .company-logo {
-            display: block;
-            max-width: 200px;
-            height: auto;
+        .company-link:hover {
+            opacity: 0.8;
         }
 
         /* About & Gear */
@@ -228,20 +243,23 @@
         /* === MOBILE RESPONSIVE FIXES (CRUCIAL) === */
         /* ========================================= */
         @media (max-width: 768px) {
+            /* 1. Reset Sidebar to Top Bar */
             .sidebar { 
                 width: 100%; 
                 height: auto; 
-                position: relative;
+                position: relative; /* Moves it into normal flow */
                 padding: 20px; 
-                flex-direction: column; 
+                flex-direction: column; /* Stack logo on top of menu */
                 align-items: center; 
                 border-right: none; 
                 border-bottom: 1px solid #333;
                 background-color: #000;
             }
             
+            /* 2. Brand Adjustment */
             .brand { margin-bottom: 20px; font-size: 1.8rem; }
 
+            /* 3. SHOW THE MENU! (Previously hidden) */
             .nav-menu { 
                 display: flex; 
                 flex-wrap: wrap; 
@@ -250,32 +268,37 @@
                 width: 100%;
             }
 
+            /* 4. Style Mobile Buttons */
             .nav-btn {
-                width: auto;
-                font-size: 0.75rem;
+                width: auto; /* Let them shrink to fit */
+                font-size: 0.75rem; /* Smaller text for mobile */
                 padding: 8px 12px;
-                border: 1px solid #333;
+                border: 1px solid #333; /* Give them a border so they look like buttons */
                 border-radius: 20px;
                 text-align: center;
                 margin-bottom: 5px;
             }
 
+            /* 5. Active State for Mobile */
             .nav-btn:hover, .nav-btn.active { 
                 background-color: var(--accent);
                 color: #fff;
-                padding-left: 12px;
-                border-left: 1px solid var(--accent);
+                padding-left: 12px; /* Reset padding shift */
+                border-left: 1px solid var(--accent); /* Reset border */
                 border-color: var(--accent);
             }
 
+            /* 6. Fix Content Width */
             .main-content { margin-left: 0; width: 100%; }
             .section { padding: 40px 20px; }
             
+            /* 7. Typography Fixes */
             .hero-title { font-size: 3rem; }
             .about-layout, .collections-grid { grid-template-columns: 1fr; flex-direction: column; gap: 40px; }
             .masonry-grid { column-count: 1; }
             .collection-card { width: 100%; margin-bottom: 20px; height: 250px; }
             
+            /* 8. Hide Socials on Mobile to save space */
             .socials { display: none; }
         }
     </style>
@@ -319,7 +342,6 @@
                         <img src="latestimages/chorbazaar_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Street'">
                         <div class="collection-title">Chor bazaar</div>
                     </div>
-                 </a>
                 
                 <a href="street/index.html" class="collection-link">
                     <div class="collection-card">
@@ -356,10 +378,8 @@
             
             <div class="current-role">
                 <p class="role-text">Currently working with</p>
-                <a href="https://www.instagram.com/bombaycreativeco/" target="_blank">
-                    <div class="logo-box">
-                        <img src="latestimages/bcc_logo.png" alt="Bombay Creative Co." class="company-logo">
-                    </div>
+                <a href="https://www.instagram.com/bombaycreativeco/" target="_blank" class="company-link">
+                    <i class="fab fa-instagram"></i> Bombay Creative Co.
                 </a>
             </div>
 
@@ -422,74 +442,40 @@
         const user = "markdsouza993-creator";
         const repo = "photography-portfolio";
         
-        // 1. Navigation Logic
         function showSection(id, btn) {
-            // Hide all sections
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            // Show the target section
-            const target = document.getElementById('sec-' + id);
-            if (target) {
-                target.classList.add('active');
-            }
-            
-            // Update button states (if a button was clicked)
+            document.getElementById('sec-' + id).classList.add('active');
             if(btn) {
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
             }
         }
 
-        // 2. Load Images from GitHub
         async function loadLatest() {
             const container = document.getElementById('latest-grid');
             const url = `https://api.github.com/repos/${user}/${repo}/contents/latestimages`;
-            
-            // Show loading state
-            container.innerHTML = "Loading...";
-
             try {
                 const res = await fetch(url);
-                if (!res.ok) throw new Error('Network response was not ok');
-                
                 const data = await res.json();
                 const images = data.filter(f => f.name.match(/\.(jpg|jpeg|png)$/i));
                 
                 container.innerHTML = "";
-                
-                if (images.length === 0) {
-                    container.innerHTML = "No images found.";
-                    return;
-                }
-
                 images.forEach(img => {
-                    // Filter out system/layout images
-                    if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover') || img.name.includes('bcc_logo')) return;
+                    if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover')) return;
                     
-                    // Add image to grid
-                    container.innerHTML += `<img src="${img.download_url}" class="grid-img" onclick="openLightbox('${img.download_url}')" loading="lazy">`;
+                    container.innerHTML += `<img src="${img.download_url}" class="grid-img" onclick="openLightbox('${img.download_url}')">`;
                 });
-            } catch(e) { 
-                console.error(e);
-                container.innerHTML = "Error loading images from GitHub."; 
-            }
+            } catch(e) { container.innerHTML = "Error loading images from GitHub."; }
         }
 
-        // 3. Lightbox Logic
         function openLightbox(url) {
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            
-            img.src = url;
-            lightbox.style.display = 'flex'; // This reveals the lightbox
+            document.getElementById('lightbox-img').src = url;
+            document.getElementById('lightbox').style.display = 'flex';
         }
-
         function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.style.display = 'none'; // This hides it
-            document.getElementById('lightbox-img').src = ''; // Clear source
+            document.getElementById('lightbox').style.display = 'none';
         }
 
-        // Initialize: Load images when the page opens
         window.onload = loadLatest;
     </script>
 </body>
