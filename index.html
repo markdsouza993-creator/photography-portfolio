@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mark Dsouza | Visuals</title>
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         /* === 1. RED & DARK THEME === */
         :root {
@@ -162,6 +164,50 @@
             text-align: center;
             background: rgba(255,255,255,0.02);
             border-radius: 4px;
+        }
+
+        /* === NEW CSS FOR INSTAGRAM ROLE (DARK THEME) === */
+        .current-role {
+            font-family: Arial, Helvetica, sans-serif;
+            margin-top: 20px;
+            padding: 30px;
+            border-left: 4px solid #E1306C; /* Instagram Pink Accent */
+            background-color: rgba(255, 255, 255, 0.03); /* Subtle dark background */
+            max-width: 500px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .role-text {
+            font-size: 0.8rem;
+            color: #888;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .company-link {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.5rem; /* Larger text */
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: color 0.3s ease;
+            font-family: 'Times New Roman', Times, serif; /* Matches your headings */
+            font-style: italic;
+        }
+
+        .company-link i {
+            font-size: 2rem; /* Large Logo */
+            background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Makes the icon actual Insta colors */
+        }
+
+        .company-link:hover {
+            opacity: 0.8;
         }
 
         /* About & Gear */
@@ -330,12 +376,13 @@
         <section id="sec-work" class="section">
             <h2 style="color:var(--text-main); margin-bottom:50px; font-size:3rem; font-style:italic;">Current Work</h2>
             
-            <div class="coming-soon-box">
-                <h3 style="color: #666; font-family: Arial; letter-spacing: 4px; font-size: 1.5rem; margin-bottom: 20px;">COMING SOON</h3>
-                <p style="color: #444; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;">
-                    Collaborations & Client Projects
-                </p>
+            <div class="current-role">
+                <p class="role-text">Currently working with</p>
+                <a href="https://www.instagram.com/bombaycreativeco/" target="_blank" class="company-link">
+                    <i class="fab fa-instagram"></i> Bombay Creative Co.
+                </a>
             </div>
+
         </section>
 
         <section id="sec-latest" class="section">
@@ -433,6 +480,3 @@
     </script>
 </body>
 </html>
-
-
-
