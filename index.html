@@ -142,8 +142,8 @@
         }
         .cta-btn:hover { background: var(--accent); border-color: var(--accent); }
 
-        /* Collections Grid - Changed to repeat(2, 1fr) for a 2x2 layout */
-        .collections-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        /* Collections Grid - Changed to 3 columns to handle 5 items nicely */
+        .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
         
         /* New Link Style to remove default underlines */
         .collection-link { text-decoration: none; display: block; color: inherit; }
@@ -204,7 +204,7 @@
             text-align: center; 
             border: 1px solid #222;
         }
-        /* FIX: Removed mix-blend-mode and opacity so the camera is fully visible */
+        /* Camera image fully visible */
         .gear-box img { width: 100%; max-width: 200px; margin-bottom: 20px; }
 
         /* Latest Grid */
@@ -291,6 +291,13 @@
                         <div class="collection-title">Portraits</div>
                     </div>
                 </a>
+
+                <a href="automotive/index.html" class="collection-link">
+                    <div class="collection-card">
+                        <img src="latestimages/automotive_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Automotive'">
+                        <div class="collection-title">Automotive</div>
+                    </div>
+                </a>
             </div>
             
         </section>
@@ -359,8 +366,6 @@
                 });
             } catch(e) { container.innerHTML = "Error loading images."; }
         }
-
-        // The openGalleryModal function has been removed since the cards now act as direct links.
 
         function openLightbox(url) {
             document.getElementById('lightbox-img').src = url;
