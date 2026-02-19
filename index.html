@@ -9,7 +9,6 @@
         /* === 1. RED & DARK THEME === */
         :root {
             --accent: #E50914;         /* Netflix Red */
-            /* BRIGHTNESS ADJUSTED: Changed 0.85 to 0.4 for a lighter look */
             --bg-overlay: rgba(5, 5, 5, 0.4); 
             --text-main: #ffffff;
             --sidebar-width: 280px;
@@ -40,7 +39,6 @@
             width: 100%; height: 100%;
             background: var(--bg-overlay);
             z-index: -1;
-            /* BLUR ADJUSTED: Increased to 8px for better depth */
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px); /* Support for Safari */
         }
@@ -144,8 +142,8 @@
         }
         .cta-btn:hover { background: var(--accent); border-color: var(--accent); }
 
-        /* Collections Grid */
-        .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        /* Collections Grid - Changed to 2 columns for 4 items */
+        .collections-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
         .collection-card { position: relative; height: 350px; border: 1px solid #222; cursor: pointer; overflow: hidden; }
         .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s ease; opacity: 0.8; filter: grayscale(100%); }
         .collection-card:hover img { transform: scale(1.05); opacity: 1; filter: grayscale(0%); }
@@ -261,16 +259,20 @@
             <h2 style="color:var(--text-main); margin-bottom:50px; font-size:3rem; font-style:italic;">Selected Series</h2>
             <div class="collections-grid">
                 <div class="collection-card" onclick="openGalleryModal('street')">
-                    <img src="latestimages/street_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Street'">
+                    <img src="latestimages/street_cover.jpg" onerror="this.src='https://images.unsplash.com/photo-1555881400-74d702736b47?q=80&w=800&auto=format&fit=crop'">
                     <div class="collection-title">Street</div>
                 </div>
                 <div class="collection-card" onclick="openGalleryModal('ganpati')">
-                    <img src="latestimages/ganpati_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Ganpati'">
+                    <img src="latestimages/ganpati_cover.jpg" onerror="this.src='https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?q=80&w=800&auto=format&fit=crop'">
                     <div class="collection-title">Ganpati</div>
                 </div>
                 <div class="collection-card" onclick="openGalleryModal('walkeshwar')">
-                    <img src="latestimages/walkeshwar_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Walkeshwar'">
+                    <img src="latestimages/walkeshwar_cover.jpg" onerror="this.src='https://images.unsplash.com/photo-1570168007204-dfb528c68bea?q=80&w=800&auto=format&fit=crop'">
                     <div class="collection-title">Walkeshwar</div>
+                </div>
+                <div class="collection-card" onclick="openGalleryModal('automotive')">
+                    <img src="latestimages/automotive_cover.jpg" onerror="this.src='https://images.unsplash.com/photo-1587750059638-e7e8c43b99fc?q=80&w=800&auto=format&fit=crop'">
+                    <div class="collection-title">Automotive</div>
                 </div>
             </div>
         </section>
@@ -286,7 +288,7 @@
         <section id="sec-about" class="section">
             <div class="about-layout">
                 <div class="about-text">
-                    <img src="latestimages/profile.jpg" class="profile-img" alt="Mark Dsouza" onerror="this.src='https://ui-avatars.com/api/?name=Mark+Dsouza&background=E50914&color=fff&size=256'">
+                    <img src="latestimages/portrait.jpg" class="profile-img" alt="Mark Dsouza" onerror="this.src='https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=256&auto=format&fit=crop'">
                     <div class="outlined-name">MARK DSOUZA</div>
                     <p>Based in <strong style="color:var(--accent)">Malad, Mumbai</strong>, my journey is defined by a late start but a rapid obsession. I’ve always watched the world with a photographer's eye, but only recently picked up the camera to prove it.</p>
                     <br>
@@ -327,17 +329,37 @@
         async function loadLatest() {
             const container = document.getElementById('latest-grid');
             const url = `https://api.github.com/repos/${user}/${repo}/contents/latestimages`;
+            
+            // NEW PHOTOS: Fallback cinematic images in case your GitHub folder is empty or fails to load
+            const fallbackImages = [
+                "https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=800&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1605806616949-1e87b487bc2a?q=80&w=800&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1533387520709-752d83de3630?q=80&w=800&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=800&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?q=80&w=800&auto=format&fit=crop"
+            ];
+
             try {
                 const res = await fetch(url);
+                if (!res.ok) throw new Error("GitHub API fetch failed");
                 const data = await res.json();
+                
+                // If the folder exists but has no valid images, throw an error to trigger the fallback
                 const images = data.filter(f => f.name.match(/\.(jpg|jpeg|png)$/i));
+                if (images.length === 0) throw new Error("No images found");
                 
                 container.innerHTML = "";
                 images.forEach(img => {
-                    if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover')) return;
+                    if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('portrait') || img.name.includes('camera') || img.name.includes('cover')) return;
                     container.innerHTML += `<img src="${img.download_url}" class="grid-img" onclick="openLightbox('${img.download_url}')">`;
                 });
-            } catch(e) { container.innerHTML = "Error loading images."; }
+            } catch(e) { 
+                // Loads the new placeholder photos if the fetch fails
+                container.innerHTML = "";
+                fallbackImages.forEach(imgUrl => {
+                    container.innerHTML += `<img src="${imgUrl}" class="grid-img" onclick="openLightbox('${imgUrl}')">`;
+                });
+            }
         }
 
         function openGalleryModal(folderName) {
