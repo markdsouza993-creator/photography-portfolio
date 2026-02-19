@@ -9,7 +9,8 @@
         /* === 1. RED & DARK THEME === */
         :root {
             --accent: #E50914;         /* Netflix Red */
-            --bg-overlay: rgba(5, 5, 5, 0.85);
+            /* BRIGHTNESS ADJUSTED: Changed 0.85 to 0.4 for a lighter look */
+            --bg-overlay: rgba(5, 5, 5, 0.4); 
             --text-main: #ffffff;
             --sidebar-width: 280px;
         }
@@ -17,7 +18,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            /* CHANGED TO ARIAL FOR CLEAN UI (Modern) */
             font-family: Arial, Helvetica, sans-serif;
             background-color: #000;
             color: var(--text-main);
@@ -40,14 +40,16 @@
             width: 100%; height: 100%;
             background: var(--bg-overlay);
             z-index: -1;
-            backdrop-filter: blur(2px);
+            /* BLUR ADJUSTED: Increased to 8px for better depth */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* Support for Safari */
         }
 
         /* HEADINGS: TIMES NEW ROMAN (Classic) */
         h1, h2, h3 { 
             font-family: 'Times New Roman', Times, serif; 
             text-transform: uppercase; 
-            letter-spacing: 0px; /* Times looks better tight */
+            letter-spacing: 0px; 
         }
 
         /* === 3. FIXED SIDEBAR === */
@@ -78,14 +80,14 @@
             background: none;
             border: none;
             color: #666;
-            font-size: 0.85rem; /* Smaller, cleaner font */
+            font-size: 0.85rem; 
             text-transform: uppercase;
             letter-spacing: 2px;
             text-align: left;
             padding: 15px 0;
             cursor: pointer;
             transition: 0.4s;
-            font-family: Arial, Helvetica, sans-serif; /* Clean UI Font */
+            font-family: Arial, Helvetica, sans-serif; 
             font-weight: 700;
         }
         .nav-btn:hover, .nav-btn.active { 
@@ -112,7 +114,7 @@
         .hero-title { 
             font-family: 'Times New Roman', Times, serif;
             font-style: italic; 
-            font-size: 6.5rem; /* Bigger for impact */
+            font-size: 6.5rem; 
             line-height: 0.9; 
             margin-bottom: 30px; 
             text-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -162,26 +164,24 @@
         /* About & Gear */
         .about-layout { display: flex; gap: 80px; align-items: flex-start; }
         
-        /* UPDATED ABOUT TEXT STYLE */
         .about-text { 
             flex: 1; 
-            font-family: 'Times New Roman', Times, serif; /* REQUESTED FONT */
+            font-family: 'Times New Roman', Times, serif; 
             font-size: 1.4rem; 
             line-height: 1.6; 
             color: #ccc; 
-            font-style: italic; /* Cinematic feel */
+            font-style: italic; 
         }
         .about-text strong { color: #fff; font-family: Arial, Helvetica, sans-serif; font-style: normal; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;}
         
-        /* OUTLINED NAME EFFECT */
         .outlined-name {
             font-family: 'Times New Roman', Times, serif;
             font-size: 4rem;
             font-weight: bold;
             font-style: normal;
             margin-bottom: 20px;
-            color: transparent; /* Makes the inside empty */
-            -webkit-text-stroke: 1px #fff; /* Creates the outline */
+            color: transparent; 
+            -webkit-text-stroke: 1px #fff; 
             letter-spacing: 2px;
         }
 
@@ -286,25 +286,15 @@
         <section id="sec-about" class="section">
             <div class="about-layout">
                 <div class="about-text">
-                    
-                    <img 
-                        src="latestimages/profile.jpg" 
-                        class="profile-img" 
-                        alt="Mark Dsouza"
-                        onerror="this.src='https://ui-avatars.com/api/?name=Mark+Dsouza&background=E50914&color=fff&size=256'"
-                    >
-
+                    <img src="latestimages/profile.jpg" class="profile-img" alt="Mark Dsouza" onerror="this.src='https://ui-avatars.com/api/?name=Mark+Dsouza&background=E50914&color=fff&size=256'">
                     <div class="outlined-name">MARK DSOUZA</div>
-                    
                     <p>Based in <strong style="color:var(--accent)">Malad, Mumbai</strong>, my journey is defined by a late start but a rapid obsession. I’ve always watched the world with a photographer's eye, but only recently picked up the camera to prove it.</p>
                     <br>
                     <p>I believe you don't need the most expensive gear to tell a story. I am a student of the streets, constantly learning to freeze time—turning the chaos of Mumbai into cinematic silence.</p>
-                    
                     <br><br>
                     <p style="font-size: 0.8rem; letter-spacing: 2px; color: #888; font-family: Arial; font-style: normal; text-transform: uppercase;">CONTACT</p>
                     <p style="color:#fff; font-size: 1.1rem; font-family: Arial; font-style: normal;">markdsouza993@gmail.com</p>
                 </div>
-                
                 <div class="gear-box">
                     <h3 style="color:#888; margin-bottom:30px; letter-spacing: 3px; font-size: 0.8rem; font-family: Arial;">CURRENT GEAR</h3>
                     <img src="latestimages/camera.png" alt="Sony A6400" onerror="this.style.display='none'">
@@ -345,10 +335,9 @@
                 container.innerHTML = "";
                 images.forEach(img => {
                     if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover')) return;
-                    
                     container.innerHTML += `<img src="${img.download_url}" class="grid-img" onclick="openLightbox('${img.download_url}')">`;
                 });
-            } catch(e) { container.innerHTML = "Error loading images from GitHub."; }
+            } catch(e) { container.innerHTML = "Error loading images."; }
         }
 
         function openGalleryModal(folderName) {
@@ -367,4 +356,3 @@
     </script>
 </body>
 </html>
-
