@@ -40,14 +40,30 @@
             background: var(--bg-overlay);
             z-index: -1;
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px); /* Support for Safari */
+            -webkit-backdrop-filter: blur(8px); 
         }
 
-        /* HEADINGS: TIMES NEW ROMAN (Classic) */
+        /* HEADINGS */
         h1, h2, h3 { 
             font-family: 'Times New Roman', Times, serif; 
             text-transform: uppercase; 
             letter-spacing: 0px; 
+        }
+
+        .section-title {
+            color: var(--text-main);
+            margin-bottom: 50px;
+            font-size: 3rem;
+            font-style: italic;
+        }
+
+        .section-subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: -30px;
         }
 
         /* === 3. FIXED SIDEBAR === */
@@ -142,10 +158,8 @@
         }
         .cta-btn:hover { background: var(--accent); border-color: var(--accent); }
 
-        /* Collections Grid - Changed to 3 columns to handle 5 items nicely */
+        /* Collections Grid - 3 columns */
         .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        
-        /* New Link Style to remove default underlines */
         .collection-link { text-decoration: none; display: block; color: inherit; }
         
         .collection-card { position: relative; height: 350px; border: 1px solid #222; cursor: pointer; overflow: hidden; }
@@ -204,7 +218,6 @@
             text-align: center; 
             border: 1px solid #222;
         }
-        /* Camera image fully visible */
         .gear-box img { width: 100%; max-width: 200px; margin-bottom: 20px; }
 
         /* Latest Grid */
@@ -212,7 +225,7 @@
         .grid-img { width: 100%; margin-bottom: 30px; display: block; cursor: zoom-in; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .grid-img:hover { transform: translateY(-5px); opacity: 0.9; }
 
-        /* Mobile */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; padding: 20px; flex-direction: row; align-items: center; border-right: none; border-bottom: 1px solid #222;}
             .nav-menu { display: none; }
@@ -261,7 +274,7 @@
         </section>
 
         <section id="sec-collections" class="section">
-            <h2 style="color:var(--text-main); margin-bottom:50px; font-size:3rem; font-style:italic;">Selected Series</h2>
+            <h2 class="section-title">Selected Series</h2>
             
             <div class="collections-grid">
                 <a href="street/index.html" class="collection-link">
@@ -303,8 +316,8 @@
         </section>
 
         <section id="sec-latest" class="section">
-            <h2 style="color:var(--text-main); margin-bottom:10px; font-size:3rem; font-style:italic;">Latest Stream</h2>
-            <p style="color:#666; margin-bottom:40px; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">Direct feed from GitHub</p>
+            <h2 class="section-title" style="margin-bottom: 10px;">Latest Stream</h2>
+            <p class="section-subtitle">Direct feed from GitHub</p>
             <div class="masonry-grid" id="latest-grid">
                 Loading...
             </div>
@@ -356,24 +369,40 @@
             const url = `https://api.github.com/repos/${user}/${repo}/contents/latestimages`;
             try {
                 const res = await fetch(url);
+                
+                // Handle GitHub API Rate Limiting
+                if (!res.ok) throw new Error("GitHub API limit reached or repo not found.");
+                
                 const data = await res.json();
                 const images = data.filter(f => f.name.match(/\.(jpg|jpeg|png)$/i));
                 
                 container.innerHTML = "";
                 images.forEach(img => {
+                    // Filter out structural images
                     if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover')) return;
+                    
                     container.innerHTML += `<img src="${img.download_url}" class="grid-img" onclick="openLightbox('${img.download_url}')">`;
                 });
-            } catch(e) { container.innerHTML = "Error loading images."; }
+            } catch(e) { 
+                container.innerHTML = `<p style="color: red; font-family: Arial;">${e.message}</p>`; 
+            }
         }
 
         function openLightbox(url) {
             document.getElementById('lightbox-img').src = url;
             document.getElementById('lightbox').style.display = 'flex';
         }
+
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
         }
+
+        // Close lightbox when clicking the black background anywhere outside the image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
 
         window.onload = loadLatest;
     </script>
