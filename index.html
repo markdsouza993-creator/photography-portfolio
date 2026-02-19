@@ -9,8 +9,7 @@
         /* === 1. RED & DARK THEME === */
         :root {
             --accent: #E50914;         /* Netflix Red */
-            /* LIGHTENED OVERLAY: Changed from 0.85 to 0.45 for more visibility */
-            --bg-overlay: rgba(5, 5, 5, 0.45); 
+            --bg-overlay: rgba(5, 5, 5, 0.85);
             --text-main: #ffffff;
             --sidebar-width: 280px;
         }
@@ -18,6 +17,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
+            /* CHANGED TO ARIAL FOR CLEAN UI (Modern) */
             font-family: Arial, Helvetica, sans-serif;
             background-color: #000;
             color: var(--text-main);
@@ -32,26 +32,22 @@
             background-image: url('latestimages/background.jpg'); 
             background-size: cover;
             background-position: center;
-            z-index: -2;
+            z-index: -1;
         }
-        
         .site-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            /* Added a gradient: clear in middle, dark on the edges for text contrast */
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%), var(--bg-overlay);
+            background: var(--bg-overlay);
             z-index: -1;
-            /* REDUCED BLUR: Changed from 8px to 2px for sharpness */
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(8px);
         }
 
+        /* HEADINGS: TIMES NEW ROMAN (Classic) */
         h1, h2, h3 { 
             font-family: 'Times New Roman', Times, serif; 
             text-transform: uppercase; 
-            letter-spacing: 0px;
-            /* Added shadow to headings so they stay readable over a visible background */
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            letter-spacing: 0px; /* Times looks better tight */
         }
 
         /* === 3. FIXED SIDEBAR === */
@@ -60,12 +56,11 @@
             height: 100vh;
             position: fixed;
             left: 0; top: 0;
-            background: rgba(0, 0, 0, 0.85); /* Slightly transparent sidebar */
-            border-right: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0, 0, 0, 0.95);
+            border-right: 1px solid #222;
             padding: 60px 40px;
             display: flex; flex-direction: column; justify-content: space-between;
             z-index: 1000;
-            backdrop-filter: blur(10px);
         }
 
         .brand { 
@@ -82,15 +77,15 @@
         .nav-btn {
             background: none;
             border: none;
-            color: #bbb;
-            font-size: 0.85rem;
+            color: #666;
+            font-size: 0.85rem; /* Smaller, cleaner font */
             text-transform: uppercase;
             letter-spacing: 2px;
             text-align: left;
             padding: 15px 0;
             cursor: pointer;
             transition: 0.4s;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial, Helvetica, sans-serif; /* Clean UI Font */
             font-weight: 700;
         }
         .nav-btn:hover, .nav-btn.active { 
@@ -99,7 +94,7 @@
             border-left: 2px solid var(--accent); 
         }
 
-        .socials a { display: block; color: #888; text-decoration: none; margin-top: 15px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;}
+        .socials a { display: block; color: #555; text-decoration: none; margin-top: 15px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;}
         .socials a:hover { color: var(--accent); }
 
         /* === 4. MAIN CONTENT === */
@@ -117,26 +112,26 @@
         .hero-title { 
             font-family: 'Times New Roman', Times, serif;
             font-style: italic; 
-            font-size: 6.5rem;
+            font-size: 6.5rem; /* Bigger for impact */
             line-height: 0.9; 
             margin-bottom: 30px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .hero-subtitle { 
             font-family: Arial, Helvetica, sans-serif;
             font-size: 0.9rem; 
             letter-spacing: 4px;
-            color: #eee; 
+            color: #ccc; 
             margin-bottom: 50px; 
             text-transform: uppercase;
-            border-left: 3px solid var(--accent);
+            border-left: 2px solid var(--accent);
             padding-left: 20px;
-            text-shadow: 1px 1px 5px rgba(0,0,0,1);
         }
         .cta-btn { 
             padding: 18px 50px; 
-            background: rgba(0,0,0,0.5); 
+            background: transparent; 
             color: white; 
-            border: 1px solid rgba(255,255,255,0.5); 
+            border: 1px solid rgba(255,255,255,0.3); 
             font-weight: 700; 
             cursor: pointer; 
             font-family: Arial, Helvetica, sans-serif;
@@ -144,14 +139,13 @@
             font-size: 0.7rem;
             transition: 0.3s;
             text-transform: uppercase;
-            backdrop-filter: blur(5px);
         }
         .cta-btn:hover { background: var(--accent); border-color: var(--accent); }
 
         /* Collections Grid */
         .collections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        .collection-card { position: relative; height: 350px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s ease; opacity: 0.9; filter: grayscale(50%); }
+        .collection-card { position: relative; height: 350px; border: 1px solid #222; cursor: pointer; overflow: hidden; }
+        .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s ease; opacity: 0.8; filter: grayscale(100%); }
         .collection-card:hover img { transform: scale(1.05); opacity: 1; filter: grayscale(0%); }
         
         .collection-title { 
@@ -162,31 +156,32 @@
             font-family: 'Times New Roman', Times, serif; 
             font-style: italic;
             z-index: 2; 
-            text-shadow: 0 5px 15px rgba(0,0,0,1); 
+            text-shadow: 0 5px 15px rgba(0,0,0,0.8); 
         }
 
         /* About & Gear */
         .about-layout { display: flex; gap: 80px; align-items: flex-start; }
         
+        /* UPDATED ABOUT TEXT STYLE */
         .about-text { 
             flex: 1; 
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Times New Roman', Times, serif; /* REQUESTED FONT */
             font-size: 1.4rem; 
             line-height: 1.6; 
-            color: #fff; 
-            font-style: italic;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+            color: #ccc; 
+            font-style: italic; /* Cinematic feel */
         }
-        .about-text strong { color: var(--accent); font-family: Arial, Helvetica, sans-serif; font-style: normal; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;}
+        .about-text strong { color: #fff; font-family: Arial, Helvetica, sans-serif; font-style: normal; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;}
         
+        /* OUTLINED NAME EFFECT */
         .outlined-name {
             font-family: 'Times New Roman', Times, serif;
             font-size: 4rem;
             font-weight: bold;
             font-style: normal;
             margin-bottom: 20px;
-            color: transparent;
-            -webkit-text-stroke: 1.5px #fff;
+            color: transparent; /* Makes the inside empty */
+            -webkit-text-stroke: 1px #fff; /* Creates the outline */
             letter-spacing: 2px;
         }
 
@@ -198,23 +193,21 @@
             object-fit: cover; 
             margin-bottom: 40px; 
             display: block;
-            box-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
         }
         
         .gear-box { 
             flex: 0.6; 
-            background: rgba(0, 0, 0, 0.6); 
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); 
             padding: 40px; 
             text-align: center; 
-            border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+            border: 1px solid #222;
         }
-        .gear-box img { width: 100%; max-width: 200px; margin-bottom: 20px; mix-blend-mode: lighten; opacity: 1; }
+        .gear-box img { width: 100%; max-width: 200px; margin-bottom: 20px; mix-blend-mode: lighten; opacity: 0.8; }
 
         /* Latest Grid */
         .masonry-grid { column-count: 3; column-gap: 30px; }
-        .grid-img { width: 100%; margin-bottom: 30px; display: block; cursor: zoom-in; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .grid-img:hover { transform: translateY(-5px); opacity: 1; }
+        .grid-img { width: 100%; margin-bottom: 30px; display: block; cursor: zoom-in; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .grid-img:hover { transform: translateY(-5px); opacity: 0.9; }
 
         /* Mobile */
         @media (max-width: 768px) {
@@ -236,3 +229,141 @@
     </style>
 </head>
 <body>
+
+    <div class="site-background"></div>
+    <div class="site-overlay"></div>
+
+    <nav class="sidebar">
+        <div class="brand" onclick="showSection('home', this)">MARK <span>DSOUZA</span></div>
+        
+        <div class="nav-menu">
+            <button class="nav-btn active" onclick="showSection('home', this)">Introduction</button>
+            <button class="nav-btn" onclick="showSection('collections', this)">Series / Collections</button>
+            <button class="nav-btn" onclick="showSection('latest', this)">Latest Stream</button>
+            <button class="nav-btn" onclick="showSection('about', this)">About & Gear</button>
+        </div>
+
+        <div class="socials">
+            <a href="https://www.instagram.com/urbngraphy/" target="_blank">Instagram</a>
+            <a href="mailto:markdsouza993@gmail.com">Email</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+        <section id="sec-home" class="section active">
+            <h1 class="hero-title">SILENCE<br>IN THE<br>CHAOS.</h1>
+            <h2 class="hero-subtitle">Visual Storyteller • Mumbai</h2>
+            <button class="cta-btn" onclick="document.querySelector('.nav-btn:nth-child(2)').click()">VIEW COLLECTIONS</button>
+        </section>
+
+        <section id="sec-collections" class="section">
+            <h2 style="color:var(--text-main); margin-bottom:50px; font-size:3rem; font-style:italic;">Selected Series</h2>
+            <div class="collections-grid">
+                <div class="collection-card" onclick="openGalleryModal('street')">
+                    <img src="latestimages/street_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Street'">
+                    <div class="collection-title">Street</div>
+                </div>
+                <div class="collection-card" onclick="openGalleryModal('ganpati')">
+                    <img src="latestimages/ganpati_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Ganpati'">
+                    <div class="collection-title">Ganpati</div>
+                </div>
+                <div class="collection-card" onclick="openGalleryModal('walkeshwar')">
+                    <img src="latestimages/walkeshwar_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Walkeshwar'">
+                    <div class="collection-title">Walkeshwar</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-latest" class="section">
+            <h2 style="color:var(--text-main); margin-bottom:10px; font-size:3rem; font-style:italic;">Latest Stream</h2>
+            <p style="color:#666; margin-bottom:40px; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">Direct feed from GitHub</p>
+            <div class="masonry-grid" id="latest-grid">
+                Loading...
+            </div>
+        </section>
+
+        <section id="sec-about" class="section">
+            <div class="about-layout">
+                <div class="about-text">
+                    
+                    <img 
+                        src="latestimages/profile.jpg" 
+                        class="profile-img" 
+                        alt="Mark Dsouza"
+                        onerror="this.src='https://ui-avatars.com/api/?name=Mark+Dsouza&background=E50914&color=fff&size=256'"
+                    >
+
+                    <div class="outlined-name">MARK DSOUZA</div>
+                    
+                    <p>Based in <strong style="color:var(--accent)">Malad, Mumbai</strong>, my journey is defined by a late start but a rapid obsession. I’ve always watched the world with a photographer's eye, but only recently picked up the camera to prove it.</p>
+                    <br>
+                    <p>I believe you don't need the most expensive gear to tell a story. I am a student of the streets, constantly learning to freeze time—turning the chaos of Mumbai into cinematic silence.</p>
+                    
+                    <br><br>
+                    <p style="font-size: 0.8rem; letter-spacing: 2px; color: #888; font-family: Arial; font-style: normal; text-transform: uppercase;">CONTACT</p>
+                    <p style="color:#fff; font-size: 1.1rem; font-family: Arial; font-style: normal;">markdsouza993@gmail.com</p>
+                </div>
+                
+                <div class="gear-box">
+                    <h3 style="color:#888; margin-bottom:30px; letter-spacing: 3px; font-size: 0.8rem; font-family: Arial;">CURRENT GEAR</h3>
+                    <img src="latestimages/camera.png" alt="Sony A6400" onerror="this.style.display='none'">
+                    <h2 style="color:#fff; font-size: 2rem; margin-top: 10px;">SONY A6400</h2>
+                    <p style="color:var(--accent); font-family: 'Times New Roman', serif; font-style: italic; margin-top: 5px; font-size: 1.2rem;">+ Kit Lens</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="lightbox" id="lightbox">
+        <div class="close-lightbox" onclick="closeLightbox()">&times;</div>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        const user = "markdsouza993-creator";
+        const repo = "photography-portfolio";
+        
+        function showSection(id, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('sec-' + id).classList.add('active');
+            if(btn) {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        }
+
+        async function loadLatest() {
+            const container = document.getElementById('latest-grid');
+            const url = `https://api.github.com/repos/${user}/${repo}/contents/latestimages`;
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                const images = data.filter(f => f.name.match(/\.(jpg|jpeg|png)$/i));
+                
+                container.innerHTML = "";
+                images.forEach(img => {
+                    if(img.name.includes('background') || img.name.includes('profile') || img.name.includes('camera') || img.name.includes('cover')) return;
+                    
+                    container.innerHTML += `<img src="${img.download_url}" class="grid-img" onclick="openLightbox('${img.download_url}')">`;
+                });
+            } catch(e) { container.innerHTML = "Error loading images from GitHub."; }
+        }
+
+        function openGalleryModal(folderName) {
+            alert("To view the " + folderName + " collection, please ensure you create a folder named '" + folderName + "' in your GitHub!");
+        }
+
+        function openLightbox(url) {
+            document.getElementById('lightbox-img').src = url;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        window.onload = loadLatest;
+    </script>
+</body>
+</html>
