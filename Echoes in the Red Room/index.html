@@ -54,22 +54,3 @@
 </body>
 </html>
 
-```
-
-### Step 3: Add the Card to the Main Menu
-
-Now you need to make the button on your homepage.
-
-1. Open your main **`index.html`** file.
-2. Search (Ctrl+F) for `<div class="collections-grid">`.
-3. You will see your existing cards (Street, Ganpati, etc.).
-4. **Paste this new block** right after the last card, but *before* the closing `</div>`.
-
-```html
-<a href="FOLDER_NAME/index.html" class="collection-link">
-    <div class="collection-card">
-        <img src="latestimages/cover_photo.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=New+Collection'">
-        <div class="collection-title">New Collection</div>
-    </div>
-</a>
-
