@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Dsouza — Visual Storyteller, Mumbai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=IBM+Plex+Mono:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --ink:   #0d0d0d;
+  --paper: #f2ede4;
+  --cream: #e8e2d7;
+  --red:   #d42b2b;
+  --muted: #6b6560;
+  --border:#d0c9be;
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono:  'IBM Plex Mono', monospace;
+  --sans:  'Outfit', sans-serif;
+}
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+#cur {
+  width:10px; height:10px;
+  background:var(--red); border-radius:50%;
+  position:fixed; pointer-events:none; z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,background .2s;
+  mix-blend-mode:multiply;
+}
+#cur.big { width:42px; height:42px; background:rgba(212,43,43,0.2); }
+a,button,.card,.grid-photo { cursor:none; }
+
+/* GRAIN */
+body::after {
+  content:''; position:fixed; inset:0;
+  pointer-events:none; z-index:9000; opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── TOP NAV ── */
+.topbar {
+  position:fixed; top:0; left:0; right:0; z-index:800;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 60px; height:64px;
+  background:var(--paper);
+  border-bottom:1px solid var(--border);
+}
+.topbar::after {
+  content:''; position:absolute;
+  bottom:-1px; left:60px;
+  width:40px; height:2px; background:var(--red);
+}
+.logo {
+  font-family:var(--serif); font-size:1.1rem; font-weight:700;
+  color:var(--ink); cursor:none; user-select:none; letter-spacing:.3px;
+}
+.logo span { color:var(--red); }
+.nav-links { display:flex; gap:36px; align-items:center; }
+.nav-link {
+  background:none; border:none;
+  font-family:var(--mono); font-size:.62rem;
+  font-weight:400; letter-spacing:2px; text-transform:uppercase;
+  color:var(--muted); cursor:none; transition:color .25s;
+  position:relative; padding-bottom:2px;
+}
+.nav-link::after {
+  content:''; position:absolute; bottom:0; left:0;
+  width:0; height:1px; background:var(--red);
+  transition:width .3s cubic-bezier(.16,1,.3,1);
+}
+.nav-link:hover,
+.nav-link.active { color:var(--ink); }
+.nav-link:hover::after,
+.nav-link.active::after { width:100%; }
+.nav-cta {
+  background:var(--ink); color:var(--paper); border:none;
+  font-family:var(--mono); font-size:.58rem; letter-spacing:2px;
+  text-transform:uppercase; padding:10px 22px; cursor:none;
+  transition:background .3s;
+}
+.nav-cta:hover { background:var(--red); }
+
+/* ── PAGES ── */
+.page { display:none; padding-top:64px; animation:fadeUp .55s cubic-bezier(.16,1,.3,1) both; }
+.page.active { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── HOME HERO ── */
+.hero {
+  min-height:calc(100vh - 64px);
+  display:grid; grid-template-columns:1fr 1fr;
+}
+.hero-left {
+  padding:80px 60px 60px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  border-right:1px solid var(--border);
+}
+.eyebrow {
+  font-family:var(--mono); font-size:.58rem; letter-spacing:3px;
+  text-transform:uppercase; color:var(--muted);
+  display:flex; align-items:center; gap:12px;
+}
+.eyebrow::before { content:''; width:24px; height:1px; background:var(--red); flex-shrink:0; }
+.hero-title {
+  font-family:var(--serif); font-weight:900;
+  font-size:clamp(4.5rem,8vw,9rem);
+  line-height:.85; letter-spacing:-3px;
+  color:var(--ink); margin:36px 0 28px;
+}
+.hero-title .outline {
+  color:transparent;
+  -webkit-text-stroke:2px var(--ink);
+}
+.hero-title .red { color:var(--red); }
+.hero-dek {
+  font-size:.9rem; font-weight:300; line-height:1.75;
+  color:var(--muted); max-width:340px; margin-bottom:36px;
+}
+.scroll-hint {
+  font-family:var(--mono); font-size:.52rem; letter-spacing:3px;
+  text-transform:uppercase; color:var(--muted);
+  display:flex; align-items:center; gap:12px;
+}
+.scroll-line {
+  width:1px; height:48px; background:var(--border);
+  animation:sline 2s ease infinite;
+}
+@keyframes sline { 0%,100%{height:48px;background:var(--border)} 50%{height:60px;background:var(--red)} }
+
+.hero-right {
+  position:relative; overflow:hidden; background:var(--ink);
+}
+.hero-bg {
+  width:100%; height:100%; object-fit:cover;
+  opacity:.75; filter:contrast(1.1);
+  transition:transform 8s ease;
+}
+.hero-right:hover .hero-bg { transform:scale(1.05); }
+.hero-cap {
+  position:absolute; bottom:28px; left:28px; right:28px; z-index:2;
+  display:flex; justify-content:space-between; align-items:flex-end;
+}
+.hero-tag {
+  background:var(--red); color:#fff;
+  font-family:var(--mono); font-size:.52rem;
+  letter-spacing:2px; text-transform:uppercase; padding:5px 12px;
+}
+.hero-loc {
+  font-family:var(--mono); font-size:.52rem;
+  letter-spacing:2px; text-transform:uppercase;
+  color:rgba(255,255,255,.65);
+}
+
+/* TICKER */
+.ticker {
+  border-top:1px solid var(--border);
+  overflow:hidden; height:38px;
+  display:flex; align-items:center; background:var(--ink);
+}
+.ticker-track {
+  display:flex; gap:80px; white-space:nowrap;
+  animation:tick 24s linear infinite; padding-left:100%;
+}
+@keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.ticker-item {
+  font-family:var(--mono); font-size:.52rem;
+  letter-spacing:3px; text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  display:flex; align-items:center; gap:20px;
+}
+.ticker-item::after { content:'◆'; color:var(--red); font-size:.35rem; }
+
+/* ── SECTION HEADER ── */
+.sec-head {
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding:56px 60px 36px; border-bottom:2px solid var(--ink);
+}
+.sec-head h2 {
+  font-family:var(--serif); font-size:clamp(2.2rem,4.5vw,4rem);
+  font-weight:900; font-style:italic; line-height:1;
+}
+.sec-count {
+  font-family:var(--mono); font-size:2.2rem;
+  font-weight:300; color:var(--red); line-height:1;
+  text-align:right;
+}
+.sec-sub {
+  font-family:var(--mono); font-size:.56rem;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--muted); margin-top:4px;
+}
+
+/* ── COLLECTIONS ── */
+.col-page { padding-bottom:100px; }
+.edit-grid {
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:0; padding:0 60px; margin-top:32px;
+}
+.card {
+  position:relative; overflow:hidden;
+  cursor:none; background:var(--ink);
+  border:1px solid var(--border);
+}
+.card.feat { grid-column:span 2; aspect-ratio:16/10; }
+.card:not(.feat) { aspect-ratio:3/4; }
+.card img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:grayscale(25%);
+  transition:transform .9s cubic-bezier(.16,1,.3,1), filter .5s;
+}
+.card:hover img { transform:scale(1.07); filter:grayscale(0%); }
+.card-body {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(13,13,13,.92) 0%,rgba(13,13,13,.1) 55%,transparent 100%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:28px 24px; transition:background .4s;
+}
+.card:hover .card-body {
+  background:linear-gradient(to top,rgba(13,13,13,.97) 0%,rgba(13,13,13,.15) 55%,transparent 100%);
+}
+.c-num {
+  font-family:var(--mono); font-size:.52rem;
+  letter-spacing:3px; text-transform:uppercase; color:var(--red); margin-bottom:5px;
+}
+.c-title {
+  font-family:var(--serif); font-size:1.8rem;
+  font-weight:700; font-style:italic; color:#fff; line-height:1.05;
+}
+.card.feat .c-title { font-size:2.8rem; }
+.c-arrow {
+  position:absolute; top:20px; right:20px;
+  width:34px; height:34px;
+  border:1px solid rgba(255,255,255,.2);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:.85rem;
+  opacity:0; transform:translateY(-6px);
+  transition:opacity .3s,transform .3s;
+}
+.card:hover .c-arrow { opacity:1; transform:translateY(0); }
+.card > a { position:absolute; inset:0; z-index:5; }
+
+/* ── LATEST ── */
+.lat-page { padding-bottom:100px; }
+.masonry { padding:0 60px; margin-top:32px; columns:4; column-gap:10px; }
+.grid-photo {
+  width:100%; margin-bottom:10px; display:block; cursor:none;
+  filter:grayscale(15%) brightness(.95);
+  transition:filter .4s,transform .35s;
+  border:1px solid var(--border);
+}
+.grid-photo:hover { filter:grayscale(0%) brightness(1.03); transform:scale(1.015); }
+.load-wrap {
+  padding:60px; display:flex; align-items:center; gap:14px;
+  font-family:var(--mono); font-size:.6rem;
+  letter-spacing:2px; text-transform:uppercase; color:var(--muted);
+}
+.ld { width:6px; height:6px; border-radius:50%; background:var(--red); animation:ld 1.2s ease infinite; }
+.ld:nth-child(2){animation-delay:.15s} .ld:nth-child(3){animation-delay:.3s}
+@keyframes ld { 0%,100%{opacity:.15} 50%{opacity:1} }
+
+/* ── ABOUT ── */
+.abt-page { padding-bottom:100px; }
+.abt-split {
+  display:grid; grid-template-columns:3fr 2fr;
+  padding:0 60px; margin-top:0;
+  border-top:1px solid var(--border);
+}
+.abt-main { padding:56px 80px 56px 0; border-right:1px solid var(--border); }
+.prof-row { display:flex; align-items:center; gap:18px; margin-bottom:44px; }
+.prof-img {
+  width:68px; height:68px; border-radius:50%;
+  object-fit:cover; border:2px solid var(--ink); filter:grayscale(15%);
+}
+.prof-name { font-family:var(--serif); font-size:1.25rem; font-weight:700; }
+.prof-role {
+  font-family:var(--mono); font-size:.55rem;
+  letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:4px;
+}
+.big-quote {
+  font-family:var(--serif); font-size:clamp(1.6rem,2.5vw,2.4rem);
+  font-weight:400; font-style:italic; line-height:1.3;
+  color:var(--ink); border-left:3px solid var(--red);
+  padding-left:28px; margin-bottom:36px;
+}
+.abt-text { font-size:.95rem; font-weight:300; line-height:1.85; color:#3a3530; max-width:520px; }
+.abt-text p+p { margin-top:18px; }
+.abt-text b {
+  font-weight:500; color:var(--ink);
+  font-family:var(--mono); font-size:.75rem;
+  letter-spacing:1px; text-transform:uppercase;
+}
+.contact-box { margin-top:48px; padding-top:28px; border-top:1px solid var(--border); }
+.c-label {
+  font-family:var(--mono); font-size:.55rem;
+  letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;
+}
+.c-email {
+  font-family:var(--serif); font-size:1.35rem; font-weight:400; color:var(--ink);
+}
+.c-email a { color:inherit; text-decoration:none; border-bottom:1px solid var(--border); transition:border-color .3s; }
+.c-email a:hover { border-color:var(--red); }
+.soc-row { display:flex; gap:20px; margin-top:14px; }
+.soc-a {
+  font-family:var(--mono); font-size:.58rem; letter-spacing:2px;
+  text-transform:uppercase; color:var(--muted);
+  text-decoration:none; transition:color .3s;
+}
+.soc-a:hover { color:var(--red); }
+
+.abt-side { padding:56px 0 56px 56px; }
+.gear-lbl {
+  font-family:var(--mono); font-size:.55rem; letter-spacing:3px;
+  text-transform:uppercase; color:var(--muted); margin-bottom:28px;
+}
+.gear-card {
+  background:var(--ink); padding:36px 28px; text-align:center;
+  position:relative; overflow:hidden; margin-bottom:20px;
+}
+.gear-card::after {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:2px; background:var(--red);
+}
+.gear-img { width:100%; max-width:160px; margin-bottom:18px; opacity:.9; }
+.gear-model {
+  font-family:var(--serif); font-size:1.5rem;
+  font-weight:700; color:#fff; margin-bottom:4px;
+}
+.gear-lens {
+  font-family:var(--mono); font-size:.6rem;
+  letter-spacing:2px; text-transform:uppercase; color:var(--red);
+}
+.stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); }
+.stat { background:var(--paper); padding:18px 14px; }
+.stat-v {
+  font-family:var(--serif); font-size:1.9rem;
+  font-weight:900; color:var(--ink); line-height:1;
+}
+.stat-l {
+  font-family:var(--mono); font-size:.52rem;
+  letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:3px;
+}
+
+/* LIGHTBOX */
+.lb {
+  display:none; position:fixed; inset:0;
+  background:rgba(13,13,13,.97); z-index:9000;
+  align-items:center; justify-content:center;
+  backdrop-filter:blur(6px);
+}
+.lb.open { display:flex; }
+.lb img { max-height:90vh; max-width:90vw; object-fit:contain; }
+.lb-x {
+  position:fixed; top:22px; right:30px;
+  font-family:var(--mono); font-size:1.4rem;
+  color:rgba(255,255,255,.5); background:none; border:none;
+  cursor:none; transition:color .25s;
+}
+.lb-x:hover { color:var(--red); }
+
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--cream); }
+::-webkit-scrollbar-thumb { background:var(--red); }
+
+/* MOBILE */
+@media(max-width:960px){
+  .topbar { padding:0 24px; }
+  .topbar::after { left:24px; }
+  .nav-links { gap:16px; }
+  .nav-cta { display:none; }
+  .hero { grid-template-columns:1fr; }
+  .hero-right { min-height:55vw; }
+  .hero-left { padding:48px 24px 40px; }
+  .sec-head,.masonry,.edit-grid,.abt-split { padding-left:24px; padding-right:24px; }
+  .edit-grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .card.feat { grid-column:span 2; aspect-ratio:4/3; }
+  .card:not(.feat) { aspect-ratio:1/1; }
+  .masonry { columns:2; }
+  .abt-split { grid-template-columns:1fr; }
+  .abt-main { padding:40px 0; border-right:none; border-bottom:1px solid var(--border); }
+  .abt-side { padding:40px 0; }
+}
+@media(max-width:520px){
+  .hero-title { font-size:clamp(3.2rem,14vw,5rem); letter-spacing:-2px; }
+  .masonry { columns:1; }
+  .edit-grid { grid-template-columns:1fr; }
+  .card.feat { grid-column:span 1; }
+  .nav-link { font-size:.52rem; letter-spacing:1.5px; }
+  .nav-links { gap:10px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+
+<header class="topbar">
+  <div class="logo" onclick="show('home')">Mark <span>D'souza</span></div>
+  <nav class="nav-links">
+    <button class="nav-link active" data-page="home"    onclick="show('home',this)">Home</button>
+    <button class="nav-link"        data-page="col"     onclick="show('col',this)">Collections</button>
+    <button class="nav-link"        data-page="latest"  onclick="show('latest',this)">Latest</button>
+    <button class="nav-link"        data-page="about"   onclick="show('about',this)">About</button>
+    <button class="nav-cta" onclick="location.href='mailto:markdsouza993@gmail.com'">Hire Me</button>
+  </nav>
+</header>
+
+<!-- HOME -->
+<div id="pg-home" class="page active">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Mumbai, India — Visual Portfolio</div>
+      <div>
+        <h1 class="hero-title">
+          SI<span class="outline">LE</span>NCE<br>
+          IN THE<br>
+          <span class="red">CHAOS.</span>
+        </h1>
+        <p class="hero-dek">Street photography, documentary portraiture, and the quiet moments hidden inside the noise of the world's most alive city.</p>
+        <button class="nav-cta" onclick="show('col',document.querySelector('[data-page=col]'))">View Collections →</button>
+      </div>
+      <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        <span>Scroll to explore</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img class="hero-bg" src="latestimages/background.jpg" alt="Photography"
+        onerror="this.style.opacity='.1'">
+      <div class="hero-cap">
+        <span class="hero-tag">Street · Mumbai</span>
+        <span class="hero-loc">© Mark Dsouza</span>
+      </div>
+    </div>
+  </div>
+  <div class="ticker">
+    <div class="ticker-track" id="tk">
+      <span class="ticker-item">Street Photography</span>
+      <span class="ticker-item">Ganpati Series</span>
+      <span class="ticker-item">Walkeshwar</span>
+      <span class="ticker-item">Portraits</span>
+      <span class="ticker-item">Automotive</span>
+      <span class="ticker-item">Echoes in the Red Room</span>
+      <span class="ticker-item">Sony A6400</span>
+      <span class="ticker-item">Malad, Mumbai</span>
+    </div>
+  </div>
+</div>
+
+<!-- COLLECTIONS -->
+<div id="pg-col" class="page col-page">
+  <div class="sec-head">
+    <h2>Selected Series</h2>
+    <div><div class="sec-count">06</div><div class="sec-sub">Collections</div></div>
+  </div>
+  <div class="edit-grid">
+
+    <div class="card feat">
+      <img src="latestimages/street_cover.jpg" alt="Street"
+        onerror="this.src='https://placehold.co/900x560/0d0d0d/222?text='">
+      <div class="card-body">
+        <div class="c-num">01 — Street</div>
+        <div class="c-title">The Streets of Mumbai</div>
+      </div>
+      <div class="c-arrow">→</div>
+      <a href="street/index.html"></a>
+    </div>
+
+    <div class="card">
+      <img src="latestimages/ganpati_cover.jpg" alt="Ganpati"
+        onerror="this.src='https://placehold.co/450x600/0d0d0d/222?text='">
+      <div class="card-body">
+        <div class="c-num">02 — Festival</div>
+        <div class="c-title">Ganpati</div>
+      </div>
+      <div class="c-arrow">→</div>
+      <a href="ganpati/index.html"></a>
+    </div>
+
+    <div class="card">
+      <img src="latestimages/walkeshwar_cover.jpg" alt="Walkeshwar"
+        onerror="this.src='https://placehold.co/450x600/0d0d0d/222?text='">
+      <div class="card-body">
+        <div class="c-num">03 — Place</div>
+        <div class="c-title">Walkeshwar</div>
+      </div>
+      <div class="c-arrow">→</div>
+      <a href="walkeshwar/index.html"></a>
+    </div>
+
+    <div class="card">
+      <img src="latestimages/portraits_cover.jpg" alt="Portraits"
+        onerror="this.src='https://placehold.co/450x600/0d0d0d/222?text='">
+      <div class="card-body">
+        <div class="c-num">04 — People</div>
+        <div class="c-title">Portraits</div>
+      </div>
+      <div class="c-arrow">→</div>
+      <a href="portraits/index.html"></a>
+    </div>
+
+    <div class="card">
+      <img src="latestimages/automotive_cover.jpg" alt="Automotive"
+        onerror="this.src='https://placehold.co/450x600/0d0d0d/222?text='">
+      <div class="card-body">
+        <div class="c-num">05 — Machines</div>
+        <div class="c-title">Automotive</div>
+      </div>
+      <div class="c-arrow">→</div>
+      <a href="automotive/index.html"></a>
+    </div>
+
+    <div class="card">
+      <img src="latestimages/Echoes in the Red Room_cover.photo.jpg" alt="Echoes"
+        onerror="this.src='https://placehold.co/450x600/0d0d0d/222?text='">
+      <div class="card-body">
+        <div class="c-num">06 — Editorial</div>
+        <div class="c-title">Echoes in<br>the Red Room</div>
+      </div>
+      <div class="c-arrow">→</div>
+      <a href="Echoes in the Red Room/index.html"></a>
+    </div>
+
+  </div>
+</div>
+
+<!-- LATEST -->
+<div id="pg-latest" class="page lat-page">
+  <div class="sec-head">
+    <h2>Latest Stream</h2>
+    <div><div class="sec-sub" style="font-size:.65rem;margin-top:6px;">Live Feed · GitHub</div></div>
+  </div>
+  <div class="masonry" id="masonry">
+    <div class="load-wrap">
+      <div class="ld"></div><div class="ld"></div><div class="ld"></div>
+      <span>Pulling images</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="pg-about" class="page abt-page">
+  <div class="sec-head">
+    <h2>About & Gear</h2>
+  </div>
+  <div class="abt-split">
+    <div class="abt-main">
+      <div class="prof-row">
+        <img class="prof-img" src="latestimages/profile.JPG" alt="Mark Dsouza"
+          onerror="this.src='https://ui-avatars.com/api/?name=MD&background=0d0d0d&color=f2ede4&size=256'">
+        <div>
+          <div class="prof-name">Mark Dsouza</div>
+          <div class="prof-role">Visual Storyteller · Malad, Mumbai</div>
+        </div>
+      </div>
+      <blockquote class="big-quote">
+        "I am a student of the streets — learning to freeze time, turning Mumbai's chaos into cinematic silence."
+      </blockquote>
+      <div class="abt-text">
+        <p>Based in <b>Malad, Mumbai</b>, my journey is defined by a late start but a rapid obsession. I've always watched the world with a photographer's eye — only recently picked up the camera to prove it.</p>
+        <p>I believe you don't need the most expensive gear to tell a story. Every frame is a negotiation between what I see and what the street allows me to capture.</p>
+      </div>
+      <div class="contact-box">
+        <p class="c-label">Get in touch</p>
+        <div class="c-email"><a href="mailto:markdsouza993@gmail.com">markdsouza993@gmail.com</a></div>
+        <div class="soc-row">
+          <a class="soc-a" href="https://www.instagram.com/urbngraphy/" target="_blank">↗ Instagram</a>
+          <a class="soc-a" href="mailto:markdsouza993@gmail.com">↗ Email</a>
+        </div>
+      </div>
+    </div>
+    <div class="abt-side">
+      <p class="gear-lbl">Current Gear</p>
+      <div class="gear-card">
+        <img class="gear-img" src="latestimages/camera.png" alt="Sony A6400"
+          onerror="this.style.display='none'">
+        <div class="gear-model">Sony A6400</div>
+        <div class="gear-lens">+ Kit Lens</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-v">06</div><div class="stat-l">Collections</div></div>
+        <div class="stat"><div class="stat-v">MUM</div><div class="stat-l">Base City</div></div>
+        <div class="stat"><div class="stat-v">24MP</div><div class="stat-l">Sensor</div></div>
+        <div class="stat"><div class="stat-v">∞</div><div class="stat-l">Stories</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <button class="lb-x" onclick="closeLb()">×</button>
+  <img id="lb-img" src="" alt="">
+</div>
+
+<script>
+/* cursor */
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a,button,.card,.grid-photo').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('big'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+});
+
+/* nav */
+let latLoaded = false;
+function show(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  if (btn && btn.classList && btn.classList.contains('nav-link')) btn.classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 'latest' && !latLoaded) { loadLatest(); latLoaded = true; }
+}
+
+/* github feed */
+async function loadLatest() {
+  const box = document.getElementById('masonry');
+  try {
+    const r = await fetch('https://api.github.com/repos/markdsouza993-creator/photography-portfolio/contents/latestimages');
+    if (!r.ok) throw new Error('GitHub API limit or repo not found');
+    const data = await r.json();
+    const skip = ['background','profile','camera','cover'];
+    const imgs = data.filter(f =>
+      f.name.match(/\.(jpg|jpeg|png|webp)$/i) &&
+      !skip.some(k => f.name.toLowerCase().includes(k))
+    );
+    box.innerHTML = '';
+    imgs.forEach((img, i) => {
+      const el = document.createElement('img');
+      el.src = img.download_url;
+      el.className = 'grid-photo';
+      el.alt = img.name; el.loading = 'lazy';
+      el.style.cssText = `opacity:0;transition:opacity .5s ${i * .05}s ease`;
+      el.onload = () => el.style.opacity = '1';
+      el.onclick = () => openLb(img.download_url);
+      box.appendChild(el);
+    });
+    if (!imgs.length) box.innerHTML = '<p style="padding:40px;font-family:var(--mono);font-size:.7rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">No images found.</p>';
+  } catch(e) {
+    box.innerHTML = `<p style="padding:40px;font-family:var(--mono);font-size:.7rem;letter-spacing:2px;color:#c0392b;text-transform:uppercase;">${e.message}</p>`;
+  }
+}
+
+/* lightbox */
+function openLb(url) {
+  document.getElementById('lb-img').src = url;
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lb').addEventListener('click', function(e){ if(e.target===this) closeLb(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb(); });
+
+/* duplicate ticker */
+const tk = document.getElementById('tk');
+if (tk) tk.innerHTML += tk.innerHTML;
+
+/* prefetch latest */
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => { if (!latLoaded) { loadLatest(); latLoaded = true; } });
+}
+</script>
+</body>
+</html>
