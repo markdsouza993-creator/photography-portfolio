@@ -120,9 +120,8 @@
             min-height: 100vh;
         }
 
-        .section { display: none; padding: 100px; animation: fadeIn 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .section { display: none; padding: 100px; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Hero Section */
         .hero-title { 
@@ -260,7 +259,7 @@
         </div>
 
         <div class="socials">
-            <a href="https://www.instagram.com/urbngraphy/" target="_blank">Instagram</a>
+            <a href="[https://www.instagram.com/urbngraphy/](https://www.instagram.com/urbngraphy/)" target="_blank">Instagram</a>
             <a href="mailto:markdsouza993@gmail.com">Email</a>
         </div>
     </nav>
@@ -279,46 +278,46 @@
             <div class="collections-grid">
                 <a href="street/index.html" class="collection-link">
                     <div class="collection-card">
-                        <img src="latestimages/street_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Street'">
+                        <img src="latestimages/street_cover.jpg" onerror="this.src='[https://placehold.co/600x800/111/E50914?text=Street](https://placehold.co/600x800/111/E50914?text=Street)'">
                         <div class="collection-title">Street</div>
                     </div>
                 </a>
                 
                 <a href="ganpati/index.html" class="collection-link">
                     <div class="collection-card">
-                        <img src="latestimages/ganpati_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Ganpati'">
+                        <img src="latestimages/ganpati_cover.jpg" onerror="this.src='[https://placehold.co/600x800/111/E50914?text=Ganpati](https://placehold.co/600x800/111/E50914?text=Ganpati)'">
                         <div class="collection-title">Ganpati</div>
                     </div>
                 </a>
                 
                 <a href="walkeshwar/index.html" class="collection-link">
                     <div class="collection-card">
-                        <img src="latestimages/walkeshwar_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Walkeshwar'">
+                        <img src="latestimages/walkeshwar_cover.jpg" onerror="this.src='[https://placehold.co/600x800/111/E50914?text=Walkeshwar](https://placehold.co/600x800/111/E50914?text=Walkeshwar)'">
                         <div class="collection-title">Walkeshwar</div>
                     </div>
                 </a>
 
                 <a href="portraits/index.html" class="collection-link">
                     <div class="collection-card">
-                        <img src="latestimages/portraits_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Portraits'">
+                        <img src="latestimages/portraits_cover.jpg" onerror="this.src='[https://placehold.co/600x800/111/E50914?text=Portraits](https://placehold.co/600x800/111/E50914?text=Portraits)'">
                         <div class="collection-title">Portraits</div>
                     </div>
                 </a>
 
                 <a href="automotive/index.html" class="collection-link">
                     <div class="collection-card">
-                        <img src="latestimages/automotive_cover.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=Automotive'">
+                        <img src="latestimages/automotive_cover.jpg" onerror="this.src='[https://placehold.co/600x800/111/E50914?text=Automotive](https://placehold.co/600x800/111/E50914?text=Automotive)'">
                         <div class="collection-title">Automotive</div>
                     </div>
                 </a>
+
+                <a href="Echoes in the Red Room/index.html" class="collection-link">
+                    <div class="collection-card">
+                        <img src="latestimages/Echoes in the Red Room_cover.photo.jpg" onerror="this.src='[https://placehold.co/600x800/111/E50914?text=New+Collection](https://placehold.co/600x800/111/E50914?text=New+Collection)'">
+                        <div class="collection-title">Echoes in the Red Room</div>
+                    </div>
+                </a>
             </div>
-            ``html
-            <a href="Echoes in the Red Room/index.html" class="collection-link">
-                <div class="collection-card">
-                     <img src="latestimages/Echoes in the Red Room_cover.photo.jpg" onerror="this.src='https://placehold.co/600x800/111/E50914?text=New+Collection'">
-                     <div class="collection-title">Echoes in the Red Room</div>
-                 </div>
-              </a>
         </section>
 
         <section id="sec-latest" class="section">
@@ -332,7 +331,7 @@
         <section id="sec-about" class="section">
             <div class="about-layout">
                 <div class="about-text">
-                   <img src="latestimages/profile.JPG" class="profile-img" alt="Mark Dsouza" onerror="this.src='https://ui-avatars.com/api/?name=Mark+Dsouza&background=E50914&color=fff&size=256'">
+                   <img src="latestimages/profile.JPG" class="profile-img" alt="Mark Dsouza" onerror="this.src='[https://ui-avatars.com/api/?name=Mark+Dsouza&background=E50914&color=fff&size=256](https://ui-avatars.com/api/?name=Mark+Dsouza&background=E50914&color=fff&size=256)'">
                     <div class="outlined-name">MARK DSOUZA</div>
                     <p>Based in <strong style="color:var(--accent)">Malad, Mumbai</strong>, my journey is defined by a late start but a rapid obsession. I’ve always watched the world with a photographer's eye, but only recently picked up the camera to prove it.</p>
                     <br>
